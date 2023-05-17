@@ -9,7 +9,7 @@ function App() {
 
   useEffect(() => {
     async function getData() {
-      let url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/api/launch-details`;
+      let url = `${process.env.REACT_APP_API_API_HOST}/api/launch-details`;
       console.log("fastapi url: ", url);
       let response = await fetch(url);
       console.log("------- hello? -------");
@@ -30,6 +30,7 @@ function App() {
     <div>
       <ErrorNotification error={error} />
       <Construct info={launchInfo} />
+      Yo
     </div>
   );
 }
