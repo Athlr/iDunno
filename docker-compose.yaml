@@ -1,14 +1,7 @@
-# volumes:
+volumes:
+  idunno-data:
+    external: true
 services:
-  fastapi:
-    build:
-      context: sample_service
-      dockerfile: Dockerfile.dev
-    ports:
-      - 8000:8000
-    volumes:
-      - ./sample_service:/app
-
   ghi:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -22,4 +15,26 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      REACT_APP_SAMPLE_SERVICE_API_HOST: ${REACT_APP_SAMPLE_SERVICE_API_HOST}
+      # REACT_APP_API_API_HOST: ${REACT_APP_API_API_HOST}
+  db:
+    image: postgres:14.5-bullseye
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: idunno
+    ports:
+      - 15432:5432
+    volumes:
+      - idunno-data:/var/lib/postgresql/data
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
+    environment:
+      DATABASE_URL: postgresql://admin:admin@db/idunno
+      WAIT_HOSTS: db:5432
+      PORT: 8000
+    ports:
+      - 8000:8000
+    volumes:
+      - ./api:/app
