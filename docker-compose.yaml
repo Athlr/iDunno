@@ -31,6 +31,7 @@ services:
       context: api
       dockerfile: Dockerfile.dev
     environment:
+      SIGNING_KEY: hahatestinglol
       DATABASE_URL: postgresql://admin:admin@db/idunno
       WAIT_HOSTS: db:5432
       PORT: 8000
