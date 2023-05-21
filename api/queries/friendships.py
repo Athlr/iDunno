@@ -47,3 +47,23 @@ class FriendshipsRepo:
         except Exception as e:
             print(e)
             return {"message": "Could not get list of friends"}
+
+    def delete_friendship(self, user_id: int, friend_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM friendships
+                        WHERE (user1_id = %(user_id)s AND user2_id = %(friend_id)s)
+                        OR (user1_id = %(friend_id)s AND user2_id = %(user_id)s)
+                        """,
+                        {
+                            'user_id': user_id,
+                            'friend_id': friend_id
+                        }
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
