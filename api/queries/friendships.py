@@ -10,6 +10,7 @@ class FriendshipIn(BaseModel):
 
 class FriendshipOut(BaseModel):
     friendship_id: int
+    friend_id: int
     username: str
     email: str
     first_name: str
@@ -22,7 +23,7 @@ class FriendshipsRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT f.friendship_id, u.username, u.email, u.first_name, u.last_name
+                        SELECT f.friendship_id, u.user_id, u.username, u.email, u.first_name, u.last_name
                         FROM user_table u
                         JOIN friendships f ON
                         (u.user_id = f.user1_id AND f.user2_id = %s)
@@ -37,10 +38,11 @@ class FriendshipsRepo:
                     for record in db:
                         friendship = FriendshipOut(
                             friendship_id=record[0],
-                            username=record[1],
-                            email=record[2],
-                            first_name=record[3],
-                            last_name=record[4],
+                            friend_id=record[1],
+                            username=record[2],
+                            email=record[3],
+                            first_name=record[4],
+                            last_name=record[5],
                         )
                         result.append(friendship)
                     return result
