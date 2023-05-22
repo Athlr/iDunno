@@ -21,6 +21,51 @@ class RestaurantListOut(BaseModel):
 
 
 class RestaurantListRepository:
+    def get_one(self, list_id: int) -> Optional[RestaurantListOut]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT list_id
+                             , name
+                             , description
+                             , user_id
+                        FROM restaurant_list
+                        WHERE list_id = %s
+                        """,
+                        [list_id]
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_restaurant_list_out(record)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that Restaurant list"}
+
+
+    def delete(self, list_id: int) -> bool:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM restaurant_list
+                        WHERE list_id = %s
+                        """,
+                        [list_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
     def update(self, list_id: int, restaurant_list: RestaurantListIn) -> Union[RestaurantListOut, Error]:
         try:
             # connect the database
@@ -65,16 +110,21 @@ class RestaurantListRepository:
                         ORDER BY name;
                         """
                     )
-                    result = []
-                    for record in db:
-                        restaurant_list = RestaurantListOut(
-                                list_id=record[0],
-                                name=record[1],
-                                description=record[2],
-                                user_id=record[3]
-                        )
-                        result.append(restaurant_list)
-                    return result
+                    # result = []
+                    # for record in db:
+                    #     restaurant_list = RestaurantListOut(
+                    #             list_id=record[0],
+                    #             name=record[1],
+                    #             description=record[2],
+                    #             user_id=record[3]
+                    #     )
+                    #     result.append(restaurant_list)
+                    # return result
+
+                    return [
+                        self.record_to_restaurant_list_out(record)
+                        for record in result
+                    ]
         except Exception as e:
             print(e)
             return {"message": "could not get all lists"}
@@ -115,3 +165,11 @@ class RestaurantListRepository:
     def restaurant_list_in_to_out(self, list_id: int, restaurant_list: RestaurantListIn):
         old_data = restaurant_list.dict()
         return RestaurantListOut(list_id=list_id, **old_data)
+
+    def record_to_restaurant_list_out(self, record):
+        return RestaurantListOut(
+            list_id=record[0],
+            name=record[1],
+            description=record[2],
+            user_id=record[3]
+        )
