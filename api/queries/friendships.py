@@ -27,7 +27,7 @@ class FriendshipsRepo:
                         FROM user_table u
                         JOIN friendships f ON
                         (u.user_id = f.user1_id AND f.user2_id = %s)
-                        OR (u.user_id = f.user2_id AND f.user1_id = %s)
+                        OR (u.user_id = f.user2_id AND f.user1_id = %s);
                         """,
                         [
                             user_id,
@@ -58,7 +58,7 @@ class FriendshipsRepo:
                         """
                         DELETE FROM friendships
                         WHERE (user1_id = %(user_id)s AND user2_id = %(friend_id)s)
-                        OR (user1_id = %(friend_id)s AND user2_id = %(user_id)s)
+                        OR (user1_id = %(friend_id)s AND user2_id = %(user_id)s);
                         """,
                         {
                             'user_id': user_id,

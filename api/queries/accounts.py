@@ -30,7 +30,7 @@ class AccountRepo:
                         """
                         SELECT user_id, username, password, first_name, last_name, email
                         FROM user_table
-                        WHERE username = %s
+                        WHERE username = %s;
                         """,
                         [
                             username
@@ -58,7 +58,7 @@ class AccountRepo:
                         """
                         INSERT INTO user_table (username, password, first_name, last_name, email)
                         VALUES (%s, %s, %s, %s, %s)
-                        RETURNING user_id, username, password, first_name, last_name, email
+                        RETURNING user_id, username, password, first_name, last_name, email;
                         """,
                         [
                             info.username,
@@ -69,16 +69,6 @@ class AccountRepo:
                         ],
                     )
                     id = result.fetchone()[0]
-                    print(id, "id")
-                    print(info, "info")
-                    print(AccountOutWithPassword(
-                        id=id,
-                        email=info.email,
-                        username=info.username,
-                        first_name=info.first_name,
-                        last_name=info.last_name,
-                        hashed_password=hashed_password,
-                    ))
                     return AccountOutWithPassword(
                         id=id,
                         email=info.email,
