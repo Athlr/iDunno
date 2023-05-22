@@ -21,6 +21,36 @@ class RestaurantListOut(BaseModel):
 
 
 class RestaurantListRepository:
+    def update(self, list_id: int, restaurant_list: RestaurantListIn) -> Union[RestaurantListOut, Error]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor
+                with conn.cursor() as db:
+                    #Run our SELECT statement
+                    db.execute(
+                        """
+                        UPDATE restaurant_list
+                        SET name = %s
+                          , description = %s
+                          , user_id = %s
+                        WHERE list_id = %s
+                        """,
+                        [
+                            restaurant_list.name,
+                            restaurant_list.description,
+                            restaurant_list.user_id,
+                            list_id
+                        ]
+                    )
+                    # old_data = restaurant_list.dict()
+                    # return RestaurantListOut(list_id=list_id, **old_data)
+                    return self.restaurant_list_in_to_out(list_id, restaurant_list)
+        except Exception as e:
+            print(e)
+            return {"message": "could not update lists"}
+
+
     def get_all(self) -> Union[Error, List[RestaurantListOut]]:
         try:
             # connect the database
@@ -32,6 +62,7 @@ class RestaurantListRepository:
                         """
                         SELECT list_id, name, description, user_id
                         FROM restaurant_list
+                        ORDER BY name;
                         """
                     )
                     result = []
@@ -73,8 +104,14 @@ class RestaurantListRepository:
                 )
                 list_id = result.fetchone()[0]
                 # Return new data
-                old_data = restaurant_list.dict()
-                return RestaurantListOut(list_id=list_id, **old_data)
+                # old_data = restaurant_list.dict()
+                # return RestaurantListOut(list_id=list_id, **old_data)
+                return self.restaurant_list_in_to_out(list_id, restaurant_list)
         # except Exception as e:
         #     print(e)
         #     return {"message": "Create did not work!"}
+
+
+    def restaurant_list_in_to_out(self, list_id: int, restaurant_list: RestaurantListIn):
+        old_data = restaurant_list.dict()
+        return RestaurantListOut(list_id=list_id, **old_data)
