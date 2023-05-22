@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional
+from typing import Optional, List, Union
 from queries.pool import pool
 
 
@@ -21,6 +21,34 @@ class RestaurantListOut(BaseModel):
 
 
 class RestaurantListRepository:
+    def get_all(self) -> Union[Error, List[RestaurantListOut]]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor
+                with conn.cursor() as db:
+                    #Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT list_id, name, description, user_id
+                        FROM restaurant_list
+                        """
+                    )
+                    result = []
+                    for record in db:
+                        restaurant_list = RestaurantListOut(
+                                list_id=record[0],
+                                name=record[1],
+                                description=record[2],
+                                user_id=record[3]
+                        )
+                        result.append(restaurant_list)
+                    return result
+        except Exception as e:
+            print(e)
+            return {"message": "could not get all lists"}
+
+
     def create(self, restaurant_list: RestaurantListIn) -> RestaurantListOut:
         # try:
         # connect the database
