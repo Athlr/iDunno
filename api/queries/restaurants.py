@@ -47,6 +47,46 @@ class RestaurantRepository:
             print(e)
             return {"message": "Could not get that restaurant"}
 
+    def delete(self, restaurant_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM restaurant
+                        WHERE restaurant_id = %s
+                        """,
+                        [restaurant_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def update(self, restaurant_id: int, restaurant: RestaurantIn) -> Union[RestaurantOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE restaurant
+                        SET name = %s,
+                            price = %s,
+                            cuisine_id = %s
+                        WHERE restaurant_id = %s
+                        """,
+                        [
+                            restaurant.name,
+                            restaurant.price,
+                            restaurant.cuisine_id,
+                            restaurant_id,
+                        ]
+                    )
+                    return RestaurantOut(restaurant_id=restaurant_id, **restaurant.dict())
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update that restaurant"}
+
     def get_all(self) -> Union[Error, List[RestaurantOut]]:
         try:
             # connect the db
@@ -107,3 +147,7 @@ class RestaurantRepository:
             price=record[2],
             cuisine_id=record[3],
         )
+
+    def restaurant_in_to_out(self, restaurant_id: int, restaurant: RestaurantIn):
+        old_data = restaurant.dict()
+        return RestaurantOut(restaurant_id=restaurant_id, **old_data)
