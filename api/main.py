@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import accounts, friendships, friend_requests, restaurant_list, cuisine_list
+from routers import accounts, friendships, friend_requests, restaurant_list, restaurants, cuisine_list
 import os
 from authenticator import authenticator
 
@@ -10,6 +10,7 @@ app.include_router(accounts.router)
 app.include_router(friendships.router)
 app.include_router(friend_requests.router)
 app.include_router(restaurant_list.router)
+app.include_router(restaurants.router)
 app.include_router(cuisine_list.router)
 
 app.add_middleware(
