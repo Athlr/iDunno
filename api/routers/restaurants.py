@@ -20,3 +20,14 @@ def get_all(
     repo: RestaurantRepository = Depends(),
 ):
     return repo.get_all()
+
+@router.get("/restaurants/{restaurant_id}", response_model=Optional[RestaurantOut])
+def get_one_restaurant(
+    restaurant_id: int,
+    response: Response,
+    repo: RestaurantRepository = Depends(),
+) -> RestaurantOut:
+    restaurant = repo.get_one(restaurant_id)
+    if restaurant is None:
+        response.status_code = 404
+    return restaurant
