@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import Union, List
+from typing import Union, List, Optional
 
 
 class Error(BaseModel):
@@ -21,6 +21,32 @@ class RestaurantOut(BaseModel):
 
 
 class RestaurantRepository:
+    def get_one(self, restaurant_id: int) -> Optional[RestaurantOut]:
+        try:
+            # connect the database
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT restaurant_id, 
+                                name, 
+                                price, 
+                                cuisine_id
+                        FROM restaurant
+                        WHERE restaurant_id = %s
+                        """,
+                        [restaurant_id]
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_to_restaurant_out(record)
+        except Exception as e:
+            print(e)
+            return {"message": "Could not get that restaurant"}
+
     def get_all(self) -> Union[Error, List[RestaurantOut]]:
         try:
             # connect the db
@@ -74,3 +100,10 @@ class RestaurantRepository:
         except Exception:
             return {"message": "Create did not work"}
     
+    def record_to_restaurant_out(self, record):
+        return RestaurantOut(
+            restaurant_id=record[0],
+            name=record[1],
+            price=record[2],
+            cuisine_id=record[3],
+        )
