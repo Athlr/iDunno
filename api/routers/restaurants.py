@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Response
 from queries.restaurants import RestaurantIn, RestaurantRepository, RestaurantOut, Error
 from authenticator import authenticator
-from typing import Optional, Union
+from typing import Optional, Union, List
 
 router = APIRouter()
 
@@ -14,3 +14,9 @@ def create_restaurant(
     ):
     print(account_data)
     return repo.post(account_data["id"], restaurants)
+
+@router.get("/restaurants", response_model=Union[Error, List[RestaurantOut]])
+def get_all(
+    repo: RestaurantRepository = Depends(),
+):
+    return repo.get_all()

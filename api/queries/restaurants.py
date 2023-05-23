@@ -1,6 +1,6 @@
 from pydantic import BaseModel
 from queries.pool import pool
-from typing import Union
+from typing import Union, List
 
 
 class Error(BaseModel):
@@ -21,6 +21,34 @@ class RestaurantOut(BaseModel):
 
 
 class RestaurantRepository:
+    def get_all(self) -> Union[Error, List[RestaurantOut]]:
+        try:
+            # connect the db
+            with pool.connection() as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT restaurant_id, name, price, cuisine_id
+                        FROM restaurant
+                        ORDER BY name;
+                        """
+                    )
+                    result = []
+                    for record in db:
+                        restaurant = RestaurantOut(
+                            restaurant_id=record[0],
+                            name=record[1],
+                            price=record[2],
+                            cuisine_id=record[3],
+                        )
+                        result.append(restaurant)
+                    return result
+        except Exception as e :
+            print(e)
+            return {"message": "Could not get all vacations"}
+
     def post(self, user_id: int, restaurant: RestaurantIn) -> Union[RestaurantOut, Error]:
         try:
             with pool.connection() as conn: 
@@ -45,3 +73,4 @@ class RestaurantRepository:
                     return RestaurantOut(restaurant_id=restaurant_id, **old_data)
         except Exception:
             return {"message": "Create did not work"}
+    
