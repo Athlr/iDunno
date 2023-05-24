@@ -19,7 +19,7 @@ class ListConnectionOut(BaseModel):
 
 
 class ListConnectionRepository:
-    def create(self, list_connection: ListConnectionIn) -> ListConnectionOut:
+    def create(self, user_id: int, list_connection: ListConnectionIn) -> ListConnectionOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -42,7 +42,7 @@ class ListConnectionRepository:
             print(e)
             return {"message": "Could not create the list connection"}
 
-    def delete(self, connection_id: int) -> bool:
+    def delete(self, user_id: int, connection_id: int) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

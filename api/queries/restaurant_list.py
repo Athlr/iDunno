@@ -48,7 +48,7 @@ class RestaurantListRepository:
             return {"message": "Could not get that Restaurant list"}
 
 
-    def delete(self, list_id: int) -> bool:
+    def delete(self, user_id: int, list_id: int) -> bool:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -66,7 +66,7 @@ class RestaurantListRepository:
             print(e)
             return False
 
-    def update(self, list_id: int, restaurant_list: RestaurantListIn) -> Union[RestaurantListOut, Error]:
+    def update(self, user_id: int, list_id: int, restaurant_list: RestaurantListIn) -> Union[RestaurantListOut, Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -84,7 +84,7 @@ class RestaurantListRepository:
                         [
                             restaurant_list.name,
                             restaurant_list.description,
-                            restaurant_list.user_id,
+                            user_id,
                             list_id
                         ]
                     )
@@ -130,7 +130,7 @@ class RestaurantListRepository:
             return {"message": "could not get all lists"}
 
 
-    def create(self, restaurant_list: RestaurantListIn) -> RestaurantListOut:
+    def create(self, user_id: int, restaurant_list: RestaurantListIn) -> RestaurantListOut:
         # try:
         # connect the database
         with pool.connection() as conn:
@@ -149,7 +149,7 @@ class RestaurantListRepository:
                     [
                         restaurant_list.name,
                         restaurant_list.description,
-                        restaurant_list.user_id
+                        user_id
                     ]
                 )
                 list_id = result.fetchone()[0]

@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Depends, Response
 from typing import Union, List, Optional
+from authenticator import authenticator
 from queries.restaurant_list import (
     Error,
     RestaurantListIn,
@@ -14,14 +15,16 @@ router = APIRouter()
 def create_restaurant_list(
     restaurant_list: RestaurantListIn,
     response: Response,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends()
 ):
     # response.status_code = 400
-    return repo.create(restaurant_list)
+    return repo.create(account_data["id"], restaurant_list)
 
 
 @router.get("/restaurant-list", response_model=Union[List[RestaurantListOut], Error])
 def get_all_restaurant_lists(
+     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ):
     return repo.get_all()
@@ -30,23 +33,26 @@ def get_all_restaurant_lists(
 def update_restaurant_list(
     list_id: int,
     restaurant_list: RestaurantListIn,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ) -> Union[Error, RestaurantListOut]:
-    return repo.update(list_id, restaurant_list)
+    return repo.update(account_data["id"], list_id, restaurant_list)
 
 
 @router.delete("/restaurant-list/{list_id}", response_model=bool)
 def delete_restaurant_list(
     list_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ) -> bool:
-    return repo.delete(list_id)
+    return repo.delete(account_data["id"], list_id)
 
 
 @router.get("/restaurant-list/{list_id}", response_model=Optional[RestaurantListOut])
 def get_one_restaurant_list(
     list_id: int,
     response: Response,
+     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ) -> RestaurantListOut:
     restaurant_list = repo.get_one(list_id)
