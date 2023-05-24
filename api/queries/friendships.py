@@ -15,6 +15,7 @@ class FriendshipOut(BaseModel):
     email: str
     first_name: str
     last_name: str
+    profile_pic: str
 
 class FriendshipsRepo:
     def get_friends(self, user_id: int) -> Union[List[FriendshipOut], Error]:
@@ -23,7 +24,7 @@ class FriendshipsRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT f.friendship_id, u.user_id, u.username, u.email, u.first_name, u.last_name
+                        SELECT f.friendship_id, u.user_id, u.username, u.email, u.first_name, u.last_name, u.profile_picture_url
                         FROM user_table u
                         JOIN friendships f ON
                         (u.user_id = f.user1_id AND f.user2_id = %s)
@@ -43,6 +44,7 @@ class FriendshipsRepo:
                             email=record[3],
                             first_name=record[4],
                             last_name=record[5],
+                            profile_pic=record[6]
                         )
                         result.append(friendship)
                     return result

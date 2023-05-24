@@ -31,3 +31,18 @@ def get_one_restaurant(
     if restaurant is None:
         response.status_code = 404
     return restaurant
+
+@router.put("/restaurants/{restaurant_id}", response_model=Union[RestaurantOut, Error])
+def update_restaurant(
+    restaurant_id: int,
+    restaurant: RestaurantIn,
+    repo: RestaurantRepository = Depends(),
+) -> Union[Error, RestaurantOut]:
+    return repo.update(restaurant_id, restaurant)
+
+@router.delete("/restaurants/{restaurant_id}", response_model=bool)
+def delete_restaurant(
+    restaurant_id: int,
+    repo: RestaurantRepository = Depends(),
+) -> bool:
+    return repo.delete(restaurant_id)

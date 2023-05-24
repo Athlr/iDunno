@@ -1,37 +1,23 @@
 import { useEffect, useState } from "react";
-import Construct from "./Construct.js";
-import ErrorNotification from "./ErrorNotification";
-import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FriendsMain from "./Friends/FriendsMain";
+// import useToken from "@galvanize-inc/jwtdown-for-react";
+// import useUser from "./useUser";
+import Auth from "./Auth";
 
 function App() {
-  const [launchInfo, setLaunchInfo] = useState([]);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    async function getData() {
-      let url = `${process.env.REACT_APP_API_API_HOST}/api/launch-details`;
-      console.log("fastapi url: ", url);
-      let response = await fetch(url);
-      console.log("------- hello? -------");
-      let data = await response.json();
-
-      if (response.ok) {
-        console.log("got launch data!");
-        setLaunchInfo(data.launch_details);
-      } else {
-        console.log("drat! something happened");
-        setError(data.message);
-      }
-    }
-    getData();
-  }, []);
+  // const { token } = useToken();
+  // const { user } = useUser(token);
 
   return (
-    <div>
-      <ErrorNotification error={error} />
-      <Construct info={launchInfo} />
-      Yo
-    </div>
+    <Routes>
+      <Route path="/" element={<Auth />} />
+      <Route path="/signup" element={<Auth />} />
+      <Route path="/signin" element={<Auth />} />
+      <Route path="friends">
+        <Route path="" element={<FriendsMain />} />
+      </Route>
+    </Routes>
   );
 }
 
