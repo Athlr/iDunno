@@ -1,4 +1,4 @@
-
+import { useEffect, useState } from 'react';
 
 
 
@@ -25,4 +25,5 @@ const useUser = (token) => {
 
 };
 
-export default userUser;
+export default useUser;
+
