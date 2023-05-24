@@ -58,7 +58,7 @@ class AccountRepo:
                         """
                         INSERT INTO user_table (username, password, first_name, last_name, email)
                         VALUES (%s, %s, %s, %s, %s)
-                        RETURNING user_id, username, password, first_name, last_name, email;
+                        RETURNING user_id
                         """,
                         [
                             info.username,

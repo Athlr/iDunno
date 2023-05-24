@@ -22,11 +22,9 @@ def get_friend_requests(
 @router.post("/requests", response_model=Union[MakeFriendRequestOut, Error])
 def create_friend_request(
     friend_request: MakeFriendRequestIn,
-    response: Response,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: FriendRequestsRepo = Depends(),
 ):
-    response.status_code = 400
     return repo.create_friend_request(account_data["id"], friend_request)
 
 @router.put("/requests/{request_id}", response_model=Union[UpdateFriendRequest, Error])

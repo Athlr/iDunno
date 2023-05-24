@@ -15,7 +15,7 @@ services:
       NODE_ENV: development
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
-      # REACT_APP_API_API_HOST: ${REACT_APP_API_API_HOST}
+      REACT_APP_API_HOST: http://localhost:8000
   db:
     image: postgres:14.5-bullseye
     environment:
@@ -31,7 +31,7 @@ services:
       context: api
       dockerfile: Dockerfile.dev
     environment:
-      SIGNING_KEY: hahatestinglol
+      SIGNING_KEY: e13d1fa9a2bfb78189072e6dd0b8ef01b997ee1f844e3a85d4c11a012d34ca02
       DATABASE_URL: postgresql://admin:admin@db/idunno
       WAIT_HOSTS: db:5432
       PORT: 8000
