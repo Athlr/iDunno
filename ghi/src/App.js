@@ -14,6 +14,7 @@ function App() {
       <Route path="/" element={<Auth />} />
       <Route path="/signup" element={<Auth />} />
       <Route path="/signin" element={<Auth />} />
+      <Route path="/signout" element={<Auth />} />
       <Route path="friends">
         <Route path="" element={<FriendsMain />} />
       </Route>
