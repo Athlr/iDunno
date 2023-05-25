@@ -24,10 +24,18 @@ def create_restaurant_list(
 
 @router.get("/restaurant-list", response_model=Union[List[RestaurantListOut], Error])
 def get_all_restaurant_lists(
-     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ):
-    return repo.get_all()
+    return repo.get_all(account_data["id"])
+
+@router.get("/restaurant-list/user/{user_id}", response_model=Union[List[RestaurantListOut], Error])
+def get_all_restaurant_lists(
+    user_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    repo: RestaurantListRepository = Depends(),
+):
+    return repo.get_all_by_user(user_id)
 
 @router.put("/restaurant-list/{list_id}", response_model=Union[RestaurantListOut, Error])
 def update_restaurant_list(
@@ -52,7 +60,7 @@ def delete_restaurant_list(
 def get_one_restaurant_list(
     list_id: int,
     response: Response,
-     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ) -> RestaurantListOut:
     restaurant_list = repo.get_one(list_id)
