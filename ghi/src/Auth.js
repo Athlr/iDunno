@@ -22,6 +22,7 @@ function Auth() {
   };
 
   const isSignIn = location.pathname.includes("signin");
+  const isSignUp = location.pathname.includes("signup");
 
   const handleSubmit = () => {
     if (isSignIn) {
@@ -31,7 +32,7 @@ function Auth() {
     }
   };
 
-  const { username = "", password = "" } = formData;
+  const { username = "", password = "", email = "", first_name = "", last_name = "" } = formData;
   return token ? null : (
     <div className="row">
       <div className="offset-3 col-6" >
@@ -62,6 +63,50 @@ function Auth() {
                 className="form-control"
               />
               </div>
+                            {isSignUp && (
+                <div className="form-floating mb-3">
+                  <input 
+                  type="text"
+                  name="email"
+                  value={email}
+                  onChange={handleFormChange}
+                  required
+                  placeholder="Email"
+                  id="email"
+                  className="form-control"
+                  />
+                </div>
+              )}
+
+              {isSignUp && (
+                <div className="form-floating mb-3">
+                  <input 
+                  type="text"
+                  name="first_name"
+                  value={first_name}
+                  onChange={handleFormChange}
+                  required
+                  placeholder="First Name"
+                  id="first_name"
+                  className="form-control"
+                  />
+                </div>
+              )}
+
+              {isSignUp && (
+                <div className="form-floating mb-3">
+                  <input 
+                  type="text"
+                  name="last_name"
+                  value={last_name}
+                  onChange={handleFormChange}
+                  required
+                  placeholder="Last Name"
+                  id="last_name"
+                  className="form-control"
+                  />
+                </div>
+              )}
               <button onClick={handleSubmit} className="btn btn-primary">{isSignIn ? "Login": "Sign Up!"}</button>
             
           </div>
