@@ -4,6 +4,7 @@ import FriendsMain from "./Friends/FriendsMain";
 // import useToken from "@galvanize-inc/jwtdown-for-react";
 // import useUser from "./useUser";
 import Auth from "./Auth";
+import NewRestaurantForm from "./Restaurants/NewRestaurantForm";
 import Nav from "./Main/Nav";
 import ProfilePage from "./Profiles/ProfilePage";
 import FriendPage from "./Profiles/FriendsPage";
@@ -22,6 +23,10 @@ function App() {
         <Route path="/signout" element={<Auth />} />
         <Route path="friends">
           <Route path="" element={<FriendsMain />} />
+        </Route>
+        <Route path="/restaurants">
+          {/* <Route path="" element={<RestaurantList />} /> */}
+          <Route path="new" element={<NewRestaurantForm />} />
         </Route>
         <Route path="profile" element={<ProfilePage />} />
         <Route path="profile/:friend_id" element={<FriendPage />} />
