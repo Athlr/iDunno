@@ -9,25 +9,26 @@ router = APIRouter()
 @router.post("/restaurants", response_model=Union[RestaurantOut, Error])
 def create_restaurant(
     restaurants: RestaurantIn,
-    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RestaurantRepository = Depends()
     ):
-    print(account_data)
     return repo.post(account_data["id"], restaurants)
 
 @router.get("/restaurants", response_model=Union[Error, List[RestaurantOut]])
 def get_all(
     repo: RestaurantRepository = Depends(),
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
 ):
-    return repo.get_all()
+    return repo.get_all(account_data["id"])
 
 @router.get("/restaurants/{restaurant_id}", response_model=Optional[RestaurantOut])
 def get_one_restaurant(
     restaurant_id: int,
     response: Response,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantRepository = Depends(),
 ) -> RestaurantOut:
-    restaurant = repo.get_one(restaurant_id)
+    restaurant = repo.get_one(account_data["id"], restaurant_id)
     if restaurant is None:
         response.status_code = 404
     return restaurant
@@ -36,13 +37,15 @@ def get_one_restaurant(
 def update_restaurant(
     restaurant_id: int,
     restaurant: RestaurantIn,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantRepository = Depends(),
 ) -> Union[Error, RestaurantOut]:
-    return repo.update(restaurant_id, restaurant)
+    return repo.update(account_data["id"], restaurant_id, restaurant)
 
 @router.delete("/restaurants/{restaurant_id}", response_model=bool)
 def delete_restaurant(
     restaurant_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantRepository = Depends(),
 ) -> bool:
-    return repo.delete(restaurant_id)
+    return repo.delete(account_data["id"], restaurant_id)

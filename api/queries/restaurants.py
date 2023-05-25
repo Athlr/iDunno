@@ -87,7 +87,7 @@ class RestaurantRepository:
             print(e)
             return {"message": "Could not update that restaurant"}
 
-    def get_all(self) -> Union[Error, List[RestaurantOut]]:
+    def get_all(self, user_id: int) -> Union[Error, List[RestaurantOut]]:
         try:
             # connect the db
             with pool.connection() as conn:
@@ -98,8 +98,12 @@ class RestaurantRepository:
                         """
                         SELECT restaurant_id, name, price, cuisine_id
                         FROM restaurant
+                        WHERE user_id = %s
                         ORDER BY name;
-                        """
+                        """,
+                        [
+                            user_id
+                        ]
                     )
                     result = []
                     for record in db:
