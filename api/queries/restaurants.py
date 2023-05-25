@@ -30,9 +30,9 @@ class RestaurantRepository:
                     # Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT restaurant_id, 
-                                name, 
-                                price, 
+                        SELECT restaurant_id,
+                                name,
+                                price,
                                 cuisine_id
                         FROM restaurant
                         WHERE restaurant_id = %s
@@ -121,11 +121,11 @@ class RestaurantRepository:
 
     def post(self, user_id: int, restaurant: RestaurantIn) -> Union[RestaurantOut, Error]:
         try:
-            with pool.connection() as conn: 
+            with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        INSERT INTO restaurant 
+                        INSERT INTO restaurant
                             (name, price, cuisine_id, user_id)
                         VALUES
                             (%s, %s, %s, %s)
@@ -140,6 +140,8 @@ class RestaurantRepository:
                     )
                     restaurant_id = result.fetchone()[0]
                     old_data = restaurant.dict()
+                    print(old_data)
+                    print(restaurant_id)
                     return RestaurantOut(restaurant_id=restaurant_id, **old_data)
         except Exception:
             return {"message": "Create did not work"}
