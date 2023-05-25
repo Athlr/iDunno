@@ -47,6 +47,7 @@ export default function FriendsMain() {
           return (
             <FriendsCard
               key={friend.friend_id}
+              friend_id={friend.friend_id}
               username={friend.username}
               first_name={friend.first_name}
               last_name={friend.last_name}

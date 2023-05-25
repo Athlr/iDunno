@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function FriendsCard({
+  friend_id,
   username,
   first_name,
   last_name,
@@ -67,13 +69,15 @@ export default function FriendsCard({
             )}
           </button> */}
         </div>
-        <div className="photo-wrapper p-2">
-          <img
-            className="w-32 h-32 rounded-full mx-auto"
-            src={profile_pic}
-            alt="John Doe"
-          />
-        </div>
+        <Link to={`/profile/${friend_id}`}>
+          <div className="photo-wrapper p-2">
+            <img
+              className="w-32 h-32 rounded-full mx-auto"
+              src={profile_pic}
+              alt="John Doe"
+            />
+          </div>
+        </Link>
         <div className="p-2">
           <h3 className="text-center text-xl text-gray-900 font-medium leading-8">
             {first_name} {last_name}
