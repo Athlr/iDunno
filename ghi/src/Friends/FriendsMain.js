@@ -46,6 +46,49 @@ export default function FriendsMain() {
     }
   };
 
+  const acceptFriendRequest = async (request_id) => {
+    const url = `${process.env.REACT_APP_API_HOST}/requests/${request_id}`;
+
+    const data = {
+      status: "accepted",
+    };
+
+    const response = await fetch(url, {
+      credentials: "include",
+      method: "put",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      fetchFriendRequests();
+      fetchFriendsData();
+    }
+  };
+
+  const rejectFriendRequest = async (request_id) => {
+    const url = `${process.env.REACT_APP_API_HOST}/requests/${request_id}`;
+
+    const data = {
+      status: "rejected",
+    };
+
+    const response = await fetch(url, {
+      credentials: "include",
+      method: "put",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (response.ok) {
+      fetchFriendRequests();
+    }
+  };
+
   useEffect(() => {
     fetchFriendsData();
   }, []);
@@ -108,7 +151,12 @@ export default function FriendsMain() {
                             @{request.username}
                           </div>
                           <div>
-                            <button className="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded">
+                            <button
+                              onClick={() =>
+                                acceptFriendRequest(request.request_id)
+                              }
+                              className="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
@@ -122,7 +170,12 @@ export default function FriendsMain() {
                                 />
                               </svg>
                             </button>
-                            <button className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded">
+                            <button
+                              onClick={() =>
+                                rejectFriendRequest(request.request_id)
+                              }
+                              className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 20 20"
