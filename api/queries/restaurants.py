@@ -18,7 +18,6 @@ class RestaurantOut(BaseModel):
     name: str
     price: str
     cuisine_id: int
-    suggested: bool
 
 
 class RestaurantRepository:
@@ -97,7 +96,7 @@ class RestaurantRepository:
                     # run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT restaurant_id, name, price, cuisine_id, suggested
+                        SELECT restaurant_id, name, price, cuisine_id
                         FROM restaurant
                         WHERE user_id = %s
                         ORDER BY name;
@@ -113,7 +112,6 @@ class RestaurantRepository:
                             name=record[1],
                             price=record[2],
                             cuisine_id=record[3],
-                            suggested=record[4]
                         )
                         result.append(restaurant)
                     return result
