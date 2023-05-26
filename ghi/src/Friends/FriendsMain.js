@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import FriendsCard from "./FriendsCard";
-// import useToken from "@galvanize-inc/jwtdown-for-react";
 
 export default function FriendsMain() {
   const [friendsList, setFriendsList] = useState([]);
@@ -52,6 +51,7 @@ export default function FriendsMain() {
               first_name={friend.first_name}
               last_name={friend.last_name}
               profile_pic={friend.profile_pic}
+              fetchFriendsData={() => fetchFriendsData()}
             />
           );
         })}
