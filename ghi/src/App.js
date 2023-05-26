@@ -5,9 +5,10 @@ import FriendsMain from "./Friends/FriendsMain";
 // import useUser from "./useUser";
 import Auth from "./Auth";
 import NewRestaurantForm from "./Restaurants/NewRestaurantForm";
-import Nav from "./Main/Nav";
+import Nav from "./Main/Nav"
 import ProfilePage from "./Profiles/ProfilePage";
 import FriendPage from "./Profiles/FriendsPage";
+import Home from "./Main/Home";
 
 function App() {
   // const { token } = useToken();
@@ -15,9 +16,10 @@ function App() {
 
   return (
     <div>
-      {/* <Nav /> */}
+      <Nav />
       <Routes>
         <Route path="/" element={<Auth />} />
+        <Route path="/home" element= {<Home />} />
         <Route path="/signup" element={<Auth />} />
         <Route path="/signin" element={<Auth />} />
         <Route path="/signout" element={<Auth />} />
