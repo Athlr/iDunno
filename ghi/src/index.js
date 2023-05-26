@@ -4,6 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "@galvanize-inc/jwtdown-for-react";
 import "./index.css";
 import App from "./App";
+import Nav from "./Main/Nav";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
