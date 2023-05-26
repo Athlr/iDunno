@@ -120,6 +120,17 @@ class FriendshipsRepo:
                             'friend_id': friend_id
                         }
                     )
+                    db.execute(
+                        """
+                        DELETE FROM friend_request
+                        WHERE (sender_id = %(user_id)s AND receiver_id = %(friend_id)s)
+                        OR (sender_id = %(friend_id)s AND receiver_id = %(user_id)s);
+                        """,
+                         {
+                            'user_id': user_id,
+                            'friend_id': friend_id
+                        }
+                    )
                     return True
         except Exception as e:
             print(e)
