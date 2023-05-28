@@ -8,6 +8,7 @@ export default function FriendsMain() {
   const [isRequestOpen, setIsRequestOpen] = useState(false);
   const [addUsername, setAddUsername] = useState("");
   const [message, setMessage] = useState("");
+  const [search, setSearch] = useState("");
 
   const openRequest = () => {
     setIsRequestOpen(true);
@@ -288,10 +289,9 @@ export default function FriendsMain() {
             <div>
               <input
                 type="text"
-                id="simple-search"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search"
-                required
+                placeholder="Search..."
+                onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <button
@@ -304,19 +304,27 @@ export default function FriendsMain() {
         </div>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-20 gap-y-5 mx-auto mt-8 w-4/5">
-        {friendsList.map((friend) => {
-          return (
-            <FriendsCard
-              key={friend.friend_id}
-              friend_id={friend.friend_id}
-              username={friend.username}
-              first_name={friend.first_name}
-              last_name={friend.last_name}
-              profile_pic={friend.profile_pic}
-              fetchFriendsData={() => fetchFriendsData()}
-            />
-          );
-        })}
+        {friendsList
+          .filter((friend) => {
+            const full_name = `${friend.first_name} ${friend.last_name}`;
+            return (
+              friend.username.toLowerCase().includes(search.toLowerCase()) ||
+              full_name.toLowerCase().includes(search.toLowerCase())
+            );
+          })
+          .map((friend) => {
+            return (
+              <FriendsCard
+                key={friend.friend_id}
+                friend_id={friend.friend_id}
+                username={friend.username}
+                first_name={friend.first_name}
+                last_name={friend.last_name}
+                profile_pic={friend.profile_pic}
+                fetchFriendsData={() => fetchFriendsData()}
+              />
+            );
+          })}
       </div>
     </>
   );
