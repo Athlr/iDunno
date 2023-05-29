@@ -10,6 +10,7 @@ export default function NewRestaurantForm() {
   const [cuisineId, setCuisineId] = useState("");
   const navigate = useNavigate();
   const { token } = useToken();
+  console.log("Token after useToken:", token);
   const { user } = useUser(token);
 
   const handleName = async (event) => {
@@ -29,6 +30,7 @@ export default function NewRestaurantForm() {
 
   const handleSubmit = async (event) => {
     if (token) {
+      console.log("Token:", token);
       const data = {
         name: name,
         price: price,
@@ -57,6 +59,10 @@ export default function NewRestaurantForm() {
       }
     }
   };
+
+  if (!token) {
+    navigate("/signin");
+  }
 
   useEffect(() => {
     const fetchCuisines = async () => {
@@ -125,7 +131,6 @@ export default function NewRestaurantForm() {
                             key={cuisine.cuisine_id}
                             value={cuisine.cuisine_id}
                           >
-                            {console.log(cuisine)}
                             {cuisine.name}
                           </option>
                         );
