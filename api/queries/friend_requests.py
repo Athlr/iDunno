@@ -80,8 +80,7 @@ class FriendRequestsRepo(BaseModel):
                         """
                         SELECT COUNT(*)
                         FROM friend_request
-                        WHERE sender_id = %(user_id)s AND receiver_id = %(receiver_id)s
-                        OR sender_id = %(receiver_id)s AND receiver_id = %(user_id)s;
+                        WHERE sender_id = %(user_id)s AND receiver_id = %(receiver_id)s;
                         """,
                         {
                             "user_id": user_id,
@@ -111,9 +110,8 @@ class FriendRequestsRepo(BaseModel):
                             sender_id=user_id,
                             receiver_id=receiver_id
                         )
-        except Exception as e:
-            print(e)
-            return {"message": "Could not create friend request: User does not exist"}
+        except Exception:
+            return {"message": "Could not create friend request"}
 
     def update_friend_request(self, receiver_id: int, request_id: int, friend_request: UpdateFriendRequest) -> Union[UpdateFriendRequest, Error]:
         try:
