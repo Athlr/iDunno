@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
 import ProfileList from "./ProfileList";
-
 export default function ProfilePage() {
   const { token } = useToken();
   const { user } = useUser(token);

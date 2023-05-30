@@ -3,7 +3,6 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
 import ProfileList from "./ProfileList";
 import { useParams } from "react-router-dom";
-
 export default function FriendPage() {
   const [friendInfo, setFriendInfo] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
@@ -52,7 +51,6 @@ export default function FriendPage() {
     fetchRestaurantListData();
     fetchUserData();
   }, []);
-
   return (
     <div className="h-screen">
       <div className="container mx-auto mt-8 w-4/5 bg-zinc-100 h-auto">
