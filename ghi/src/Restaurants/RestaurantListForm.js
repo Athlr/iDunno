@@ -63,7 +63,7 @@ function RestaurantListForm() {
                   id="name"
                   className="form-control"
                 />
-                <label htmlFor="name">Restaurant Name</label>
+                <label htmlFor="name">List Name</label>
               </div>
               <div className="form-floating mb-3">
                 <input

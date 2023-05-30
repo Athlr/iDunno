@@ -17,6 +17,7 @@ class AccountOut(BaseModel):
     username: str
     first_name: str
     last_name: str
+    profile_picture_url: str
 
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
@@ -28,7 +29,7 @@ class AccountRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT user_id, username, password, first_name, last_name, email
+                        SELECT user_id, username, password, first_name, last_name, email, profile_picture_url
                         FROM user_table
                         WHERE username = %s;
                         """,
@@ -45,6 +46,7 @@ class AccountRepo:
                         username=record[1],
                         first_name=record[3],
                         last_name=record[4],
+                        profile_picture_url=record[6],
                         hashed_password=record[2],
                     )
         except Exception:
@@ -58,7 +60,7 @@ class AccountRepo:
                         """
                         INSERT INTO user_table (username, password, first_name, last_name, email)
                         VALUES (%s, %s, %s, %s, %s)
-                        RETURNING user_id
+                        RETURNING user_id, profile_picture_url
                         """,
                         [
                             info.username,
@@ -68,13 +70,16 @@ class AccountRepo:
                             info.email
                         ],
                     )
-                    id = result.fetchone()[0]
+                    object = result.fetchone()
+                    id = object[0]
+                    profile_picture_url = object[1]
                     return AccountOutWithPassword(
                         id=id,
                         email=info.email,
                         username=info.username,
                         first_name=info.first_name,
                         last_name=info.last_name,
+                        profile_picture_url=profile_picture_url,
                         hashed_password=hashed_password,
                     )
         except Exception:

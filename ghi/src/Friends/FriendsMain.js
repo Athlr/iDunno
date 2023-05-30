@@ -1,6 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import FriendsCard from "./FriendsCard";
 import { Dialog, Transition } from "@headlessui/react";
+import blobBackground from "../Media/blob-background.svg";
 
 export default function FriendsMain() {
   const [friendsList, setFriendsList] = useState([]);
@@ -9,6 +10,12 @@ export default function FriendsMain() {
   const [addUsername, setAddUsername] = useState("");
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
+
+  const mainBackground = {
+    backgroundImage: `url(${blobBackground})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+  };
 
   const openRequest = () => {
     setIsRequestOpen(true);
@@ -282,49 +289,51 @@ export default function FriendsMain() {
           </div>
         </Dialog>
       </Transition>
-      <div className="container mx-auto mt-8 w-4/5">
-        <div className="flex items-center justify-between">
-          <h1 className="text-4xl font-bold">Friends</h1>
-          <div className="flex space-x-2">
-            <div>
-              <input
-                type="text"
-                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="Search..."
-                onChange={(e) => setSearch(e.target.value)}
-              />
+      <div className="min-h-screen h-fit" style={mainBackground}>
+        <div className="container mx-auto pt-8 w-4/5">
+          <div className="flex items-center justify-between">
+            <h1 className="text-4xl font-bold">Friends</h1>
+            <div className="flex space-x-2">
+              <div>
+                <input
+                  type="text"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="Search..."
+                  onChange={(e) => setSearch(e.target.value)}
+                />
+              </div>
+              <button
+                onClick={() => openRequest()}
+                className="bg-zinc-100 hover:bg-black hover:text-white text-stone-950 font-bold py-2 px-4 rounded-full"
+              >
+                Friend Request
+              </button>
             </div>
-            <button
-              onClick={() => openRequest()}
-              className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
-            >
-              Friend Request
-            </button>
           </div>
         </div>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-20 gap-y-5 mx-auto mt-8 w-4/5">
-        {friendsList
-          .filter((friend) => {
-            const full_name = `${friend.first_name} ${friend.last_name}`;
-            return (
-              friend.username.toLowerCase().includes(search.toLowerCase()) ||
-              full_name.toLowerCase().includes(search.toLowerCase())
-            );
-          })
-          .map((friend) => {
-            return (
-              <FriendsCard
-                key={friend.friend_id}
-                friend_id={friend.friend_id}
-                username={friend.username}
-                first_name={friend.first_name}
-                last_name={friend.last_name}
-                profile_pic={friend.profile_pic}
-                fetchFriendsData={() => fetchFriendsData()}
-              />
-            );
-          })}
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-x-20 gap-y-5 mx-auto mt-8 w-4/5">
+          {friendsList
+            .filter((friend) => {
+              const full_name = `${friend.first_name} ${friend.last_name}`;
+              return (
+                friend.username.toLowerCase().includes(search.toLowerCase()) ||
+                full_name.toLowerCase().includes(search.toLowerCase())
+              );
+            })
+            .map((friend) => {
+              return (
+                <FriendsCard
+                  key={friend.friend_id}
+                  friend_id={friend.friend_id}
+                  username={friend.username}
+                  first_name={friend.first_name}
+                  last_name={friend.last_name}
+                  profile_pic={friend.profile_pic}
+                  fetchFriendsData={() => fetchFriendsData()}
+                />
+              );
+            })}
+        </div>
       </div>
     </>
   );

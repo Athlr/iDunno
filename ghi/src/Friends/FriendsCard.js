@@ -130,7 +130,7 @@ export default function FriendsCard({
         </Dialog>
       </Transition>
       <div className="max-w-xs w-52 mx-3 my-3 justify-self-center">
-        <div className="bg-white shadow-xl rounded-lg py-3 bg-zinc-100">
+        <div className="ashadow-xl rounded-lg py-3 bg-zinc-100">
           <div className="flex justify-end mr-3">
             <button>
               <svg

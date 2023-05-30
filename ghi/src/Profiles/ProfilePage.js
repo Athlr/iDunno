@@ -34,7 +34,7 @@ export default function ProfilePage() {
         <div className="photo-wrapper p-2 flex">
           <img
             className="w-32 h-32 rounded-full"
-            src="https://cdn.discordapp.com/attachments/1105246169736675350/1110310871764312074/social-media-chatting-online-blank-profile-picture-head-and-body-icon-people-standing-icon-grey-background-free-vector.png"
+            src={user ? user.profile_picture_url : ""}
             alt="John Doe"
           />
           <div className="p-2">
