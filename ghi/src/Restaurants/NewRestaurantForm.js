@@ -39,7 +39,6 @@ export default function NewRestaurantForm() {
       console.log(data);
       const restaurant_url = `${process.env.REACT_APP_API_HOST}/restaurants`;
       const config = {
-        credentials: "include",
         method: "post",
         body: JSON.stringify(data),
         headers: {
