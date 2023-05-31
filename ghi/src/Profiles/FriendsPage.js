@@ -3,6 +3,8 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
 import ProfileList from "./ProfileList";
 import { useParams } from "react-router-dom";
+import blobBackground from "../Media/blob-background.svg";
+
 export default function FriendPage() {
   const [friendInfo, setFriendInfo] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
@@ -12,6 +14,13 @@ export default function FriendPage() {
   const { user } = useUser(token);
 
   const { friend_id } = useParams();
+
+  const mainBackground = {
+    backgroundImage: `url(${blobBackground})`,
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    height: `calc(100vh - 64px)`,
+  };
 
   const fetchUserData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/friends/${friend_id}`;
@@ -52,9 +61,9 @@ export default function FriendPage() {
     fetchUserData();
   }, []);
   return (
-    <div className="h-screen">
-      <div className="container mx-auto mt-8 w-4/5 bg-zinc-100 h-auto">
-        <div className="photo-wrapper p-2 flex">
+    <div style={mainBackground}>
+      <div className="container mx-auto pt-8 w-4/5 h-auto">
+        <div className="photo-wrapper p-4 pt-8 flex bg-[#faf0e6] rounded-md">
           <img
             className="w-32 h-32 rounded-full"
             src={friendInfo.profile_pic}
@@ -78,7 +87,7 @@ export default function FriendPage() {
           </div>
         </div>
       </div>
-      <div className="container mx-auto mt-5 w-4/5 bg-zinc-100 h-3/4 overflow-y-scroll">
+      <div className="container mx-auto mt-5 w-4/5 bg-[#faf0e6] h-4/6 overflow-y-scroll rounded-md">
         <div>
           <h3 className="text-center text-xl text-gray-900 font-medium leading-8">
             Restaurant Lists

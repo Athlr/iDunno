@@ -14,7 +14,7 @@ router = APIRouter()
 
 @router.get("/requests", response_model=Union[List[FriendRequestOut], Error])
 def get_friend_requests(
-    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: FriendRequestsRepo = Depends(),
 ):
     return repo.get_friend_requests(account_data["id"])
@@ -22,7 +22,7 @@ def get_friend_requests(
 @router.post("/requests", response_model=Union[MakeFriendRequestOut, Error])
 def create_friend_request(
     friend_request: MakeFriendRequestIn,
-    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: FriendRequestsRepo = Depends(),
 ):
     return repo.create_friend_request(account_data["id"], friend_request)
@@ -31,7 +31,7 @@ def create_friend_request(
 def update_friend_request(
     request_id: int,
     friend_request: UpdateFriendRequest,
-    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    account_data: dict = Depends(authenticator.get_current_account_data),
     repo: FriendRequestsRepo = Depends(),
 ) -> Union[UpdateFriendRequest, Error]:
     return repo.update_friend_request(account_data["id"], request_id, friend_request)

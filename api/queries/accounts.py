@@ -1,8 +1,12 @@
 from pydantic import BaseModel
+from typing import Optional, Union
 from queries.pool import pool
 
 class DuplicateAccountError(ValueError):
     pass
+
+class Error(BaseModel):
+    message: str
 
 class AccountIn(BaseModel):
     email: str
@@ -21,6 +25,12 @@ class AccountOut(BaseModel):
 
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
+
+class ProfileUpdate(BaseModel):
+    first_name: str = None
+    last_name: str = None
+    password: str = None
+    profile_picture: str = None
 
 class AccountRepo:
     def get(self, username: str) -> AccountOutWithPassword:
@@ -84,3 +94,107 @@ class AccountRepo:
                     )
         except Exception:
             return {"message": "Could not create account"}
+
+    def getAccount(self, user_id: int) -> Union[AccountOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    user_data = db.execute(
+                        """
+                        SELECT user_id, email, username, first_name, last_name, profile_picture_url
+                        FROM user_table
+                        WHERE user_id = %(user_id)s;
+                        """,
+                        {
+                            "user_id": user_id
+                        }
+                    )
+                    record = user_data.fetchone()
+                    if record is None:
+                        return None
+                    return AccountOut(
+                        id=record[0],
+                        email=record[1],
+                        username=record[2],
+                        first_name=record[3],
+                        last_name=record[4],
+                        profile_picture_url=record[5]
+                    )
+        except Exception as e:
+            print(e)
+            return {"message": "Could not grab account"}
+
+
+
+    def updateAccount(self, user_id: int, profile_update: ProfileUpdate, hashed_password: str | None = None) -> Optional[Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    user_data = db.execute(
+                        """
+                        SELECT *
+                        FROM user_table
+                        WHERE user_id = %(user_id)s
+                        """,
+                        {
+                            "user_id": user_id
+                        }
+                    )
+                    user = user_data.fetchone()
+                    if not user:
+                        return {"message": "User not found"}
+
+                    if profile_update.first_name:
+                        db.execute(
+                            """
+                            UPDATE user_table
+                            SET first_name = %(first_name)s
+                            WHERE user_id = %(user_id)s
+                            """,
+                            {
+                                "first_name": profile_update.first_name,
+                                "user_id": user_id
+                            }
+                        )
+
+                    if profile_update.last_name:
+                        db.execute(
+                            """
+                            UPDATE user_table
+                            SET last_name = %(last_name)s
+                            WHERE user_id = %(user_id)s
+                            """,
+                            {
+                                "last_name": profile_update.last_name,
+                                "user_id": user_id
+                            }
+                        )
+
+                    if profile_update.password:
+                        db.execute(
+                            """
+                            UPDATE user_table
+                            SET password = %(password)s
+                            WHERE user_id = %(user_id)s
+                            """,
+                            {
+                                "password": hashed_password,
+                                "user_id": user_id
+                            }
+                        )
+
+                    if profile_update.profile_picture:
+                        db.execute(
+                            """
+                            UPDATE user_table
+                            SET profile_picture_url = %(profile_picture)s
+                            WHERE user_id = %(user_id)s
+                            """,
+                            {
+                                "profile_picture": profile_update.profile_picture,
+                                "user_id": user_id
+                            }
+                        )
+        except Exception as e:
+            print(e)
+            return {"message": "Could not update account information"}

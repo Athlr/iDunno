@@ -8,6 +8,7 @@ from fastapi import (
 )
 from jwtdown_fastapi.authentication import Token
 from authenticator import authenticator
+from typing import Optional, Union
 
 from pydantic import BaseModel
 
@@ -16,6 +17,8 @@ from queries.accounts import (
     AccountOut,
     AccountRepo,
     DuplicateAccountError,
+    Error,
+    ProfileUpdate,
 )
 
 class AccountForm(BaseModel):
@@ -63,3 +66,22 @@ async def create_account(
     form = AccountForm(username=info.username, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
+
+@router.get("/api/accounts", response_model=Union[AccountOut, Error])
+def get_account(
+    account_data: dict = Depends(authenticator.try_get_current_account_data),
+    repo: AccountRepo = Depends()
+):
+    return repo.getAccount(account_data["id"])
+
+@router.put("/api/accounts/{user_id}", response_model=Optional[Error])
+def update_account(
+    profile_update: ProfileUpdate,
+    account_data: dict = Depends(authenticator.try_get_current_account_data),
+    repo: AccountRepo = Depends()
+) -> Optional[Error]:
+    try:
+        hashed_password = authenticator.hash_password(profile_update.password)
+        return repo.updateAccount(account_data["id"], profile_update, hashed_password)
+    except:
+        return repo.updateAccount(account_data["id"], profile_update)

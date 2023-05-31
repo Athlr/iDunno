@@ -2,6 +2,9 @@ import React, { useEffect, useState, Fragment } from "react";
 import FriendsCard from "./FriendsCard";
 import { Dialog, Transition } from "@headlessui/react";
 import blobBackground from "../Media/blob-background.svg";
+import { Navigate } from "react-router-dom";
+import useToken from "@galvanize-inc/jwtdown-for-react";
+import useUser from "../useUser";
 
 export default function FriendsMain() {
   const [friendsList, setFriendsList] = useState([]);
@@ -10,6 +13,7 @@ export default function FriendsMain() {
   const [addUsername, setAddUsername] = useState("");
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
+  const { token } = useToken();
 
   const mainBackground = {
     backgroundImage: `url(${blobBackground})`,
@@ -129,7 +133,7 @@ export default function FriendsMain() {
     fetchFriendsData();
   }, []);
 
-  return (
+  return token ? (
     <>
       <Transition appear show={isRequestOpen} as={Fragment}>
         <Dialog as="div" className="relative z-10" onClose={closeRequest}>
@@ -146,7 +150,7 @@ export default function FriendsMain() {
           </Transition.Child>
 
           <div className="fixed inset-0 overflow-y-auto">
-            <div className="flex min-h-full items-center justify-center p-4 text-center">
+            <div className="flex min-h-full items-center justify-center p-4 text-center ">
               <Transition.Child
                 as={Fragment}
                 enter="ease-out duration-300"
@@ -156,7 +160,7 @@ export default function FriendsMain() {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="w-full max-w-7xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                <Dialog.Panel className="w-full max-w-7xl transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all ">
                   <div className="flex justify-end">
                     <button
                       type="button"
@@ -304,7 +308,7 @@ export default function FriendsMain() {
               </div>
               <button
                 onClick={() => openRequest()}
-                className="bg-zinc-100 hover:bg-black hover:text-white text-stone-950 font-bold py-2 px-4 rounded-full"
+                className="bg-[#faf0e6] hover:bg-black text-black hover:text-white font-bold py-2 px-4 rounded-full"
               >
                 Friend Request
               </button>
@@ -336,5 +340,5 @@ export default function FriendsMain() {
         </div>
       </div>
     </>
-  );
+  ) : null;
 }

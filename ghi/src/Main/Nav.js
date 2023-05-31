@@ -27,6 +27,12 @@ export default function Nav() {
                   Friends
                 </a>
                 <a
+                  href="http://localhost:3000/profile"
+                  className="text-white hover:text-slate-300 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  Profile
+                </a>
+                <a
                   href="http://localhost:3000/signup"
                   className="text-white hover:text-slate-300 px-3 py-2 rounded-md text-sm font-medium"
                 >
@@ -58,9 +64,6 @@ export default function Nav() {
                 </a>
               </div>
             </div>
-          </div>
-          <div className="hidden md:block">
-            <div className="ml-4 flex items-center md:ml-6"></div>
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6"></div>

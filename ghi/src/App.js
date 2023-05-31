@@ -11,9 +11,6 @@ import FriendPage from "./Profiles/FriendsPage";
 import RestaurantListForm from "./Restaurants/RestaurantListForm";
 
 function App() {
-  // const { token } = useToken();
-  // const { user } = useUser(token);
-
   return (
     <div>
       <Nav />
@@ -27,11 +24,13 @@ function App() {
         </Route>
         <Route path="/restaurants">
           {/* <Route path="" element={<RestaurantList />} /> */}
-          <Route path="CreateList" element={<RestaurantListForm/>} />
+          <Route path="CreateList" element={<RestaurantListForm />} />
           <Route path="new" element={<NewRestaurantForm />} />
         </Route>
-        <Route path="profile" element={<ProfilePage />} />
-        <Route path="profile/:friend_id" element={<FriendPage />} />
+        <Route path="/profile">
+          <Route path="" element={<ProfilePage />} />
+          <Route path=":friend_id" element={<FriendPage />} />
+        </Route>
       </Routes>
     </div>
   );
