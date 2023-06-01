@@ -16,18 +16,22 @@ steps = [
     ],
 
 
+
     [
         # "Up" SQL statement
         """
-        CREATE TABLE list_connection (
-            connection_id SERIAL PRIMARY KEY NOT NULL,
-            list_id INTEGER REFERENCES restaurant_list(list_id) NOT NULL,
-            restaurant_id INTEGER REFERENCES restaurant(restaurant_id) NOT NULL
+        CREATE TABLE restaurant_list_restaurant (
+            id SERIAL PRIMARY KEY,
+            list_id INT,
+            restaurant_id INT,
+            FOREIGN KEY (list_id) REFERENCES restaurant_list (list_id),
+            FOREIGN KEY (restaurant_id) REFERENCES restaurant (restaurant_id)
         );
         """,
         # "Down" SQL statement
         """
-        DROP TABLE list_connection;
+        DROP TABLE restaurant_list_restaurant;
         """
-    ],
+    ]
+
 ]

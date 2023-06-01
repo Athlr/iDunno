@@ -1,13 +1,12 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from routers import (
-    accounts, 
-    friendships, 
-    friend_requests, 
-    restaurant_list, 
-    restaurants, 
-    cuisine_list, 
-    list_connection,
+    accounts,
+    friendships,
+    friend_requests,
+    restaurant_list,
+    restaurants,
+    cuisine_list,
     sponsored,
     )
 import os
@@ -21,7 +20,6 @@ app.include_router(friend_requests.router)
 app.include_router(restaurant_list.router)
 app.include_router(restaurants.router)
 app.include_router(cuisine_list.router)
-app.include_router(list_connection.router)
 app.include_router(sponsored.router)
 
 

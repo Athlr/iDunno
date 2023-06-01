@@ -20,6 +20,13 @@ class RestaurantOut(BaseModel):
     cuisine_id: int
 
 
+class RestaurantInWithListID(BaseModel):
+    name: str
+    price: str
+    cuisine_id: int
+    list_id: int
+
+
 class RestaurantRepository:
     def get_one(self, restaurant_id: int) -> Optional[RestaurantOut]:
         try:
@@ -119,7 +126,7 @@ class RestaurantRepository:
             print(e)
             return {"message": "Could not get all vacations"}
 
-    def post(self, user_id: int, restaurant: RestaurantIn) -> Union[RestaurantOut, Error]:
+    def post(self, user_id: int, restaurant: RestaurantInWithListID) -> Union[RestaurantOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -139,13 +146,25 @@ class RestaurantRepository:
                         ]
                     )
                     restaurant_id = result.fetchone()[0]
+                    db.execute(
+                        """
+                        INSERT INTO restaurant_list_restaurant
+                            (list_id, restaurant_id)
+                        VALUES
+                            (%s, %s)
+                        """,
+                        [
+                            restaurant.list_id,
+                            restaurant_id
+                        ]
+                    )
                     old_data = restaurant.dict()
                     print(old_data)
                     print(restaurant_id)
                     return RestaurantOut(restaurant_id=restaurant_id, **old_data)
         except Exception:
             return {"message": "Create did not work"}
-    
+
     def record_to_restaurant_out(self, record):
         return RestaurantOut(
             restaurant_id=record[0],

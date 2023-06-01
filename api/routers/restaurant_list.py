@@ -6,9 +6,63 @@ from queries.restaurant_list import (
     RestaurantListIn,
     RestaurantListRepository,
     RestaurantListOut,
+    RestaurantOutWithCuisine
 )
 
+from queries.restaurants import RestaurantIn, RestaurantOut
+
 router = APIRouter()
+
+@router.post("/restaurant_list/{list_id}/add-restaurant/{restaurant_id}", response_model=bool)
+def add_restaurant_to_list(
+    list_id: int,
+    restaurant_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    repo: RestaurantListRepository = Depends(),
+) -> bool:
+    return repo.add_restaurant_to_list(list_id, restaurant_id)
+
+
+@router.get("/restaurant_list/{list_id}/restaurants", response_model=List[RestaurantOutWithCuisine])
+def get_restaurants_in_list(
+    list_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    repo: RestaurantListRepository = Depends(),
+) -> List[RestaurantOutWithCuisine]:
+    print(f"Received request for list_id: {list_id}")
+    return repo.get_restaurants_in_list(list_id)
+
+
+@router.put("/restaurant_list/{list_id}/update-restaurant/{old_restaurant_id}/{new_restaurant_id}", response_model=bool)
+def update_restaurant_in_list(
+    list_id: int,
+    old_restaurant_id: int,
+    new_restaurant_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    repo: RestaurantListRepository = Depends(),
+) -> bool:
+    return repo.update_restaurant_in_list(list_id, old_restaurant_id, new_restaurant_id)
+
+
+@router.delete("/restaurant_list/{list_id}/remove-restaurant/{restaurant_id}", response_model=bool)
+def remove_restaurant_from_list(
+    list_id: int,
+    restaurant_id: int,
+    account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
+    repo: RestaurantListRepository = Depends(),
+) -> bool:
+    return repo.remove_restaurant_from_list(list_id, restaurant_id)
+
+
+
+
+
+
+
+
+
+
+
 
 
 @router.post("/restaurant-list", response_model=Union[RestaurantListOut, Error])

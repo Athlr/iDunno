@@ -28,11 +28,11 @@ function RestaurantListForm() {
 
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;
     const fetchConfig = {
+      credentials: "include",
       method: "post",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     };
 

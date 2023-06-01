@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from queries.restaurants import RestaurantIn, RestaurantRepository, RestaurantOut, Error
+from queries.restaurants import RestaurantIn, RestaurantRepository, RestaurantOut, Error, RestaurantInWithListID
 from authenticator import authenticator
 from typing import Optional, Union, List
 
@@ -8,10 +8,10 @@ router = APIRouter()
 
 @router.post("/restaurants", response_model=Union[RestaurantOut, Error])
 def create_restaurant(
-    restaurants: RestaurantIn,
+    restaurants: RestaurantInWithListID,
     account_data: dict = Depends(authenticator.get_current_account_data),
     repo: RestaurantRepository = Depends()
-    ):
+):
     return repo.post(account_data["id"], restaurants)
 
 @router.get("/restaurants", response_model=Union[Error, List[RestaurantOut]])
