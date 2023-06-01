@@ -12,5 +12,4 @@ steps = [
         DROP TABLE cuisine;
         """
     ]
-
 ]
