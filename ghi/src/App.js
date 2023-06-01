@@ -5,6 +5,7 @@ import FriendsMain from "./Friends/FriendsMain";
 // import useUser from "./useUser";
 import Auth from "./Auth";
 import Nav from "./Main/Nav";
+import SpinningCarousel from "./Main/Spinner";
 import NewRestaurantForm from "./Restaurants/NewRestaurantForm";
 import ProfilePage from "./Profiles/ProfilePage";
 import FriendPage from "./Profiles/FriendsPage";
@@ -16,6 +17,7 @@ function App() {
       <Nav />
       <Routes>
         <Route path="/" element={<Auth />} />
+        <Route path="/home" element={<SpinningCarousel />} />
         <Route path="/signup" element={<Auth />} />
         <Route path="/signin" element={<Auth />} />
         <Route path="/signout" element={<Auth />} />
