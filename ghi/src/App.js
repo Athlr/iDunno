@@ -26,7 +26,7 @@ function App() {
           <Route path="" element={<FriendsMain />} />
         </Route>
         <Route path="/restaurants">
-          <Route path=":listId" element={<RestaurantListPage />} />
+          <Route path=":listId?" element={<RestaurantListPage />} />
           <Route path="CreateList" element={<RestaurantListForm/>} />
           <Route path="new" element={<NewRestaurantForm />} />
         </Route>

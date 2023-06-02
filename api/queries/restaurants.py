@@ -54,7 +54,7 @@ class RestaurantRepository:
             print(e)
             return {"message": "Could not get that restaurant"}
 
-    def delete(self, restaurant_id: int) -> bool:
+    def delete(self, user_id: int, restaurant_id: int) -> bool:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
