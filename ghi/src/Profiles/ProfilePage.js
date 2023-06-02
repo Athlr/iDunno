@@ -140,6 +140,7 @@ export default function ProfilePage() {
                 return (
                   <ProfileList
                     key={list.list_id}
+                    listId={list.list_id}
                     name={list.name}
                     description={list.description}
                   />
