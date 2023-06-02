@@ -4,8 +4,10 @@ from authenticator import authenticator
 from queries.restaurant_list import (
     Error,
     RestaurantListIn,
+    RestaurantListInPicture,
     RestaurantListRepository,
     RestaurantListOut,
+    RestaurantListOutPicture,
     RestaurantOutWithCuisine
 )
 
@@ -76,14 +78,14 @@ def create_restaurant_list(
     return repo.create(account_data["id"], restaurant_list)
 
 
-@router.get("/restaurant-list", response_model=Union[List[RestaurantListOut], Error])
+@router.get("/restaurant-list", response_model=Union[List[RestaurantListOutPicture], Error])
 def get_all_restaurant_lists(
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ):
     return repo.get_all(account_data["id"])
 
-@router.get("/restaurant-list/user/{user_id}", response_model=Union[List[RestaurantListOut], Error])
+@router.get("/restaurant-list/user/{user_id}", response_model=Union[List[RestaurantListOutPicture], Error])
 def get_all_restaurant_lists(
     user_id: int,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),

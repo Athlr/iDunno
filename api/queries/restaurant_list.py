@@ -13,12 +13,17 @@ class RestaurantListIn(BaseModel):
     description: Optional[str]
     user_id: int
 
+class RestaurantListInPicture(RestaurantListIn):
+    list_picture: str
 
 class RestaurantListOut(BaseModel):
     list_id: int
     name: str
     description: Optional[str]
     user_id: int
+
+class RestaurantListOutPicture(RestaurantListOut):
+    list_picture: str
 
 class RestaurantOutWithCuisine(BaseModel):
     restaurant_id: int
@@ -168,10 +173,6 @@ class RestaurantListRepository:
             print(e)
             return False
 
-
-
-
-
     def get_one(self, list_id: int) -> Optional[RestaurantListOut]:
         try:
             # connect the database
@@ -247,7 +248,7 @@ class RestaurantListRepository:
             return {"message": "could not update lists"}
 
 
-    def get_all(self, user_id: int) -> Union[Error, List[RestaurantListOut]]:
+    def get_all(self, user_id: int) -> Union[Error, List[RestaurantListOutPicture]]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -256,7 +257,7 @@ class RestaurantListRepository:
                     #Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT list_id, name, description, user_id
+                        SELECT list_id, name, description, user_id, list_picture
                         FROM restaurant_list
                         WHERE user_id = %s
                         ORDER BY name;
@@ -265,26 +266,26 @@ class RestaurantListRepository:
                             user_id
                         ]
                     )
-                    # result = []
-                    # for record in db:
-                    #     restaurant_list = RestaurantListOut(
-                    #             list_id=record[0],
-                    #             name=record[1],
-                    #             description=record[2],
-                    #             user_id=record[3]
-                    #     )
-                    #     result.append(restaurant_list)
-                    # return result
-
-                    return [
-                        self.record_to_restaurant_list_out(record)
-                        for record in result
-                    ]
+                    result = []
+                    for record in db:
+                        restaurant_list = RestaurantListOutPicture(
+                                list_id=record[0],
+                                name=record[1],
+                                description=record[2],
+                                user_id=record[3],
+                                list_picture=record[4]
+                        )
+                        result.append(restaurant_list)
+                    return result
+                    # return [
+                    #     self.record_to_restaurant_list_out(record)
+                    #     for record in result
+                    # ]
         except Exception as e:
             print(e)
             return {"message": "could not get all lists"}
 
-    def get_all_by_user(self, user_id: int) -> Union[Error, List[RestaurantListOut]]:
+    def get_all_by_user(self, user_id: int) -> Union[Error, List[RestaurantListOutPicture]]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -293,7 +294,7 @@ class RestaurantListRepository:
                     #Run our SELECT statement
                     result = db.execute(
                         """
-                        SELECT list_id, name, description, user_id
+                        SELECT list_id, name, description, user_id, list_picture
                         FROM restaurant_list
                         WHERE user_id = %s
                         ORDER BY name;
@@ -302,21 +303,22 @@ class RestaurantListRepository:
                             user_id
                         ]
                     )
-                    # result = []
-                    # for record in db:
-                    #     restaurant_list = RestaurantListOut(
-                    #             list_id=record[0],
-                    #             name=record[1],
-                    #             description=record[2],
-                    #             user_id=record[3]
-                    #     )
-                    #     result.append(restaurant_list)
-                    # return result
+                    result = []
+                    for record in db:
+                        restaurant_list = RestaurantListOutPicture(
+                                list_id=record[0],
+                                name=record[1],
+                                description=record[2],
+                                user_id=record[3],
+                                list_picture=record[4]
+                        )
+                        result.append(restaurant_list)
+                    return result
 
-                    return [
-                        self.record_to_restaurant_list_out(record)
-                        for record in result
-                    ]
+                    # return [
+                    #     self.record_to_restaurant_list_out(record)
+                    #     for record in result
+                    # ]
         except Exception as e:
             print(e)
             return {"message": "could not get all lists"}

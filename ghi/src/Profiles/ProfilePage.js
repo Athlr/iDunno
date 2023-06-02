@@ -52,6 +52,7 @@ export default function ProfilePage() {
     if (response.ok) {
       const data = await response.json();
       setRestaurantList(data);
+      console.log(data);
     }
   };
 
@@ -141,6 +142,7 @@ export default function ProfilePage() {
                   <ProfileList
                     key={list.list_id}
                     listId={list.list_id}
+                    picture={list.list_picture}
                     name={list.name}
                     description={list.description}
                   />

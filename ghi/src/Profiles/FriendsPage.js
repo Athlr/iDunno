@@ -128,6 +128,7 @@ export default function FriendPage() {
                 <FriendsList
                   key={list.list_id}
                   listId={list.list_id}
+                  picture={list.list_picture}
                   name={list.name}
                   description={list.description}
                 />
