@@ -67,14 +67,13 @@ def remove_restaurant_from_list(
 
 
 
-@router.post("/restaurant-list", response_model=Union[RestaurantListOut, Error])
+@router.post("/restaurant-list", response_model=Union[RestaurantListOutPicture, Error])
 def create_restaurant_list(
-    restaurant_list: RestaurantListIn,
+    restaurant_list: RestaurantListInPicture,
     response: Response,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends()
 ):
-    # response.status_code = 400
     return repo.create(account_data["id"], restaurant_list)
 
 
@@ -86,20 +85,20 @@ def get_all_restaurant_lists(
     return repo.get_all(account_data["id"])
 
 @router.get("/restaurant-list/user/{user_id}", response_model=Union[List[RestaurantListOutPicture], Error])
-def get_all_restaurant_lists(
+def get_all_restaurant_lists_by_user(
     user_id: int,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
 ):
     return repo.get_all_by_user(user_id)
 
-@router.put("/restaurant-list/{list_id}", response_model=Union[RestaurantListOut, Error])
+@router.put("/restaurant-list/{list_id}", response_model=Union[RestaurantListOutPicture, Error])
 def update_restaurant_list(
     list_id: int,
-    restaurant_list: RestaurantListIn,
+    restaurant_list: RestaurantListInPicture,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
-) -> Union[Error, RestaurantListOut]:
+) -> Union[Error, RestaurantListOutPicture]:
     return repo.update(account_data["id"], list_id, restaurant_list)
 
 
@@ -112,13 +111,13 @@ def delete_restaurant_list(
     return repo.delete(account_data["id"], list_id)
 
 
-@router.get("/restaurant-list/{list_id}", response_model=Optional[RestaurantListOut])
+@router.get("/restaurant-list/{list_id}", response_model=Optional[RestaurantListOutPicture])
 def get_one_restaurant_list(
     list_id: int,
     response: Response,
     account_data: Optional[dict] = Depends(authenticator.get_current_account_data),
     repo: RestaurantListRepository = Depends(),
-) -> RestaurantListOut:
+) -> Optional[RestaurantListOutPicture]:
     restaurant_list = repo.get_one(list_id)
     if restaurant_list is None:
         response.status_code = 404

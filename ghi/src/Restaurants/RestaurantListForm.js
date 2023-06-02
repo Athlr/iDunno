@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 function RestaurantListForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [listPicture, setListPicture] = useState("");
   const { token } = useToken();
   const { user } = useUser(token);
   const navigate = useNavigate();
@@ -20,12 +21,18 @@ function RestaurantListForm() {
     setDescription(value);
   };
 
+  const handleListPictureChange = (event) => {
+    const value = event.target.value;
+    setListPicture(value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const data = {};
 
     data.name = name;
     data.description = description;
+    data.list_picture = listPicture;
     data.user_id = user.id;
 
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;
@@ -44,6 +51,7 @@ function RestaurantListForm() {
       const newRestaurantList = await response.json();
       setName("");
       setDescription("");
+      setListPicture("");
       navigate(`/profile/`);
     }
   };
@@ -72,7 +80,7 @@ function RestaurantListForm() {
                 <input
                   value={description}
                   onChange={handleDescriptionChange}
-                  placeholder="Description"
+                  placeholder="*Optional*"
                   required
                   type="text"
                   name="description"
@@ -80,6 +88,18 @@ function RestaurantListForm() {
                   className="form-control"
                 />
                 <label htmlFor="description">Description</label>
+              </div>
+              <div className="form-floating mb-3">
+                <input
+                  value={listPicture}
+                  onChange={handleListPictureChange}
+                  placeholder="*Optional*"
+                  type="text"
+                  name="Picture_Url"
+                  id="Picture_Url"
+                  className="form-control"
+                />
+                <label htmlFor="Picture_Url">Picture Url</label>
               </div>
               <button type="submit" className="btn btn-primary">
                 Create
