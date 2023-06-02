@@ -2,7 +2,17 @@
 module.exports = {
   content: ["./src/**/*.{html,js}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        salmon: "#f4b688",
+        woodland: "#404824",
+        cognac: "#A0411B",
+        goldSand: "#E9B790",
+        hunterGreen: "#3E5641",
+        nyanza: "#DDFFD9",
+        darkCyan: "#048A81",
+      },
+    },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/forms"), require("daisyui")],
 };

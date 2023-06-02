@@ -10,6 +10,8 @@ import SpinningCarousel from "./Main/Spinner";
 import NewRestaurantForm from "./Restaurants/NewRestaurantForm";
 import ProfilePage from "./Profiles/ProfilePage";
 import FriendPage from "./Profiles/FriendsPage";
+import Footer from "./Main/Footer";
+import MainPage from "./MainPage";
 import RestaurantListForm from "./Restaurants/RestaurantListForm";
 
 function App() {
@@ -17,7 +19,7 @@ function App() {
     <div>
       <Nav />
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/" element={<MainPage />} />
         <Route path="/home" element={<SpinningCarousel />} />
         <Route path="/signup" element={<Auth />} />
         <Route path="/signin" element={<Auth />} />
@@ -35,6 +37,7 @@ function App() {
           <Route path=":friend_id" element={<FriendPage />} />
         </Route>
       </Routes>
+      <Footer />
     </div>
   );
 }
