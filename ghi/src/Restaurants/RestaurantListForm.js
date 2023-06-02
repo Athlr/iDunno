@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
+import { useNavigate } from "react-router-dom";
 
 function RestaurantListForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const { token } = useToken();
   const { user } = useUser(token);
+  const navigate = useNavigate();
 
   const handleNameChange = (event) => {
     const value = event.target.value;
@@ -42,6 +44,7 @@ function RestaurantListForm() {
       const newRestaurantList = await response.json();
       setName("");
       setDescription("");
+      navigate(`/profile/`);
     }
   };
 
