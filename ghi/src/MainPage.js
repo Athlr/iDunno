@@ -9,7 +9,7 @@ export default function MainPage() {
       <div>
         <Hero />
       </div>
-      <div className="p-6">
+      <div>
         <Cards />
       </div>
     </>

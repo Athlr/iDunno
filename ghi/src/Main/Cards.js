@@ -28,7 +28,7 @@ export default function Cards() {
                 />
               </a>
               <a
-                href="#"
+                href="https://gitlab.com/aatran2021"
                 target="_blank"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
@@ -65,7 +65,7 @@ export default function Cards() {
                 />
               </a>
               <a
-                href="#"
+                href="https://gitlab.com/LuisBravo9900"
                 target="_blank"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
@@ -93,7 +93,7 @@ export default function Cards() {
             <span className="text-sm text-gray-900">Full Stack Engineer</span>
             <div className="flex mt-4 space-x-3 md:mt-6">
               <a
-                href="https://www.linkedin.com/in/williamhgates/"
+                href="https://www.linkedin.com/in/matthew-huff-6b4211125/"
                 target="_blank"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
@@ -104,7 +104,7 @@ export default function Cards() {
                 />
               </a>
               <a
-                href="#"
+                href="https://gitlab.com/mhuff9112"
                 target="_blank"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
@@ -141,7 +141,7 @@ export default function Cards() {
                 />
               </a>
               <a
-                href="#"
+                href="https://gitlab.com/justinburgonio"
                 target="_blank"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
