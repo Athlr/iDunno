@@ -19,6 +19,9 @@ export default function SpinningCarousel() {
   function closeModal() {
     filteredUserList();
     setIsOpen(false);
+
+    setSelectedCuisine(null);
+    setSelectedPrice('');
     
   }
 
@@ -82,18 +85,39 @@ export default function SpinningCarousel() {
       });
 
       if (response.ok){
-        const data = await response.json();
-        console.log("Data", data);
-        const filteredRestaurants = data.filter(restaurant => { 
-          return (
-            restaurant.cuisine_id === selectedCuisine &&
-            restaurant.price === selectedPrice
-          );
-        });
-        setRestaurants(filteredRestaurants);
-        console.log(filteredRestaurants);
-      };
-    
+        if (selectedUserList && selectedCuisine !== null && selectedPrice !== ''){
+          const data = await response.json();
+          const filteredRestaurants = data.filter(restaurant => { 
+            return (
+              restaurant.cuisine_id === selectedCuisine &&
+              restaurant.price === selectedPrice
+            );
+          });
+          setRestaurants(filteredRestaurants);
+          
+      }else if (selectedUserList && selectedCuisine !== null){
+          const data = await response.json();
+          const filteredRestaurants = data.filter(restaurant => { 
+            return (
+              restaurant.cuisine_id === selectedCuisine
+            );
+          });
+          setRestaurants(filteredRestaurants);
+        }else if (selectedUserList && selectedPrice !== ''){
+          const data = await response.json();
+          const filteredRestaurants = data.filter(restaurant => { 
+            return (
+              restaurant.price === selectedPrice
+            );
+          });
+          setRestaurants(filteredRestaurants);
+        }else if (selectedUserList){
+          const data = await response.json();
+          setRestaurants(data);
+        }else{
+          fetchRestaurants();
+        }
+      }
   };
 
 
