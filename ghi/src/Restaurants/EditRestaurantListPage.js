@@ -36,7 +36,6 @@
 //     }
 //   };
 
-
 //   const updateDescription = async (listId) => {
 //     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list/${listId}`;
 
@@ -86,11 +85,6 @@
 //     }
 //     }
 //   };
-
-
-
-
-
 
 //   return (
 //     <div className="my-5 container">
@@ -148,9 +142,6 @@
 //   );
 // }
 
-
-
-
 import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
@@ -169,16 +160,16 @@ export default function EditRestaurantListForm() {
   const fetchRestaurantsData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list/${listId}`;
     const fetchConfig = {
-        credentials: "include",
-        method: "get",
+      credentials: "include",
+      method: "get",
     };
-    const response = await fetch(url, fetchConfig)
-        if (response.ok) {
-            const data = await response.json();
-            setRestaurantData(data)
-        }
-  }
-
+    const response = await fetch(url, fetchConfig);
+    if (response.ok) {
+      const data = await response.json();
+      setRestaurantData(data);
+      console.log("Fetch data", data);
+    }
+  };
 
   const handleNameChange = (event) => {
     const value = event.target.value;
@@ -215,7 +206,6 @@ export default function EditRestaurantListForm() {
     };
 
     const response = await fetch(url, fetchConfig);
-    console.log(response);
     if (response.ok) {
       const newRestaurantList = await response.json();
       setName("");
@@ -225,16 +215,17 @@ export default function EditRestaurantListForm() {
     }
   };
 
-    useEffect(() => {
-        fetchRestaurantsData();
-    }, []);
+  useEffect(() => {
+    if (listId) {
+      fetchRestaurantsData();
+    }
+  }, [listId]);
 
-
-    useEffect(() => {
-        setName(restaurantData.name)
-        setDescription(restaurantData.description)
-        setListPicture(restaurantData.list_picture)
-    }, [restaurantData]);
+  useEffect(() => {
+    setName(restaurantData.name);
+    setDescription(restaurantData.description);
+    setListPicture(restaurantData.list_picture);
+  }, [restaurantData]);
 
   return (
     <div className="my-5 container">
@@ -261,7 +252,6 @@ export default function EditRestaurantListForm() {
                   value={description}
                   onChange={handleDescriptionChange}
                   placeholder="*Optional*"
-                  required
                   type="text"
                   name="description"
                   id="description"
@@ -270,15 +260,57 @@ export default function EditRestaurantListForm() {
                 <label htmlFor="description">Description</label>
               </div>
               <div className="form-floating mb-3">
-                <input
-                  value={listPicture}
+                <select
+                  className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-0"
                   onChange={handleListPictureChange}
-                  placeholder="*Optional*"
-                  type="text"
-                  name="Picture_Url"
-                  id="Picture_Url"
-                  className="form-control"
-                />
+                  defaultValue={listPicture}
+                >
+                  <option value="" disabled>
+                    Select an option
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284824.png">
+                    Taco
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284797.png">
+                    Toast
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284794.png">
+                    Cupcake
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284792.png">
+                    Donut
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284815.png">
+                    Coffee
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284795.png">
+                    Sushi
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284791.png">
+                    French Fries
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284805.png">
+                    Apple
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284798.png">
+                    Cookie
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284823.png">
+                    Broccoli
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284814.png">
+                    Ice Cream
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284789.png">
+                    Burger
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284800.png">
+                    Pizza
+                  </option>
+                  <option value="https://cdn-icons-png.flaticon.com/128/284/284835.png">
+                    Bell Pepper
+                  </option>
+                </select>
                 <label htmlFor="Picture_Url">Picture Url</label>
               </div>
               <button type="submit" className="btn btn-primary">
