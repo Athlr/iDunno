@@ -1,10 +1,12 @@
 import React, { useState, useEffect, Fragment } from 'react';
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Dialog, Transition } from '@headlessui/react'
-
+import useUser from '../useUser';
 
 export default function SpinningCarousel() {
   const [restaurants, setRestaurants] = useState([]);
+  const [userLists, setUserLists] = useState([]);
+  const [selectedUserList, setSelectedUserList] = useState(null)
   const [isRotating, setIsRotating] = useState(false);
   const [hasFirstRotation, setHasFirstRotation] = useState(false);
   const [cuisines, setCuisines] = useState([]);
@@ -12,6 +14,13 @@ export default function SpinningCarousel() {
   const [selectedPrice, setSelectedPrice] = useState('');
   const [isOpen, setIsOpen] = useState(false)
   const { token } = useToken();
+  const { user } = useUser(token);
+
+  function closeModal() {
+    filteredUserList();
+    setIsOpen(false);
+    
+  }
 
   const getRandomRestaurant = () => {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
@@ -20,13 +29,18 @@ export default function SpinningCarousel() {
   
   const handleCuisineChange = (event) => {
     const selectedCuisineValue = event.target.value;
-    setSelectedCuisine(selectedCuisineValue);
+    setSelectedCuisine(parseInt(selectedCuisineValue));
   };
 
   const handlePriceChange = (event) => {
     const selectedPrice = event.target.value;
     setSelectedPrice(selectedPrice);
-    console.log(selectedPrice);
+  };
+
+  const handleUserListChange = (event) => {
+    const selectedList = event.target.value;
+    setSelectedUserList(selectedList);
+    
   };
 
   const fetchCuisine = async () => {
@@ -38,8 +52,50 @@ export default function SpinningCarousel() {
       if (response.ok) {
         const data = await response.json();
         setCuisines(data);
-      } 
+      }
   };
+
+  const fetchUserLists = async () => {
+    if(token) {
+      const url = `${process.env.REACT_APP_API_HOST}/restaurant-list/user/${user.id}`;
+      const response = await fetch(url, {
+        credentials: 'include',
+        method: 'get',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setUserLists(data);
+      };
+
+     }else{
+
+     };
+  };
+
+
+  const filteredUserList = async () => {
+    const url = `${process.env.REACT_APP_API_HOST}/restaurant_list/${selectedUserList}/restaurants`;
+    const response = await fetch(url, {
+        credentials: 'include',
+        method: 'get',
+      });
+
+      if (response.ok){
+        const data = await response.json();
+        console.log("Data", data);
+        const filteredRestaurants = data.filter(restaurant => { 
+          return (
+            restaurant.cuisine_id === selectedCuisine &&
+            restaurant.price === selectedPrice
+          );
+        });
+        setRestaurants(filteredRestaurants);
+        console.log(filteredRestaurants);
+      };
+    
+  };
+
 
   const fetchRestaurants = async () => {
       if (!token){
@@ -55,11 +111,9 @@ export default function SpinningCarousel() {
       }
     }else{
       
-    }
+    };
   }; 
-  function closeModal() {
-    setIsOpen(false)
-  };
+
 
   function openModal() {
     setIsOpen(true)
@@ -105,14 +159,19 @@ export default function SpinningCarousel() {
     }
   }, [isRotating]);
 
+ 
   useEffect(() => {
-    const fetchData = async () =>{
-    await fetchRestaurants();
-    await fetchCuisine();
-    };
-
-    fetchData();
+  
+    fetchRestaurants();
+    fetchCuisine();
+    
   }, []);
+
+  useEffect(() => {
+    if (user){
+    fetchUserLists();
+    };
+  },[user]);
 
   const placeholderCount = Math.max(9 - restaurants.length, 0);
   const placeholderFaces = Array.from({ length: placeholderCount }, (_, index) => index);
@@ -254,6 +313,24 @@ export default function SpinningCarousel() {
                       </div>
                     </div>
                   </div>
+                  <div className="mt-2">
+                    <p className="text-sm text-gray-500">User Lists:</p>
+                  </div>
+                  {userLists.length > 0 && (
+                    <div className="mt-4">
+                      <select
+                        onChange={handleUserListChange}
+                        className="form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                      >
+                        <option value="">Select a user list</option>
+                        {userLists.map((userList) => (
+                          <option key={userList.list_id} value={userList.list_id}>
+                            {userList.name}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  )}
                   <div className="mt-4">
                     <button
                       type="button"
@@ -279,9 +356,8 @@ export default function SpinningCarousel() {
     }}
       >
         <div
-          className='carousel'
           style={{
-            position: 'absolute',
+            position: 'fixed', top: 0, left: 0, zIndex: 9999,
             width: '100%',
             height: '100%',
             transformStyle: 'preserve-3d',
@@ -291,7 +367,6 @@ export default function SpinningCarousel() {
           {restaurants.slice(0, 9).map((restaurant, index) => (
             <div
               key={index}
-              className='carousel_face'
               style={{
                 position: 'absolute',
                 width: '300px',
@@ -315,7 +390,6 @@ export default function SpinningCarousel() {
           {placeholderFaces.map((index) => (
             <div
               key={index}
-              className='carousel_face'
               style={{
                 position: 'absolute',
                 width: '300px',

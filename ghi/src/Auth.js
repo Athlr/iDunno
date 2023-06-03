@@ -73,7 +73,7 @@ function Auth() {
       </div>
       <div className="bg-white border border-gray-200 rounded p-6 shadow-lg space-y-12 relative z-10 h-auto max-h-full overflow-auto">
         <div className="border-b border-gray-900/10 pb-12">
-          <h2 class="text-base font-semibold leading-7 text-gray-900">
+          <h2 className="text-base font-semibold leading-7 text-gray-900">
             {isSignIn ? "Login" : "Create an Account"}
           </h2>
           <form
