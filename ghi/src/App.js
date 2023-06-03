@@ -14,6 +14,7 @@ import Footer from "./Main/Footer";
 import MainPage from "./MainPage";
 import RestaurantListForm from "./Restaurants/RestaurantListForm";
 import FriendRestaurantPage from "./Restaurants/FriendRestaurantPage";
+import EditRestaurantListForm from "./Restaurants/EditRestaurantListPage";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path="CreateList" element={<RestaurantListForm/>} />
           <Route path="new" element={<NewRestaurantForm />} />
           <Route path=":friend_id/:listId" element={<FriendRestaurantPage />} />
+          <Route path="edit/:listId" element={<EditRestaurantListForm />} />
         </Route>
         <Route path="/profile">
           <Route path="" element={<ProfilePage />} />

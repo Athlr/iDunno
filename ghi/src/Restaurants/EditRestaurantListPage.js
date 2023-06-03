@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
-function RestaurantListForm() {
+export default function EditRestaurantListForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [listPicture, setListPicture] = useState("");
   const { token } = useToken();
   const { user } = useUser(token);
+  const { listId } = useParams();
   const navigate = useNavigate();
 
   const handleNameChange = (event) => {
@@ -35,10 +36,10 @@ function RestaurantListForm() {
     data.list_picture = listPicture;
     data.user_id = user.id;
 
-    const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;
+    const url = `${process.env.REACT_APP_API_HOST}/restaurant-list/${listId}`;
     const fetchConfig = {
       credentials: "include",
-      method: "post",
+      method: "put",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
@@ -81,6 +82,7 @@ function RestaurantListForm() {
                   value={description}
                   onChange={handleDescriptionChange}
                   placeholder="*Optional*"
+                  required
                   type="text"
                   name="description"
                   id="description"
@@ -101,7 +103,7 @@ function RestaurantListForm() {
                 <label htmlFor="Picture_Url">Picture Url</label>
               </div>
               <button type="submit" className="btn btn-primary">
-                Create
+                Update
               </button>
             </form>
           </div>
@@ -110,5 +112,3 @@ function RestaurantListForm() {
     </div>
   );
 }
-
-export default RestaurantListForm;
