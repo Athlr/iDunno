@@ -6,6 +6,7 @@ steps = [
             list_id SERIAL PRIMARY KEY NOT NULL,
             name VARCHAR(255) NOT NULL,
             description VARCHAR(1000),
+            list_picture VARCHAR(500) DEFAULT 'https://cdn-icons-png.flaticon.com/128/284/284789.png',
             user_id INTEGER REFERENCES user_table(user_id) NOT NULL
         );
         """,

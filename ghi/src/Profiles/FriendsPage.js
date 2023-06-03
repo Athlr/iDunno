@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
-import ProfileList from "./ProfileList";
+import FriendsList from "./FriendsList";
 import { useParams } from "react-router-dom";
 import blobBackground from "../Media/blob-background.svg";
 
@@ -125,8 +125,10 @@ export default function FriendPage() {
             })
             .map((list) => {
               return (
-                <ProfileList
+                <FriendsList
                   key={list.list_id}
+                  listId={list.list_id}
+                  picture={list.list_picture}
                   name={list.name}
                   description={list.description}
                 />

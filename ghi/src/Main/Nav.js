@@ -1,40 +1,52 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
 
 export default function Nav() {
   const { token, logout } = useToken();
   const { user } = useUser(token);
+  console.log(user);
+
+  const handleLogout = () => {
+    logout();
+    window.location.href = `${process.env.PUBLIC_URL}/`;
+  };
+
   return token ? (
-    <div className="navbar bg-goldSand flex">
+    <div className="navbar bg-darkCyan flex">
       <div className="flex-1">
-        <a
-          href={`${process.env.PUBLIC_URL}/home/`}
+        <Link
+          to="/home/"
           className="btn btn-ghost normal-case text-xl text-white"
         >
           iDunno
-        </a>
+        </Link>
       </div>
       <div className="flex-2 flex justify-center gap-2">
         <button className="btn btn-ghost">
-          <a href={`${process.env.PUBLIC_URL}/friends`} className="text-white">
+          <Link to="/friends" className="text-white">
             Friends
-          </a>
+          </Link>
         </button>
         <button className="btn btn-ghost">
-          <a
-            href={`${process.env.PUBLIC_URL}/restaurants`}
-            className="text-white"
-          >
+          <Link to="/restaurants" className="text-white">
             Lists
-          </a>
+          </Link>
         </button>
       </div>
       <div className="flex-none gap-2">
         <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src="/favicon.ico" alt="User Avatar" />
+              <img
+                src={
+                  user && user.profile_picture_url
+                    ? user.profile_picture_url
+                    : "/favicon.ico"
+                }
+                alt="User Avatar"
+              />
             </div>
           </label>
           <ul
@@ -42,43 +54,34 @@ export default function Nav() {
             className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
-              <a
-                href={`${process.env.PUBLIC_URL}/profile`}
-                className="justify-between"
-              >
+              <Link to="/profile" className="justify-between">
                 Profile
-              </a>
+              </Link>
             </li>
             <li>
-              <a>Settings</a>
-            </li>
-            <li>
-              <button onClick={logout}>Logout</button>
+              <a onClick={handleLogout}>Logout</a>
             </li>
           </ul>
         </div>
       </div>
     </div>
   ) : (
-    <div className="navbar bg-goldSand flex">
+    <div className="navbar bg-darkCyan flex">
       <div className="flex-1">
-        <a
-          href={`${process.env.PUBLIC_URL}/`}
-          className="btn btn-ghost normal-case text-xl text-white"
-        >
+        <Link to="/" className="btn btn-ghost normal-case text-xl text-white">
           iDunno
-        </a>
+        </Link>
       </div>
       <div className="flex-2 flex justify-center gap-2">
         <button className="btn btn-ghost">
-          <a href={`${process.env.PUBLIC_URL}/signup`} className="text-white">
+          <Link to="/signup" className="text-white">
             Signup
-          </a>
+          </Link>
         </button>
         <button className="btn btn-ghost">
-          <a href={`${process.env.PUBLIC_URL}/signin`} className="text-white">
+          <Link to="/signin" className="text-white">
             Signin
-          </a>
+          </Link>
         </button>
       </div>
     </div>
