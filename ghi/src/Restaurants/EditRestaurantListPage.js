@@ -166,7 +166,7 @@ export default function EditRestaurantListForm() {
   const { listId } = useParams();
   const navigate = useNavigate();
 
-  const fetchRestaurantsData = async (listId) => {
+  const fetchRestaurantsData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list/${listId}`;
     const fetchConfig = {
         credentials: "include",
