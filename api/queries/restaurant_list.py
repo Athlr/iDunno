@@ -144,13 +144,13 @@ class RestaurantListRepository:
 
 
 
-    def get_one(self, list_id: int) -> Optional[RestaurantListOut]:
+    def get_one(self, list_id: int) -> Optional[RestaurantListOutPicture]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT list_id, name, description, user_id
+                        SELECT list_id, name, description, user_id, list_picture
                         FROM restaurant_list
                         WHERE list_id = %s
                         """,
