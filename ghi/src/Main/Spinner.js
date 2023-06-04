@@ -14,6 +14,8 @@ export default function SpinningCarousel() {
   const [selectedPrice, setSelectedPrice] = useState('');
   const [isOpen, setIsOpen] = useState(false)
   const [friendsIsOpen, setFriendsIsOpen] = useState(false);
+  const [userFriends, setUserFriends] = useState([]);
+  const [selectedFriends, setSelectedFriends] = useState([]);
   const { token } = useToken();
   const { user } = useUser(token);
 
@@ -24,15 +26,34 @@ export default function SpinningCarousel() {
     setSelectedCuisine(null);
     setSelectedPrice('');
     
-  }
+  };
 
   function openFriendsModal () {
     setFriendsIsOpen(true);
-  }
+  };
 
   function closeFriendModal () {
     setFriendsIsOpen(false);
-  }
+  };
+
+    const toggleRotation = () => {
+    if (!isRotating) {
+      setIsRotating(true);
+      setHasFirstRotation(false);
+    } else {
+      setIsRotating(false);
+      if (hasFirstRotation) {
+        const updatedRestaurants = [...restaurants];
+        updatedRestaurants[0] = getRandomRestaurant();
+        setRestaurants(updatedRestaurants);
+        setHasFirstRotation(true);
+      } else {
+        const updatedRestaurants = [...restaurants];
+        updatedRestaurants[0].name = getRandomRestaurant();
+        setRestaurants(updatedRestaurants);
+      }
+    }
+  };
 
   const getRandomRestaurant = () => {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
@@ -54,6 +75,38 @@ export default function SpinningCarousel() {
     setSelectedUserList(selectedList);
     
   };
+
+  useEffect (() => {
+    console.log(selectedFriends)
+  }, [selectedFriends]);
+
+  const handleFriendChange = (friendId) => {
+    console.log(friendId)
+    if (selectedFriends.includes(parseInt(friendId))){
+      setSelectedFriends(selectedFriends.filter((id) => id !== parseInt(friendId)))
+    }else{
+      setSelectedFriends([... selectedFriends, parseInt(friendId)])
+    }
+  };
+
+
+  const fetchRestaurants = async () => {
+      if (!token){
+      const url = `${process.env.REACT_APP_API_HOST}/sponsored`;
+      const response = await fetch(url, {
+        credentials: 'include',
+        method: 'get',
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        setRestaurants(data);
+      }
+    }else{
+      
+    };
+  };
+
 
   const fetchCuisine = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/cuisine-list`;
@@ -83,6 +136,18 @@ export default function SpinningCarousel() {
      }else{
 
      };
+  };
+
+  const fetchFreinds = async () => {
+    const url = `${process.env.REACT_APP_API_HOST}/friends`;
+    const response = await fetch(url, {
+        credentials: 'include',
+        method: 'get',
+      });
+      if (response.ok){
+        const data = await response.json();
+        setUserFriends(data);
+      }
   };
 
 
@@ -130,47 +195,10 @@ export default function SpinningCarousel() {
   };
 
 
-  const fetchRestaurants = async () => {
-      if (!token){
-      const url = `${process.env.REACT_APP_API_HOST}/sponsored`;
-      const response = await fetch(url, {
-        credentials: 'include',
-        method: 'get',
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        setRestaurants(data);
-      }
-    }else{
-      
-    };
-  }; 
-
 
   function openModal() {
     setIsOpen(true)
   };
-
-  const toggleRotation = () => {
-    if (!isRotating) {
-      setIsRotating(true);
-      setHasFirstRotation(false);
-    } else {
-      setIsRotating(false);
-      if (hasFirstRotation) {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0] = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-        setHasFirstRotation(true);
-      } else {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0].name = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-      }
-    }
-  };
-
 
   useEffect(() => {
     let timeoutID;
@@ -197,6 +225,7 @@ export default function SpinningCarousel() {
   
     fetchRestaurants();
     fetchCuisine();
+    fetchFreinds();
     
   }, []);
 
@@ -409,6 +438,27 @@ export default function SpinningCarousel() {
                                 >
                                   Who are you eating with?:
                                 </Dialog.Title>
+                                <div className='space-y-2'>
+                                  {userFriends.map((friend) => (
+                                    <div key={friend.friend_id} className='flex items-center'>
+                                      <input
+                                      type='checkbox'
+                                      id={friend.friend_id}
+                                      value={friend.friend_id}
+                                      checked={selectedFriends.includes(friend.friend_id)}
+                                      onChange={(e) => handleFriendChange(e.target.value)}
+                                      className='form-checkbox h-5 w-5 text-blue-500'
+                                      />
+                                      <label
+                                      htmlFor={friend.friend_id}
+                                      className='ml-2 block text-sm text-gray-700'
+                                      >
+                                        {friend.username}
+                                      </label>
+                                    </div>
+                                  ))}
+                                </div>
+
                               </Dialog.Panel>
                             </Transition.Child>
                           </div>
