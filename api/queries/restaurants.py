@@ -28,7 +28,7 @@ class RestaurantInWithListID(BaseModel):
 
 
 class RestaurantRepository:
-    def get_one(self, restaurant_id: int) -> Optional[RestaurantOut]:
+    def get_one(self, user_id: int, restaurant_id: int) -> Optional[RestaurantOut]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -70,7 +70,7 @@ class RestaurantRepository:
             print(e)
             return False
 
-    def update(self, restaurant_id: int, restaurant: RestaurantIn) -> Union[RestaurantOut, Error]:
+    def update(self, user_id: int, restaurant_id: int, restaurant: RestaurantInWithListID) -> Union[RestaurantOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -122,7 +122,7 @@ class RestaurantRepository:
                         )
                         result.append(restaurant)
                     return result
-        except Exception as e :
+        except Exception as e:
             print(e)
             return {"message": "Could not get all vacations"}
 
