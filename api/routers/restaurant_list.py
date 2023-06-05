@@ -11,7 +11,6 @@ from queries.restaurant_list import (
     RestaurantOutWithCuisine
 )
 
-from queries.restaurants import RestaurantIn, RestaurantOut
 
 router = APIRouter()
 
