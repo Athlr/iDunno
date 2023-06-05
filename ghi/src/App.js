@@ -15,6 +15,7 @@ import MainPage from "./MainPage";
 import RestaurantListForm from "./Restaurants/RestaurantListForm";
 import FriendRestaurantPage from "./Restaurants/FriendRestaurantPage";
 import EditRestaurantListForm from "./Restaurants/EditRestaurantListPage";
+import EditRestaurantForm from "./Restaurants/EditRestaurants";
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
           <Route path=":listId?" element={<RestaurantListPage />} />
           <Route path="CreateList" element={<RestaurantListForm/>} />
           <Route path="new" element={<NewRestaurantForm />} />
+          <Route path=":listId/edit/:restaurantId/" element={<EditRestaurantForm />} />
           <Route path=":friend_id/:listId" element={<FriendRestaurantPage />} />
           <Route path="edit/:listId" element={<EditRestaurantListForm />} />
         </Route>
