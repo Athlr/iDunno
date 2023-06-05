@@ -16,6 +16,8 @@ export default function SpinningCarousel() {
   const [friendsIsOpen, setFriendsIsOpen] = useState(false);
   const [userFriends, setUserFriends] = useState([]);
   const [selectedFriends, setSelectedFriends] = useState([]);
+  const [selectedFriendsProfiles, setSelectedFriendsProfiles] = useState([]);
+  const [selectedFriendsLists, setSelectedFriendsLists] = useState([]);
   const { token } = useToken();
   const { user } = useUser(token);
 
@@ -76,12 +78,8 @@ export default function SpinningCarousel() {
     
   };
 
-  useEffect (() => {
-    console.log(selectedFriends)
-  }, [selectedFriends]);
 
   const handleFriendChange = (friendId) => {
-    console.log(friendId)
     if (selectedFriends.includes(parseInt(friendId))){
       setSelectedFriends(selectedFriends.filter((id) => id !== parseInt(friendId)))
     }else{
@@ -89,6 +87,38 @@ export default function SpinningCarousel() {
     }
   };
 
+
+  const fetchFriendData = async () => {
+    const responses = await Promise.all(
+      selectedFriends.map((friend_id) => 
+        fetch(`${process.env.REACT_APP_API_HOST}/friends/${friend_id}`, {credentials: 'include', method: 'get',}).then((response) => response.json())
+      )
+    );
+    
+    const friendProfiles = responses.map((data) => ({
+      id: data.friend_id,
+      username: data.username,
+    }));
+    
+    return friendProfiles
+  }
+
+  const fetchFriendLists = async () => {
+    const responses = await Promise.all(
+      selectedFriends.map((friend_id) => 
+        fetch(`${process.env.REACT_APP_API_HOST}/restaurant-list/user/${friend_id}`, {credentials: 'include', method: 'get',}).then((response) => response.json())
+       )  
+    );
+    
+    const friendsList = responses.flatMap((data) =>
+    data.map((item) => ({
+      id: item.list_id,
+      name: item.name,
+      user_id: item.user_id,
+    })))
+    console.log(friendsList)
+    return friendsList;
+  };
 
   const fetchRestaurants = async () => {
       if (!token){
@@ -199,6 +229,23 @@ export default function SpinningCarousel() {
   function openModal() {
     setIsOpen(true)
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      if (selectedFriends.length === 0){
+        setSelectedFriendsProfiles([]);
+        setSelectedFriendsLists([]);
+        return;
+      }
+
+      const profiles = await fetchFriendData();
+      setSelectedFriendsProfiles(profiles);
+      const lists = await fetchFriendLists();
+      setSelectedFriendsLists(lists);
+    };
+ 
+    fetchData();
+  },[selectedFriends]);
 
   useEffect(() => {
     let timeoutID;
@@ -462,9 +509,28 @@ export default function SpinningCarousel() {
                               </Dialog.Panel>
                             </Transition.Child>
                           </div>
-                        </div>
+                        </div>                        
                       </Dialog>
                     </Transition>
+                    <div className='mt-4'>
+                      {selectedFriendsProfiles.map((friendProfile) => (
+                        <div key={friendProfile.id}>
+                          <label htmlFor={`dropdown-${friendProfile.id}`}>{friendProfile.username}: </label>
+                          <select id={`dropdown-${friendProfile.id}`} style={{ width: '200px', marginTop: '5px' }}>
+                            <option key={''} value={''}>
+                                    Your buddy's Lists!
+                                  </option>
+                            {selectedFriendsLists.filter((friendList) => friendList.user_id === friendProfile.id)
+                              .map((filteredFriendList) => (
+                                  <option key={filteredFriendList.id} value={filteredFriendList.id}>
+                                    {filteredFriendList.name}
+                                  </option>
+                            ))}
+
+                          </select>
+                        </div>
+                      ))}
+                    </div>
                   </div>
 
                   <div className="mt-4">
