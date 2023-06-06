@@ -7,9 +7,6 @@ stages:
 services:
   - docker:dind
 
-services:
-  - docker:dind
-
 # Run flake8 to check for code quality
 lint-test-job:
   image: python:3-bullseye
