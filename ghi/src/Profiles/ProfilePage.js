@@ -77,7 +77,7 @@ export default function ProfilePage() {
             <img
               className="w-32 h-32 rounded-full"
               src={userData.profile_picture_url}
-              alt="profile picture"
+              alt="user's profile"
             />
             <div className="p-2">
               <h3 className="text-xl text-gray-900 font-medium leading-8">

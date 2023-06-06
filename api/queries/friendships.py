@@ -2,11 +2,14 @@ from pydantic import BaseModel
 from typing import List, Optional, Union
 from queries.pool import pool
 
+
 class Error(BaseModel):
     message: str
 
+
 class FriendshipIn(BaseModel):
     pass
+
 
 class FriendshipOut(BaseModel):
     friendship_id: int
@@ -17,6 +20,7 @@ class FriendshipOut(BaseModel):
     last_name: str
     profile_pic: str
 
+
 class FriendOut(BaseModel):
     friend_id: int
     username: str
@@ -24,6 +28,7 @@ class FriendOut(BaseModel):
     first_name: str
     last_name: str
     profile_pic: str
+
 
 class FriendshipsRepo:
     def get_friends(self, user_id: int) -> Union[List[FriendshipOut], Error]:
@@ -38,10 +43,7 @@ class FriendshipsRepo:
                         (u.user_id = f.user1_id AND f.user2_id = %s)
                         OR (u.user_id = f.user2_id AND f.user1_id = %s);
                         """,
-                        [
-                            user_id,
-                            user_id
-                        ]
+                        [user_id, user_id],
                     )
                     result = []
                     for record in db:
@@ -52,7 +54,7 @@ class FriendshipsRepo:
                             email=record[3],
                             first_name=record[4],
                             last_name=record[5],
-                            profile_pic=record[6]
+                            profile_pic=record[6],
                         )
                         result.append(friendship)
                     return result
@@ -73,10 +75,7 @@ class FriendshipsRepo:
                         WHERE user1_id = %(user_id)s AND user2_id = %(friend_id)s
                         OR user1_id = %(friend_id)s AND user2_id = %(user_id)s
                         """,
-                        {
-                            "user_id": user_id,
-                            "friend_id": friend_id
-                        }
+                        {"user_id": user_id, "friend_id": friend_id},
                     )
                     check_friends_exist = check_friends.fetchone()
                     if check_friends_exist:
@@ -86,9 +85,7 @@ class FriendshipsRepo:
                             FROM user_table
                             WHERE user_id = %(friend_id)s
                             """,
-                            {
-                                "friend_id": friend_id
-                            }
+                            {"friend_id": friend_id},
                         )
                         record = result.fetchone()
                         if record is None:
@@ -99,7 +96,7 @@ class FriendshipsRepo:
                             email=record[2],
                             first_name=record[3],
                             last_name=record[4],
-                            profile_pic=record[5]
+                            profile_pic=record[5],
                         )
         except Exception as e:
             print(e)
@@ -115,10 +112,7 @@ class FriendshipsRepo:
                         WHERE (user1_id = %(user_id)s AND user2_id = %(friend_id)s)
                         OR (user1_id = %(friend_id)s AND user2_id = %(user_id)s);
                         """,
-                        {
-                            'user_id': user_id,
-                            'friend_id': friend_id
-                        }
+                        {"user_id": user_id, "friend_id": friend_id},
                     )
                     db.execute(
                         """
@@ -126,10 +120,7 @@ class FriendshipsRepo:
                         WHERE (sender_id = %(user_id)s AND receiver_id = %(friend_id)s)
                         OR (sender_id = %(friend_id)s AND receiver_id = %(user_id)s);
                         """,
-                         {
-                            'user_id': user_id,
-                            'friend_id': friend_id
-                        }
+                        {"user_id": user_id, "friend_id": friend_id},
                     )
                     return True
         except Exception as e:

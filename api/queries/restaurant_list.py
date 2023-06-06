@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union
 from queries.pool import pool
-from queries.restaurants import RestaurantOut, RestaurantIn
 
 
 class Error(BaseModel):
@@ -13,8 +12,10 @@ class RestaurantListIn(BaseModel):
     description: Optional[str]
     user_id: int
 
+
 class RestaurantListInPicture(RestaurantListIn):
     list_picture: Optional[str]
+
 
 class RestaurantListOut(BaseModel):
     list_id: int
@@ -22,8 +23,10 @@ class RestaurantListOut(BaseModel):
     description: Optional[str]
     user_id: int
 
+
 class RestaurantListOutPicture(RestaurantListOut):
     list_picture: Optional[str]
+
 
 class RestaurantOutWithCuisine(BaseModel):
     restaurant_id: int
@@ -31,7 +34,6 @@ class RestaurantOutWithCuisine(BaseModel):
     price: str
     cuisine_id: int
     cuisine_name: str
-
 
 
 class RestaurantListRepository:
@@ -47,7 +49,7 @@ class RestaurantListRepository:
                         INSERT INTO restaurant_list_restaurant (list_id, restaurant_id)
                         VALUES (%s, %s)
                         """,
-                        [list_id, restaurant_id]
+                        [list_id, restaurant_id],
                     )
                     return True
         except Exception as e:
@@ -67,7 +69,7 @@ class RestaurantListRepository:
                         FROM restaurant_list_restaurant
                         WHERE list_id = %s
                         """,
-                        [list_id]
+                        [list_id],
                     )
                     # Fetch all the restaurant IDs
                     restaurant_ids = [record[0] for record in result]
@@ -82,7 +84,7 @@ class RestaurantListRepository:
                             INNER JOIN cuisine c ON r.cuisine_id = c.cuisine_id
                             WHERE r.restaurant_id = %s
                             """,
-                            [restaurant_id]
+                            [restaurant_id],
                         )
                         restaurant_data = result.fetchone()
                         if restaurant_data:
@@ -91,7 +93,7 @@ class RestaurantListRepository:
                                 name=restaurant_data[1],
                                 price=restaurant_data[2],
                                 cuisine_id=restaurant_data[3],
-                                cuisine_name=restaurant_data[4]
+                                cuisine_name=restaurant_data[4],
                             )
                             restaurants.append(restaurant)
 
@@ -100,7 +102,9 @@ class RestaurantListRepository:
             print(e)
             return []
 
-    def update_restaurant_in_list(self, list_id: int, old_restaurant_id: int, new_restaurant_id: int) -> bool:
+    def update_restaurant_in_list(
+        self, list_id: int, old_restaurant_id: int, new_restaurant_id: int
+    ) -> bool:
         try:
             # Connect to the database
             with pool.connection() as conn:
@@ -113,7 +117,7 @@ class RestaurantListRepository:
                         SET restaurant_id = %s
                         WHERE list_id = %s AND restaurant_id = %s
                         """,
-                        [new_restaurant_id, list_id, old_restaurant_id]
+                        [new_restaurant_id, list_id, old_restaurant_id],
                     )
                     return True
         except Exception as e:
@@ -132,17 +136,12 @@ class RestaurantListRepository:
                         DELETE FROM restaurant_list_restaurant
                         WHERE list_id = %s AND restaurant_id = %s
                         """,
-                        [list_id, restaurant_id]
+                        [list_id, restaurant_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
-
-
-
-
-
 
     def get_one(self, list_id: int) -> Optional[RestaurantListOutPicture]:
         try:
@@ -154,7 +153,7 @@ class RestaurantListRepository:
                         FROM restaurant_list
                         WHERE list_id = %s
                         """,
-                        [list_id]
+                        [list_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -173,14 +172,16 @@ class RestaurantListRepository:
                         DELETE FROM restaurant_list
                         WHERE list_id = %s
                         """,
-                        [list_id]
+                        [list_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def update(self, user_id: int, list_id: int, restaurant_list: RestaurantListInPicture) -> Union[RestaurantListOutPicture, Error]:
+    def update(
+        self, user_id: int, list_id: int, restaurant_list: RestaurantListInPicture
+    ) -> Union[RestaurantListOutPicture, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -195,8 +196,8 @@ class RestaurantListRepository:
                             restaurant_list.description,
                             user_id,
                             restaurant_list.list_picture,
-                            list_id
-                        ]
+                            list_id,
+                        ],
                     )
                     return self.restaurant_list_in_to_out(list_id, restaurant_list)
         except Exception as e:
@@ -214,18 +215,19 @@ class RestaurantListRepository:
                         WHERE user_id = %s
                         ORDER BY name
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     result = db.fetchall()
                     return [
-                        self.record_to_restaurant_list_out(record)
-                        for record in result
+                        self.record_to_restaurant_list_out(record) for record in result
                     ]
         except Exception as e:
             print(e)
             return Error(message="Could not get all lists")
 
-    def get_all_by_user(self, user_id: int) -> Union[Error, List[RestaurantListOutPicture]]:
+    def get_all_by_user(
+        self, user_id: int
+    ) -> Union[Error, List[RestaurantListOutPicture]]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -236,18 +238,19 @@ class RestaurantListRepository:
                         WHERE user_id = %s
                         ORDER BY name
                         """,
-                        [user_id]
+                        [user_id],
                     )
                     result = db.fetchall()
                     return [
-                        self.record_to_restaurant_list_out(record)
-                        for record in result
+                        self.record_to_restaurant_list_out(record) for record in result
                     ]
         except Exception as e:
             print(e)
             return Error(message="Could not get all lists")
 
-    def create(self, user_id: int, restaurant_list: RestaurantListInPicture) -> Union[RestaurantListOutPicture, Error]:
+    def create(
+        self, user_id: int, restaurant_list: RestaurantListInPicture
+    ) -> Union[RestaurantListOutPicture, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -261,8 +264,8 @@ class RestaurantListRepository:
                             restaurant_list.name,
                             restaurant_list.description,
                             user_id,
-                            restaurant_list.list_picture
-                        ]
+                            restaurant_list.list_picture,
+                        ],
                     )
                     list_id = db.fetchone()[0]
                     return self.restaurant_list_in_to_out(list_id, restaurant_list)
@@ -270,7 +273,9 @@ class RestaurantListRepository:
             print(e)
             return Error(message="Could not create list")
 
-    def restaurant_list_in_to_out(self, list_id: int, restaurant_list: RestaurantListInPicture) -> RestaurantListOutPicture:
+    def restaurant_list_in_to_out(
+        self, list_id: int, restaurant_list: RestaurantListInPicture
+    ) -> RestaurantListOutPicture:
         return RestaurantListOutPicture(
             list_id=list_id,
             name=restaurant_list.name,

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Dialog, Transition } from '@headlessui/react'
 import useUser from '../useUser';
@@ -30,6 +30,9 @@ export default function SpinningCarousel() {
     flatten();
     setIsOpen(false);
   };
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   function openFriendsModal () {
     setFriendsIsOpen(true);
@@ -293,16 +296,16 @@ export default function SpinningCarousel() {
       setHasFirstRotation(false);
       setTimeout(() => {
         setIsRotating(false);
-      if (hasFirstRotation) {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0] = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-        setHasFirstRotation(true);
-      } else {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0].name = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-      }
+        if (hasFirstRotation) {
+          const updatedRestaurants = [...restaurants];
+          updatedRestaurants[0] = getRandomRestaurant();
+          setRestaurants(updatedRestaurants);
+          setHasFirstRotation(true);
+        } else {
+          const updatedRestaurants = [...restaurants];
+          updatedRestaurants[0].name = getRandomRestaurant();
+          setRestaurants(updatedRestaurants);
+        }
       }, 3000);
     }
   }, [isRotating]);// eslint-disable-line react-hooks/exhaustive-deps
@@ -374,9 +377,7 @@ export default function SpinningCarousel() {
                     Filtering Options:
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                     Cuisines:
-                    </p>
+                    <p className="text-sm text-gray-500">Cuisines:</p>
                   </div>
                   {cuisines.length > 0 && (
                     <div className='mt-4' style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
@@ -402,73 +403,83 @@ export default function SpinningCarousel() {
                   </div>
                   )}
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                     Price:
-                    </p>
+                    <p className="text-sm text-gray-500">Price:</p>
                   </div>
-                  <div className='mt-4'>
+                  <div className="mt-4">
                     <div className="mt-4">
                       <div className="radio-buttons">
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$' ? 'selected' : ''}`}
-                          value={'$'}
+                          className={`radio-button ${
+                            selectedPrice === "$" ? "selected" : ""
+                          }`}
+                          value={"$"}
                           onClick={handlePriceChange}
                         >
                           $
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$' ? 'selected' : ''}`}
-                          value={'$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$" ? "selected" : ""
+                          }`}
+                          value={"$$"}
                           onClick={handlePriceChange}
                         >
                           $$
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$$' ? 'selected' : ''}`}
-                          value={'$$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$$" ? "selected" : ""
+                          }`}
+                          value={"$$$"}
                           onClick={handlePriceChange}
                         >
                           $$$
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$$$' ? 'selected' : ''}`}
-                          value={'$$$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$$$" ? "selected" : ""
+                          }`}
+                          value={"$$$$"}
                           onClick={handlePriceChange}
                         >
                           $$$$
@@ -605,13 +616,14 @@ export default function SpinningCarousel() {
         </Dialog>
       </Transition>
       <div
-        className='container'
-        style={{ position: 'relative', 
-        width: '320px', 
-        margin: '100px auto 0 auto', 
-        perspective: '1000px',
-        transform: 'rotateY(50deg)' // Neat place to change size of the frames.
-    }}
+        className="container"
+        style={{
+          position: "relative",
+          width: "320px",
+          margin: "100px auto 0 auto",
+          perspective: "1000px",
+          transform: "rotateY(50deg)", // Neat place to change size of the frames.
+        }}
       >
         <div
           style={{
@@ -626,25 +638,25 @@ export default function SpinningCarousel() {
             <div
               key={index}
               style={{
-                position: 'absolute',
-                width: '300px',
-                height: '187px',
-                top: '20px',
-                left: '10px',
-                right: '10px',
-                backgroundSize: 'cover',
-                boxShadow: 'inset 0 0 0 2000px rgba(0,0,0,0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
+                position: "absolute",
+                width: "300px",
+                height: "187px",
+                top: "20px",
+                left: "10px",
+                right: "10px",
+                backgroundSize: "cover",
+                boxShadow: "inset 0 0 0 2000px rgba(0,0,0,0.5)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
                 transform: `rotateY(${index * 40}deg) translateZ(430px)`,
               }}
             >
               <h3>{restaurant.name}</h3>
             </div>
-          ))};
-
+          ))}
+          ;
           {placeholderFaces.map((index) => (
             <div
               key={index}
@@ -687,15 +699,21 @@ export default function SpinningCarousel() {
           </style>
         </div>
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <button onClick={toggleRotation}>{isRotating ? 'Stop' : 'Start'}</button>
-        <div>{token && (<button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          Filter
-        </button>)}</div>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={toggleRotation}>
+          {isRotating ? "Stop" : "Start"}
+        </button>
+        <div>
+          {token && (
+            <button
+              type="button"
+              onClick={openModal}
+              className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Filter
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

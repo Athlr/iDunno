@@ -21,15 +21,19 @@ from queries.accounts import (
     ProfileUpdate,
 )
 
+
 class AccountForm(BaseModel):
     username: str
     password: str
 
+
 class AccountToken(Token):
     account: AccountOut
 
+
 class HttpError(BaseModel):
     detail: str
+
 
 router = APIRouter()
 
@@ -37,7 +41,7 @@ router = APIRouter()
 @router.get("/token", response_model=AccountToken | None)
 async def get_token(
     request: Request,
-    account: AccountOut = Depends(authenticator.try_get_current_account_data)
+    account: AccountOut = Depends(authenticator.try_get_current_account_data),
 ) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
         return {
@@ -67,21 +71,23 @@ async def create_account(
     token = await authenticator.login(response, request, form, repo)
     return AccountToken(account=account, **token.dict())
 
+
 @router.get("/api/accounts", response_model=Union[AccountOut, Error])
 def get_account(
     account_data: dict = Depends(authenticator.try_get_current_account_data),
-    repo: AccountRepo = Depends()
+    repo: AccountRepo = Depends(),
 ):
     return repo.getAccount(account_data["id"])
+
 
 @router.put("/api/accounts/{user_id}", response_model=Optional[Error])
 def update_account(
     profile_update: ProfileUpdate,
     account_data: dict = Depends(authenticator.try_get_current_account_data),
-    repo: AccountRepo = Depends()
+    repo: AccountRepo = Depends(),
 ) -> Optional[Error]:
-    try:
+    if profile_update.password is not None:
         hashed_password = authenticator.hash_password(profile_update.password)
         return repo.updateAccount(account_data["id"], profile_update, hashed_password)
-    except:
+    else:
         return repo.updateAccount(account_data["id"], profile_update)

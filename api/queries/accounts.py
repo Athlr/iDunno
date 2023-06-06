@@ -2,11 +2,14 @@ from pydantic import BaseModel
 from typing import Optional, Union
 from queries.pool import pool
 
+
 class DuplicateAccountError(ValueError):
     pass
 
+
 class Error(BaseModel):
     message: str
+
 
 class AccountIn(BaseModel):
     email: str
@@ -14,6 +17,7 @@ class AccountIn(BaseModel):
     password: str
     first_name: str
     last_name: str
+
 
 class AccountOut(BaseModel):
     id: int
@@ -23,14 +27,17 @@ class AccountOut(BaseModel):
     last_name: str
     profile_picture_url: str
 
+
 class AccountOutWithPassword(AccountOut):
     hashed_password: str
+
 
 class ProfileUpdate(BaseModel):
     first_name: str = None
     last_name: str = None
     password: str = None
     profile_picture: str = None
+
 
 class AccountRepo:
     def get(self, username: str) -> AccountOutWithPassword:
@@ -43,9 +50,7 @@ class AccountRepo:
                         FROM user_table
                         WHERE username = %s;
                         """,
-                        [
-                            username
-                        ],
+                        [username],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -77,7 +82,7 @@ class AccountRepo:
                             hashed_password,
                             info.first_name,
                             info.last_name,
-                            info.email
+                            info.email,
                         ],
                     )
                     object = result.fetchone()
@@ -105,9 +110,7 @@ class AccountRepo:
                         FROM user_table
                         WHERE user_id = %(user_id)s;
                         """,
-                        {
-                            "user_id": user_id
-                        }
+                        {"user_id": user_id},
                     )
                     record = user_data.fetchone()
                     if record is None:
@@ -118,15 +121,18 @@ class AccountRepo:
                         username=record[2],
                         first_name=record[3],
                         last_name=record[4],
-                        profile_picture_url=record[5]
+                        profile_picture_url=record[5],
                     )
         except Exception as e:
             print(e)
             return {"message": "Could not grab account"}
 
-
-
-    def updateAccount(self, user_id: int, profile_update: ProfileUpdate, hashed_password: str | None = None) -> Optional[Error]:
+    def updateAccount(
+        self,
+        user_id: int,
+        profile_update: ProfileUpdate,
+        hashed_password: str | None = None,
+    ) -> Optional[Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -136,9 +142,7 @@ class AccountRepo:
                         FROM user_table
                         WHERE user_id = %(user_id)s
                         """,
-                        {
-                            "user_id": user_id
-                        }
+                        {"user_id": user_id},
                     )
                     user = user_data.fetchone()
                     if not user:
@@ -153,8 +157,8 @@ class AccountRepo:
                             """,
                             {
                                 "first_name": profile_update.first_name,
-                                "user_id": user_id
-                            }
+                                "user_id": user_id,
+                            },
                         )
 
                     if profile_update.last_name:
@@ -164,10 +168,7 @@ class AccountRepo:
                             SET last_name = %(last_name)s
                             WHERE user_id = %(user_id)s
                             """,
-                            {
-                                "last_name": profile_update.last_name,
-                                "user_id": user_id
-                            }
+                            {"last_name": profile_update.last_name, "user_id": user_id},
                         )
 
                     if profile_update.password:
@@ -177,10 +178,7 @@ class AccountRepo:
                             SET password = %(password)s
                             WHERE user_id = %(user_id)s
                             """,
-                            {
-                                "password": hashed_password,
-                                "user_id": user_id
-                            }
+                            {"password": hashed_password, "user_id": user_id},
                         )
 
                     if profile_update.profile_picture:
@@ -192,8 +190,8 @@ class AccountRepo:
                             """,
                             {
                                 "profile_picture": profile_update.profile_picture,
-                                "user_id": user_id
-                            }
+                                "user_id": user_id,
+                            },
                         )
         except Exception as e:
             print(e)

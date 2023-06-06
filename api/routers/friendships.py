@@ -1,15 +1,15 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from typing import List, Optional, Union
 from authenticator import authenticator
 from queries.friendships import (
     Error,
-    FriendshipIn,
     FriendshipOut,
     FriendOut,
     FriendshipsRepo,
 )
 
 router = APIRouter()
+
 
 @router.get("/friends", response_model=Union[List[FriendshipOut], Error])
 def get_friends(
@@ -18,6 +18,7 @@ def get_friends(
 ):
     return repo.get_friends(account_data["id"])
 
+
 @router.get("/friends/{friend_id}", response_model=Optional[FriendOut])
 def get_friend(
     friend_id: int,
@@ -25,6 +26,7 @@ def get_friend(
     repo: FriendshipsRepo = Depends(),
 ):
     return repo.get_friend(account_data["id"], friend_id)
+
 
 @router.delete("/friends/{friend_id}", response_model=bool)
 def delete_friend(

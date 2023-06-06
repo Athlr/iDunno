@@ -1,16 +1,16 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import useUser from "../useUser";
 
 export default function Nav() {
   const { token, logout } = useToken();
   const { user } = useUser(token);
-  console.log(user);
+  const navigate = useNavigate();
 
   const handleLogout = () => {
     logout();
-    window.location.href = `${process.env.PUBLIC_URL}/`;
+    navigate("/");
   };
 
   return token ? (
@@ -59,7 +59,7 @@ export default function Nav() {
               </Link>
             </li>
             <li>
-              <a onClick={handleLogout}>Logout</a>
+              <span onClick={handleLogout}>Logout</span>
             </li>
           </ul>
         </div>

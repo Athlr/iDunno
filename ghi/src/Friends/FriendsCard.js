@@ -187,7 +187,7 @@ export default function FriendsCard({
               <img
                 className="w-32 h-32 rounded-full mx-auto"
                 src={profile_pic}
-                alt="profile picture"
+                alt="user's profile"
               />
             </div>
           </Link>
