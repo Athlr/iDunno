@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import FriendsMain from "./Friends/FriendsMain";
 // import useToken from "@galvanize-inc/jwtdown-for-react";
 // import useUser from "./useUser";
@@ -32,9 +31,12 @@ function App() {
         </Route>
         <Route path="/restaurants">
           <Route path=":listId?" element={<RestaurantListPage />} />
-          <Route path="CreateList" element={<RestaurantListForm/>} />
+          <Route path="CreateList" element={<RestaurantListForm />} />
           <Route path="new" element={<NewRestaurantForm />} />
-          <Route path=":listId/edit/:restaurantId/" element={<EditRestaurantForm />} />
+          <Route
+            path=":listId/edit/:restaurantId/"
+            element={<EditRestaurantForm />}
+          />
           <Route path=":friend_id/:listId" element={<FriendRestaurantPage />} />
           <Route path="edit/:listId" element={<EditRestaurantListForm />} />
         </Route>

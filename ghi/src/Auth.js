@@ -12,7 +12,7 @@ function Auth() {
     if (token && !location.pathname.includes("signout")) {
       navigate("/home");
     }
-  }, [token]);
+  }, [token, location.pathname, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({

@@ -7,12 +7,10 @@ export default function Nav() {
   const { token, logout } = useToken();
   const { user } = useUser(token);
   const navigate = useNavigate();
-  console.log(user);
 
   const handleLogout = () => {
     logout();
     navigate("/");
-    // window.location.href = `${process.env.PUBLIC_URL}/`;
   };
 
   return token ? (
@@ -61,7 +59,7 @@ export default function Nav() {
               </Link>
             </li>
             <li>
-              <a onClick={handleLogout}>Logout</a>
+              <span onClick={handleLogout}>Logout</span>
             </li>
           </ul>
         </div>

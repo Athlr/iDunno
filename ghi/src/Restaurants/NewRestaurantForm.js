@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useUser from "../useUser";
 
 export default function NewRestaurantForm() {
   const [cuisines, setCuisines] = useState([]);
@@ -13,7 +12,6 @@ export default function NewRestaurantForm() {
   const navigate = useNavigate();
   const { token } = useToken();
   console.log("Token after useToken:", token);
-  const { user } = useUser(token);
 
   const handleName = (event) => {
     const value = event.target.value;
@@ -53,8 +51,6 @@ export default function NewRestaurantForm() {
       event.preventDefault();
       const response = await fetch(restaurant_url, config);
       if (response.ok) {
-        const newRestaurant = await response.json();
-        // console.log(newRestaurant);
         setName("");
         setPrice("");
         setCuisineId("");

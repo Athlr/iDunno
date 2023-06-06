@@ -54,7 +54,6 @@ function RestaurantListForm() {
     const response = await fetch(url, fetchConfig);
     console.log(response);
     if (response.ok) {
-      const newRestaurantList = await response.json();
       setName("");
       setDescription("");
       setListPicture(null);

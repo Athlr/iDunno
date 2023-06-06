@@ -204,7 +204,7 @@ export default function EditProfile({
                   <img
                     className="w-24 h-24 rounded-full"
                     src={userData.profile_picture_url}
-                    alt="profile picture"
+                    alt="user's profile"
                   />
                 </div>
                 <div className="relative my-2">

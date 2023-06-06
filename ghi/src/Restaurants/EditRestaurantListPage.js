@@ -63,7 +63,6 @@ export default function EditRestaurantListForm() {
 
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
-      const newRestaurantList = await response.json();
       setName("");
       setDescription("");
       setListPicture("");
