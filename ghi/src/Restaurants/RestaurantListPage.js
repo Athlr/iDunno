@@ -20,18 +20,18 @@ export default function RestaurantList() {
     }
   };
 
-  const fetchRestaurantsData = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/restaurants`;
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "get",
-    });
+  // const fetchRestaurantsData = async () => {
+  //   const url = `${process.env.REACT_APP_API_HOST}/restaurants`;
+  //   const response = await fetch(url, {
+  //     credentials: "include",
+  //     method: "get",
+  //   });
 
-    if (response.ok) {
-      const data = await response.json();
-      setRestaurants(data);
-    }
-  };
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     setRestaurants(data);
+  //   }
+  // };
 
   const fetchRestaurantListData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;

@@ -74,7 +74,7 @@ export default function EditRestaurantListForm() {
     if (listId) {
       fetchRestaurantsData();
     }
-  }, [listId]);
+  }, [listId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setName(restaurantData.name);

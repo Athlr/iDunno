@@ -99,7 +99,7 @@ export default function SpinningCarousel() {
         }
       }, 3000);
     }
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     const fetchData = async () => {
@@ -108,7 +108,7 @@ export default function SpinningCarousel() {
     };
 
     fetchData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const placeholderCount = Math.max(9 - restaurants.length, 0);
   const placeholderFaces = Array.from(

@@ -53,7 +53,7 @@ export default function FriendPage() {
   useEffect(() => {
     fetchRestaurantListData();
     fetchUserData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div style={mainBackground}>
       <div className="container mx-auto pt-8 w-4/5 h-auto">

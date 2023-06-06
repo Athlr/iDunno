@@ -96,7 +96,7 @@ export default function EditRestaurantForm() {
   useEffect(() => {
     fetchRestaurantData();
     fetchCuisineData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (restaurantData) {
