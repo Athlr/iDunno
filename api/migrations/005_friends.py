@@ -12,7 +12,7 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE friend_request;
-        """
+        """,
     ],
     [
         # "Up" SQL statement
@@ -26,6 +26,6 @@ steps = [
         # "Down" SQL statemnet
         """
         DROP TABLE friendships;
-        """
-    ]
+        """,
+    ],
 ]

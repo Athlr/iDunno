@@ -2,6 +2,8 @@ import os
 from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
 from queries.accounts import AccountRepo, AccountOut, AccountOutWithPassword
+
+
 class MyAuthenticator(Authenticator):
     async def get_account_data(
         self,

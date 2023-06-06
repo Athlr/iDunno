@@ -16,12 +16,8 @@ class RestaurantListOut(BaseModel):
 
 
 def fake_restaurant_list_data():
-    return RestaurantListOut(
-        list_id=1,
-        name="user",
-        description="example",
-        user_id=1
-    )
+    return RestaurantListOut(list_id=1, name="user", description="example", user_id=1)
+
 
 class EmptyRestaurantListRepository:
     def get_one(self, list_id: int) -> Optional[RestaurantListOutPicture]:
@@ -30,20 +26,22 @@ class EmptyRestaurantListRepository:
             name="name",
             description="description",
             user_id=1,
-            list_picture="https://example.com/list_picture.jpg"
+            list_picture="https://example.com/list_picture.jpg",
         )
 
 
 def test_get_one_restaurant_list():
     # Arrange
-    app.dependency_overrides[authenticator.get_current_account_data] = fake_restaurant_list_data
+    app.dependency_overrides[
+        authenticator.get_current_account_data
+    ] = fake_restaurant_list_data
     app.dependency_overrides[RestaurantListRepository] = EmptyRestaurantListRepository
     expected = {
         "list_id": 1,
         "name": "name",
         "description": "description",
         "user_id": 1,
-        "list_picture": "https://example.com/list_picture.jpg"
+        "list_picture": "https://example.com/list_picture.jpg",
     }
 
     # Act

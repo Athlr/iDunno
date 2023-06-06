@@ -10,6 +10,6 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE cuisine;
-        """
+        """,
     ]
 ]
