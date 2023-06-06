@@ -22,8 +22,6 @@ class SponsoredOut(BaseModel):
 
 
 class SponsoredRepository:
-    
-
     def get(self) -> Union[Error, List[SponsoredOut]]:
         try:
             with pool.connection() as conn:
@@ -43,10 +41,10 @@ class SponsoredRepository:
                             name=record[1],
                             price=record[2],
                             cuisine_id=record[3],
-                            suggested=record[4]
+                            suggested=record[4],
                         )
                         suggested_list.append(restaurant)
                     return suggested_list
-        except Exception as e :
+        except Exception as e:
             print(e)
             return {"message": "Could not get all sponsored"}

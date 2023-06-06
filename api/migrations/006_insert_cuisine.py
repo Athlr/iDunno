@@ -30,6 +30,6 @@ steps = [
         # "Down" SQL statement
         """
         DROP TABLE testingtable;
-        """
+        """,
     ]
 ]

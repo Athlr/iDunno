@@ -8,8 +8,7 @@ from queries.cuisine_list import (
 
 router = APIRouter()
 
+
 @router.get("/cuisine-list", response_model=Union[List[CuisinesOut], Error])
-def get_cuisine_list(
-    repo: CuisineListRepository = Depends()
-):
+def get_cuisine_list(repo: CuisineListRepository = Depends()):
     return repo.get()

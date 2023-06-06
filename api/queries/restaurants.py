@@ -44,7 +44,7 @@ class RestaurantRepository:
                         FROM restaurant
                         WHERE restaurant_id = %s
                         """,
-                        [restaurant_id]
+                        [restaurant_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -63,14 +63,16 @@ class RestaurantRepository:
                         DELETE FROM restaurant
                         WHERE restaurant_id = %s
                         """,
-                        [restaurant_id]
+                        [restaurant_id],
                     )
                     return True
         except Exception as e:
             print(e)
             return False
 
-    def update(self, user_id: int, restaurant_id: int, restaurant: RestaurantInWithListID) -> Union[RestaurantOut, Error]:
+    def update(
+        self, user_id: int, restaurant_id: int, restaurant: RestaurantInWithListID
+    ) -> Union[RestaurantOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -87,9 +89,11 @@ class RestaurantRepository:
                             restaurant.price,
                             restaurant.cuisine_id,
                             restaurant_id,
-                        ]
+                        ],
                     )
-                    return RestaurantOut(restaurant_id=restaurant_id, **restaurant.dict())
+                    return RestaurantOut(
+                        restaurant_id=restaurant_id, **restaurant.dict()
+                    )
         except Exception as e:
             print(e)
             return {"message": "Could not update that restaurant"}
@@ -108,9 +112,7 @@ class RestaurantRepository:
                         WHERE user_id = %s
                         ORDER BY name;
                         """,
-                        [
-                            user_id
-                        ]
+                        [user_id],
                     )
                     result = []
                     for record in db:
@@ -126,7 +128,9 @@ class RestaurantRepository:
             print(e)
             return {"message": "Could not get all vacations"}
 
-    def post(self, user_id: int, restaurant: RestaurantInWithListID) -> Union[RestaurantOut, Error]:
+    def post(
+        self, user_id: int, restaurant: RestaurantInWithListID
+    ) -> Union[RestaurantOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -143,7 +147,7 @@ class RestaurantRepository:
                             restaurant.price,
                             restaurant.cuisine_id,
                             user_id,
-                        ]
+                        ],
                     )
                     restaurant_id = result.fetchone()[0]
                     db.execute(
@@ -153,10 +157,7 @@ class RestaurantRepository:
                         VALUES
                             (%s, %s)
                         """,
-                        [
-                            restaurant.list_id,
-                            restaurant_id
-                        ]
+                        [restaurant.list_id, restaurant_id],
                     )
                     old_data = restaurant.dict()
                     print(old_data)
