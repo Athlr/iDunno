@@ -5,6 +5,8 @@ import useUser from '../useUser';
 
 export default function SpinningCarousel() {
   const [restaurants, setRestaurants] = useState([]);
+  const [filteredRestaurants, setFilteredRestaurants] = useState([]);
+  const [userSelectedRestaurants, setUserSelectedRestaurants] = useState([]);
   const [userLists, setUserLists] = useState([]);
   const [selectedUserList, setSelectedUserList] = useState(null)
   const [isRotating, setIsRotating] = useState(false);
@@ -18,16 +20,15 @@ export default function SpinningCarousel() {
   const [selectedFriends, setSelectedFriends] = useState([]);
   const [selectedFriendsProfiles, setSelectedFriendsProfiles] = useState([]);
   const [selectedFriendsLists, setSelectedFriendsLists] = useState([]);
+  const [selectedFriendsList, setSelectedFriendsList] = useState({})
+  const [selectedFriendsListsRestaurants, setSelectedFriendsListsRestaurants] = useState([])
   const { token } = useToken();
   const { user } = useUser(token);
 
   function closeModal() {
-    filteredUserList();
+    fetchFriendRestaurants();
+    flatten();
     setIsOpen(false);
-
-    setSelectedCuisine(null);
-    setSelectedPrice('');
-    
   };
 
   function openFriendsModal () {
@@ -87,6 +88,18 @@ export default function SpinningCarousel() {
     }
   };
 
+  const handleFriendListChange = (listId, dropdownId) => {
+    setSelectedFriendsList((prevData) => {
+      const updatedSelections = { ...prevData };
+      if (listId === ''){
+        delete updatedSelections[dropdownId];
+      }else{
+        updatedSelections[dropdownId] = parseInt(listId);
+      }
+      return updatedSelections;
+    });
+    fetchFriendRestaurants();
+  };
 
   const fetchFriendData = async () => {
     const responses = await Promise.all(
@@ -116,7 +129,6 @@ export default function SpinningCarousel() {
       name: item.name,
       user_id: item.user_id,
     })))
-    console.log(friendsList)
     return friendsList;
   };
 
@@ -180,8 +192,27 @@ export default function SpinningCarousel() {
       }
   };
 
+  const fetchFriendRestaurants= async () => {
+    for (const list of Object.values(selectedFriendsList)){
+      const url = `${process.env.REACT_APP_API_HOST}/restaurant_list/${list}/restaurants`
+            const response = await fetch(url, {
+        credentials: 'include',
+        method: 'get',
+      });
 
-  const filteredUserList = async () => {
+      if (response.ok){
+        const data = await response.json();
+        setSelectedFriendsListsRestaurants(prevState => ({
+          ...prevState,
+          [list]: data,
+        }));
+      }
+    }
+    
+
+  };
+
+  const fetchUsersRestaurants= async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant_list/${selectedUserList}/restaurants`;
     const response = await fetch(url, {
         credentials: 'include',
@@ -189,46 +220,69 @@ export default function SpinningCarousel() {
       });
 
       if (response.ok){
-        if (selectedUserList && selectedCuisine !== null && selectedPrice !== ''){
-          const data = await response.json();
-          const filteredRestaurants = data.filter(restaurant => { 
-            return (
-              restaurant.cuisine_id === selectedCuisine &&
-              restaurant.price === selectedPrice
-            );
-          });
-          setRestaurants(filteredRestaurants);
-          
-      }else if (selectedUserList && selectedCuisine !== null){
-          const data = await response.json();
-          const filteredRestaurants = data.filter(restaurant => { 
-            return (
-              restaurant.cuisine_id === selectedCuisine
-            );
-          });
-          setRestaurants(filteredRestaurants);
-        }else if (selectedUserList && selectedPrice !== ''){
-          const data = await response.json();
-          const filteredRestaurants = data.filter(restaurant => { 
-            return (
-              restaurant.price === selectedPrice
-            );
-          });
-          setRestaurants(filteredRestaurants);
-        }else if (selectedUserList){
-          const data = await response.json();
-          setRestaurants(data);
-        }else{
-          fetchRestaurants();
-        }
+        const data = await response.json();
+        setUserSelectedRestaurants(data);
       }
+  }
+ 
+  const filterRestaurants = () => {
+    let filterRestaurants = restaurants;
+    console.log("pre if", restaurants)
+    if (selectedCuisine !== null) {
+      filterRestaurants = filterRestaurants.filter(
+        restaurant => restaurant.cuisine_id === selectedCuisine
+      );
+    }
+
+    if (selectedPrice !== '') {
+      filterRestaurants = filterRestaurants.filter(
+        restaurant => restaurant.price === selectedPrice
+      );
+    }
+
+    setFilteredRestaurants(filterRestaurants);
   };
 
+        
+
+
+  function flatten() {
+    const result = [];
+      for (let key in selectedFriendsListsRestaurants) {
+      if (selectedFriendsListsRestaurants.hasOwnProperty(key)) {
+        const value = selectedFriendsListsRestaurants[key];
+
+        if (Array.isArray(value)) {
+          result.push(...value);
+        } else {
+          result.push(value);
+        }
+      }
+    }
+  result.push(...userSelectedRestaurants);
+  setRestaurants(result);
+  return result;
+    
+  };
 
 
   function openModal() {
-    setIsOpen(true)
+    setIsOpen(true);
+    setRestaurants([]);
+    setSelectedFriendsList({});
+    setSelectedFriendsListsRestaurants([]);
   };
+
+  useEffect(() => {
+    // console.log("userSelectedRestaurants", userSelectedRestaurants);
+    // console.log('selectedFriendsListsRestaurants', selectedFriendsListsRestaurants);
+    // console.log('restaurants', restaurants);
+    // console.log('selectedFriendsList', selectedFriendsList);
+    console.log('restaurants', restaurants);
+    console.log("selectedCuisine", selectedCuisine);
+    console.log('filtered restaurants', filteredRestaurants);
+  })
+
 
   useEffect(() => {
     const fetchData = async () => {
@@ -267,14 +321,24 @@ export default function SpinningCarousel() {
     }
   }, [isRotating]);
 
- 
   useEffect(() => {
-  
+    if(selectedFriendsList){
+    fetchFriendRestaurants();
+    }
+  }, [selectedFriendsList]);
+
+  useEffect(() => {
+    
     fetchRestaurants();
     fetchCuisine();
     fetchFreinds();
-    
   }, []);
+
+  useEffect(() => {
+    if(selectedUserList){
+    fetchUsersRestaurants();
+    }
+  }, [selectedUserList]);
 
   useEffect(() => {
     if (user){
@@ -282,7 +346,11 @@ export default function SpinningCarousel() {
     };
   },[user]);
 
-  const placeholderCount = Math.max(9 - restaurants.length, 0);
+  useEffect(() => {
+    filterRestaurants();
+  },[restaurants])
+
+  const placeholderCount = Math.max(9 - filteredRestaurants.length, 0);
   const placeholderFaces = Array.from({ length: placeholderCount }, (_, index) => index);
 
   return (
@@ -516,7 +584,9 @@ export default function SpinningCarousel() {
                       {selectedFriendsProfiles.map((friendProfile) => (
                         <div key={friendProfile.id}>
                           <label htmlFor={`dropdown-${friendProfile.id}`}>{friendProfile.username}: </label>
-                          <select id={`dropdown-${friendProfile.id}`} style={{ width: '200px', marginTop: '5px' }}>
+                          <select id={`dropdown-${friendProfile.id}`} style={{ width: '200px', marginTop: '5px' }}
+                          onChange={(event) => handleFriendListChange(event.target.value, `dropdown-${friendProfile.id}`)} 
+                          >
                             <option key={''} value={''}>
                                     Your buddy's Lists!
                                   </option>
@@ -566,7 +636,7 @@ export default function SpinningCarousel() {
             animation: isRotating ? 'rotate360 1s infinite linear' : 'none',
           }}
         >
-          {restaurants.slice(0, 9).map((restaurant, index) => (
+          {filteredRestaurants.slice(0, 9).map((restaurant, index) => (
             <div
               key={index}
               style={{
@@ -605,7 +675,7 @@ export default function SpinningCarousel() {
                 justifyContent: 'center',
                 alignItems: 'center',
                 textAlign: 'center',
-                transform: `rotateY(${(restaurants.length + index) * 40}deg) translateZ(430px)`,
+                transform: `rotateY(${(filteredRestaurants.length + index) * 40}deg) translateZ(430px)`,
               }}
             >
               Place Holder
