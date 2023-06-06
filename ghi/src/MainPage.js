@@ -9,6 +9,7 @@ export default function MainPage() {
       <div>
         <Hero />
       </div>
+      
       <div>
         <Cards />
       </div>

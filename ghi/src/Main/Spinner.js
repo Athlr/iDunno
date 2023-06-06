@@ -17,7 +17,7 @@ export default function SpinningCarousel() {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
     return restaurants[randomIndex].name;
   };
-  
+
   const handleCuisineChange = (event) => {
     const selectedCuisineValue = event.target.value;
     setSelectedCuisine(selectedCuisineValue);
@@ -38,7 +38,7 @@ export default function SpinningCarousel() {
       if (response.ok) {
         const data = await response.json();
         setCuisines(data);
-      } 
+      }
   };
 
   const fetchRestaurants = async () => {
@@ -54,9 +54,9 @@ export default function SpinningCarousel() {
         setRestaurants(data);
       }
     }else{
-      
+
     }
-  }; 
+  };
   function closeModal() {
     setIsOpen(false)
   };
@@ -160,7 +160,7 @@ export default function SpinningCarousel() {
                     <div className='mt-4'>
                     {cuisines.map((cuisine, index) =>(
                       <div key={index} >
-                        <input 
+                        <input
                         type='radio'
                         value={cuisine.cuisine_id}
                         id={cuisine.cuisine_id}
@@ -169,9 +169,9 @@ export default function SpinningCarousel() {
                         name='cuisint-radion'
                         className="form-radio h-4 w-4 text-blue-600"
                         />
-                      <label 
+                      <label
                         htmlFor={cuisine.cuisine_id}
-                        className={`inline-flex items-center mb-2 
+                        className={`inline-flex items-center mb-2
                           ${cuisine.cuisine_id === selectedCuisine?.id ? 'text-blue-900' : 'text-gray-700'}`}>
                         <span className='ml-2'>{cuisine.name}</span>
                       </label>
@@ -271,15 +271,14 @@ export default function SpinningCarousel() {
       </Transition>
       <div
         className='container'
-        style={{ position: 'relative', 
-        width: '320px', 
-        margin: '100px auto 0 auto', 
+        style={{ position: 'relative',
+        width: '320px',
+        margin: '100px auto 0 auto',
         perspective: '1000px',
         transform: 'rotateY(50deg)' // Neat place to change size of the frames.
     }}
       >
         <div
-          className='carousel'
           style={{
             position: 'absolute',
             width: '100%',
@@ -291,7 +290,6 @@ export default function SpinningCarousel() {
           {restaurants.slice(0, 9).map((restaurant, index) => (
             <div
               key={index}
-              className='carousel_face'
               style={{
                 position: 'absolute',
                 width: '300px',
@@ -315,7 +313,6 @@ export default function SpinningCarousel() {
           {placeholderFaces.map((index) => (
             <div
               key={index}
-              className='carousel_face'
               style={{
                 position: 'absolute',
                 width: '300px',
