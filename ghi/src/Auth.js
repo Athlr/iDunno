@@ -12,7 +12,7 @@ function Auth() {
     if (token && !location.pathname.includes("signout")) {
       navigate("/home");
     }
-  }, [token]);
+  }, [token, location.pathname, navigate]);
 
   const handleFormChange = (e) => {
     setFormData({
@@ -92,7 +92,7 @@ function Auth() {
                 <input
                   value={username}
                   onChange={handleFormChange}
-                  placeholder="BootyMuncher69"
+                  placeholder="Username"
                   required
                   type="text"
                   name="username"
@@ -112,7 +112,7 @@ function Auth() {
                 <input
                   value={password}
                   onChange={handleFormChange}
-                  placeholder="BigMac123!"
+                  placeholder="Password"
                   required
                   type="password"
                   name="password"
@@ -134,7 +134,7 @@ function Auth() {
                     <input
                       value={email}
                       onChange={handleFormChange}
-                      placeholder="doublequarterpounderwithcheese@aol.com"
+                      placeholder="email@email.com"
                       required
                       type="text"
                       name="email"
@@ -154,7 +154,7 @@ function Auth() {
                     <input
                       value={first_name}
                       onChange={handleFormChange}
-                      placeholder="Ronald"
+                      placeholder="First name"
                       required
                       type="text"
                       name="first_name"
@@ -174,7 +174,7 @@ function Auth() {
                     <input
                       value={last_name}
                       onChange={handleFormChange}
-                      placeholder="McDonald"
+                      placeholder="Last name"
                       required
                       type="text"
                       name="last_name"

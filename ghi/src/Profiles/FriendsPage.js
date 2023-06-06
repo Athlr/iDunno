@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import useUser from "../useUser";
 import FriendsList from "./FriendsList";
 import { useParams } from "react-router-dom";
 import blobBackground from "../Media/blob-background.svg";
@@ -9,10 +7,6 @@ export default function FriendPage() {
   const [friendInfo, setFriendInfo] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
   const [search, setSearch] = useState("");
-
-  const { token } = useToken();
-  const { user } = useUser(token);
-
   const { friend_id } = useParams();
 
   const mainBackground = {
@@ -59,7 +53,7 @@ export default function FriendPage() {
   useEffect(() => {
     fetchRestaurantListData();
     fetchUserData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
   return (
     <div style={mainBackground}>
       <div className="container mx-auto pt-8 w-4/5 h-auto">

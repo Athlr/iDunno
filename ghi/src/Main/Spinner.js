@@ -1,7 +1,6 @@
-import React, { useState, useEffect, Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import { Dialog, Transition } from '@headlessui/react'
-
+import { Dialog, Transition } from "@headlessui/react";
 
 export default function SpinningCarousel() {
   const [restaurants, setRestaurants] = useState([]);
@@ -9,15 +8,15 @@ export default function SpinningCarousel() {
   const [hasFirstRotation, setHasFirstRotation] = useState(false);
   const [cuisines, setCuisines] = useState([]);
   const [selectedCuisine, setSelectedCuisine] = useState(null);
-  const [selectedPrice, setSelectedPrice] = useState('');
-  const [isOpen, setIsOpen] = useState(false)
+  const [selectedPrice, setSelectedPrice] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
   const { token } = useToken();
 
   const getRandomRestaurant = () => {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
     return restaurants[randomIndex].name;
   };
-  
+
   const handleCuisineChange = (event) => {
     const selectedCuisineValue = event.target.value;
     setSelectedCuisine(selectedCuisineValue);
@@ -32,38 +31,37 @@ export default function SpinningCarousel() {
   const fetchCuisine = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/cuisine-list`;
     const response = await fetch(url, {
-        credentials: 'include',
-        method: 'get',
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setCuisines(data);
-      } 
+      credentials: "include",
+      method: "get",
+    });
+    if (response.ok) {
+      const data = await response.json();
+      setCuisines(data);
+    }
   };
 
   const fetchRestaurants = async () => {
-      if (!token){
+    if (!token) {
       const url = `${process.env.REACT_APP_API_HOST}/sponsored`;
       const response = await fetch(url, {
-        credentials: 'include',
-        method: 'get',
+        credentials: "include",
+        method: "get",
       });
 
       if (response.ok) {
         const data = await response.json();
         setRestaurants(data);
       }
-    }else{
-      
+    } else {
     }
-  }; 
-  function closeModal() {
-    setIsOpen(false)
   };
+  function closeModal() {
+    setIsOpen(false);
+  }
 
   function openModal() {
-    setIsOpen(true)
-  };
+    setIsOpen(true);
+  }
 
   const toggleRotation = () => {
     if (!isRotating) {
@@ -84,38 +82,39 @@ export default function SpinningCarousel() {
     }
   };
 
-
   useEffect(() => {
-    let timeoutID;
-    if (isRotating){
+    if (isRotating) {
       setHasFirstRotation(false);
-      timeoutID = setTimeout(() => {
+      setTimeout(() => {
         setIsRotating(false);
-      if (hasFirstRotation) {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0] = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-        setHasFirstRotation(true);
-      } else {
-        const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0].name = getRandomRestaurant();
-        setRestaurants(updatedRestaurants);
-      }
+        if (hasFirstRotation) {
+          const updatedRestaurants = [...restaurants];
+          updatedRestaurants[0] = getRandomRestaurant();
+          setRestaurants(updatedRestaurants);
+          setHasFirstRotation(true);
+        } else {
+          const updatedRestaurants = [...restaurants];
+          updatedRestaurants[0].name = getRandomRestaurant();
+          setRestaurants(updatedRestaurants);
+        }
       }, 3000);
     }
-  }, [isRotating]);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    const fetchData = async () =>{
-    await fetchRestaurants();
-    await fetchCuisine();
+    const fetchData = async () => {
+      await fetchRestaurants();
+      await fetchCuisine();
     };
 
     fetchData();
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   const placeholderCount = Math.max(9 - restaurants.length, 0);
-  const placeholderFaces = Array.from({ length: placeholderCount }, (_, index) => index);
+  const placeholderFaces = Array.from(
+    { length: placeholderCount },
+    (_, index) => index
+  );
 
   return (
     <div>
@@ -152,101 +151,116 @@ export default function SpinningCarousel() {
                     Filtering Options:
                   </Dialog.Title>
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                     Cuisines:
-                    </p>
+                    <p className="text-sm text-gray-500">Cuisines:</p>
                   </div>
                   {cuisines.length > 0 && (
-                    <div className='mt-4'>
-                    {cuisines.map((cuisine, index) =>(
-                      <div key={index} >
-                        <input 
-                        type='radio'
-                        value={cuisine.cuisine_id}
-                        id={cuisine.cuisine_id}
-                        defaultChecked={cuisine.cuisine_id === selectedCuisine}
-                        onClick={handleCuisineChange}
-                        name='cuisint-radion'
-                        className="form-radio h-4 w-4 text-blue-600"
-                        />
-                      <label 
-                        htmlFor={cuisine.cuisine_id}
-                        className={`inline-flex items-center mb-2 
-                          ${cuisine.cuisine_id === selectedCuisine?.id ? 'text-blue-900' : 'text-gray-700'}`}>
-                        <span className='ml-2'>{cuisine.name}</span>
-                      </label>
-                      </div>
-                    ))}
-                  </div>
+                    <div className="mt-4">
+                      {cuisines.map((cuisine, index) => (
+                        <div key={index}>
+                          <input
+                            type="radio"
+                            value={cuisine.cuisine_id}
+                            id={cuisine.cuisine_id}
+                            defaultChecked={
+                              cuisine.cuisine_id === selectedCuisine
+                            }
+                            onClick={handleCuisineChange}
+                            name="cuisint-radion"
+                            className="form-radio h-4 w-4 text-blue-600"
+                          />
+                          <label
+                            htmlFor={cuisine.cuisine_id}
+                            className={`inline-flex items-center mb-2
+                          ${
+                            cuisine.cuisine_id === selectedCuisine?.id
+                              ? "text-blue-900"
+                              : "text-gray-700"
+                          }`}
+                          >
+                            <span className="ml-2">{cuisine.name}</span>
+                          </label>
+                        </div>
+                      ))}
+                    </div>
                   )}
                   <div className="mt-2">
-                    <p className="text-sm text-gray-500">
-                     Price:
-                    </p>
+                    <p className="text-sm text-gray-500">Price:</p>
                   </div>
-                  <div className='mt-4'>
+                  <div className="mt-4">
                     <div className="mt-4">
                       <div className="radio-buttons">
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$' ? 'selected' : ''}`}
-                          value={'$'}
+                          className={`radio-button ${
+                            selectedPrice === "$" ? "selected" : ""
+                          }`}
+                          value={"$"}
                           onClick={handlePriceChange}
                         >
                           $
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$' ? 'selected' : ''}`}
-                          value={'$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$" ? "selected" : ""
+                          }`}
+                          value={"$$"}
                           onClick={handlePriceChange}
                         >
                           $$
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$$' ? 'selected' : ''}`}
-                          value={'$$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$$" ? "selected" : ""
+                          }`}
+                          value={"$$$"}
                           onClick={handlePriceChange}
                         >
                           $$$
                         </button>
                         <button
                           style={{
-                          display: 'inline-block',
-                          marginRight: '10px',
-                          padding: '5px 10px',
-                          border: '1px solid #ccc',
-                          borderRadius: '5px',
-                          cursor: 'pointer',
-                          backgroundColor: selectedPrice === '$$$$' ? '#ccc' : ''
+                            display: "inline-block",
+                            marginRight: "10px",
+                            padding: "5px 10px",
+                            border: "1px solid #ccc",
+                            borderRadius: "5px",
+                            cursor: "pointer",
+                            backgroundColor:
+                              selectedPrice === "$$$$" ? "#ccc" : "",
                           }}
-                          className={`radio-button ${selectedPrice === '$$$$' ? 'selected' : ''}`}
-                          value={'$$$$'}
+                          className={`radio-button ${
+                            selectedPrice === "$$$$" ? "selected" : ""
+                          }`}
+                          value={"$$$$"}
                           onClick={handlePriceChange}
                         >
                           $$$$
@@ -270,66 +284,69 @@ export default function SpinningCarousel() {
         </Dialog>
       </Transition>
       <div
-        className='container'
-        style={{ position: 'relative', 
-        width: '320px', 
-        margin: '100px auto 0 auto', 
-        perspective: '1000px',
-        transform: 'rotateY(50deg)' // Neat place to change size of the frames.
-    }}
+        className="container"
+        style={{
+          position: "relative",
+          width: "320px",
+          margin: "100px auto 0 auto",
+          perspective: "1000px",
+          transform: "rotateY(50deg)", // Neat place to change size of the frames.
+        }}
       >
         <div
-          className='carousel'
+          className="carousel"
           style={{
-            position: 'absolute',
-            width: '100%',
-            height: '100%',
-            transformStyle: 'preserve-3d',
-            animation: isRotating ? 'rotate360 1s infinite linear' : 'none',
+            position: "absolute",
+            width: "100%",
+            height: "100%",
+            transformStyle: "preserve-3d",
+            animation: isRotating ? "rotate360 1s infinite linear" : "none",
           }}
         >
           {restaurants.slice(0, 9).map((restaurant, index) => (
             <div
               key={index}
-              className='carousel_face'
+              className="carousel_face"
               style={{
-                position: 'absolute',
-                width: '300px',
-                height: '187px',
-                top: '20px',
-                left: '10px',
-                right: '10px',
-                backgroundSize: 'cover',
-                boxShadow: 'inset 0 0 0 2000px rgba(0,0,0,0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
+                position: "absolute",
+                width: "300px",
+                height: "187px",
+                top: "20px",
+                left: "10px",
+                right: "10px",
+                backgroundSize: "cover",
+                boxShadow: "inset 0 0 0 2000px rgba(0,0,0,0.5)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
                 transform: `rotateY(${index * 40}deg) translateZ(430px)`,
               }}
             >
               <h3>{restaurant.name}</h3>
             </div>
-          ))};
-
+          ))}
+          ;
           {placeholderFaces.map((index) => (
             <div
               key={index}
-              className='carousel_face'
+              className="carousel_face"
               style={{
-                position: 'absolute',
-                width: '300px',
-                height: '187px',
-                top: '20px',
-                left: '10px',
-                right: '10px',
-                backgroundSize: 'cover',
-                boxShadow: 'inset 0 0 0 2000px rgba(0,0,0,0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                textAlign: 'center',
-                transform: `rotateY(${(restaurants.length + index) * 40}deg) translateZ(430px)`,
+                position: "absolute",
+                width: "300px",
+                height: "187px",
+                top: "20px",
+                left: "10px",
+                right: "10px",
+                backgroundSize: "cover",
+                boxShadow: "inset 0 0 0 2000px rgba(0,0,0,0.5)",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                textAlign: "center",
+                transform: `rotateY(${
+                  (restaurants.length + index) * 40
+                }deg) translateZ(430px)`,
               }}
             >
               Place Holder
@@ -355,15 +372,21 @@ export default function SpinningCarousel() {
           </style>
         </div>
       </div>
-      <div style={{ textAlign: 'center' }}>
-        <button onClick={toggleRotation}>{isRotating ? 'Stop' : 'Start'}</button>
-        <div>{token && (<button
-          type="button"
-          onClick={openModal}
-          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          Filter
-        </button>)}</div>
+      <div style={{ textAlign: "center" }}>
+        <button onClick={toggleRotation}>
+          {isRotating ? "Stop" : "Start"}
+        </button>
+        <div>
+          {token && (
+            <button
+              type="button"
+              onClick={openModal}
+              className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
+              Filter
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -9,7 +9,7 @@ export default function Cards() {
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
               src="/aaron.png"
-              alt="Aaron image"
+              alt="Aaron"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
               Aaron Tran
@@ -19,6 +19,7 @@ export default function Cards() {
               <a
                 href="https://www.linkedin.com/in/aaron-k-tran/"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -30,6 +31,7 @@ export default function Cards() {
               <a
                 href="https://gitlab.com/aatran2021"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -46,7 +48,7 @@ export default function Cards() {
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
               src="/luis.png"
-              alt="Luis image"
+              alt="Luis"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
               Luis Bravo
@@ -56,6 +58,7 @@ export default function Cards() {
               <a
                 href="https://www.linkedin.com/in/luis-fernando-bravo-morales-14a094254/"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -67,6 +70,7 @@ export default function Cards() {
               <a
                 href="https://gitlab.com/LuisBravo9900"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -85,7 +89,7 @@ export default function Cards() {
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
               src="/matt.png"
-              alt="Matthew image"
+              alt="Matthew"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
               Matthew Huff
@@ -95,6 +99,7 @@ export default function Cards() {
               <a
                 href="https://www.linkedin.com/in/matthew-huff-6b4211125/"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -106,6 +111,7 @@ export default function Cards() {
               <a
                 href="https://gitlab.com/mhuff9112"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -122,7 +128,7 @@ export default function Cards() {
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
               src="/jb.png"
-              alt="Justin image"
+              alt="Justin"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
               Justin Burgonio
@@ -132,6 +138,7 @@ export default function Cards() {
               <a
                 href="https://www.linkedin.com/in/justinburgonio/"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img
@@ -143,6 +150,7 @@ export default function Cards() {
               <a
                 href="https://gitlab.com/justinburgonio"
                 target="_blank"
+                rel="noreferrer"
                 className="transition ease-in-out delay-150  hover:-translate-y-1 hover:scale-110 duration-300"
               >
                 <img

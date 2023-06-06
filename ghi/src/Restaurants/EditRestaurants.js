@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useUser from "../useUser";
 
 export default function EditRestaurantForm() {
   const [cuisines, setCuisines] = useState([]);
@@ -12,10 +11,8 @@ export default function EditRestaurantForm() {
   const [restaurantData, setRestaurantData] = useState("");
   const navigate = useNavigate();
   const { token } = useToken();
-  const { user } = useUser(token);
   // console.log(listId)
   // console.log(restaurantId)
-
 
   const fetchCuisineData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/cuisine-list`;
@@ -32,8 +29,6 @@ export default function EditRestaurantForm() {
     }
   };
 
-
-
   const fetchRestaurantData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurants/${restaurantId}`;
     const fetchConfig = {
@@ -48,7 +43,6 @@ export default function EditRestaurantForm() {
       // console.log("Fetch data", data);
     }
   };
-
 
   const handleName = (event) => {
     const value = event.target.value;
@@ -87,8 +81,6 @@ export default function EditRestaurantForm() {
 
       const response = await fetch(restaurant_url, config);
       if (response.ok) {
-        const newRestaurant = await response.json();
-        // console.log(newRestaurant);
         setName("");
         setPrice("");
         setCuisineId("");
@@ -101,12 +93,10 @@ export default function EditRestaurantForm() {
   //   navigate("/signin");
   // }
 
-
-
   useEffect(() => {
-      fetchRestaurantData();
-      fetchCuisineData();
-  }, []);
+    fetchRestaurantData();
+    fetchCuisineData();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (restaurantData) {

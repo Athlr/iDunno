@@ -2,9 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import FriendsCard from "./FriendsCard";
 import { Dialog, Transition } from "@headlessui/react";
 import blobBackground from "../Media/blob-background.svg";
-import { Navigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-import useUser from "../useUser";
 
 export default function FriendsMain() {
   const [friendsList, setFriendsList] = useState([]);

@@ -63,7 +63,6 @@ export default function EditRestaurantListForm() {
 
     const response = await fetch(url, fetchConfig);
     if (response.ok) {
-      const newRestaurantList = await response.json();
       setName("");
       setDescription("");
       setListPicture("");
@@ -75,7 +74,7 @@ export default function EditRestaurantListForm() {
     if (listId) {
       fetchRestaurantsData();
     }
-  }, [listId]);
+  }, [listId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     setName(restaurantData.name);

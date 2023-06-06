@@ -1,15 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import useToken from "@galvanize-inc/jwtdown-for-react";
-import useUser from "../useUser";
 
 export default function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
   const [selectedListId, setSelectedListId] = useState("");
-  const { restaurantId } = useParams();
-  const { token } = useToken();
-  const { user } = useUser(token);
+  // const { restaurantId } = useParams();
   const navigate = useNavigate();
 
   const { listId } = useParams();
@@ -24,20 +20,18 @@ export default function RestaurantList() {
     }
   };
 
+  // const fetchRestaurantsData = async () => {
+  //   const url = `${process.env.REACT_APP_API_HOST}/restaurants`;
+  //   const response = await fetch(url, {
+  //     credentials: "include",
+  //     method: "get",
+  //   });
 
- const fetchRestaurantsData = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/restaurants`;
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "get",
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      setRestaurants(data);
-    }
-  };
-
+  //   if (response.ok) {
+  //     const data = await response.json();
+  //     setRestaurants(data);
+  //   }
+  // };
 
   const fetchRestaurantListData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;
@@ -84,25 +78,6 @@ export default function RestaurantList() {
     }
   };
 
-
-  const handleEditRestaurant = async () => {
-    if (selectedListId) {
-      const url = `${process.env.REACT_APP_API_HOST}/restaurants/${restaurantId}`;
-      const config = {
-        credentials: "include",
-        method: "put",
-      };
-
-      const response = await fetch(url, config);
-      if (response.ok) {
-        fetchRestaurantsData(restaurants);
-        navigate("/restaurants/new/edit/${restaurantId}", { state: { listId: selectedListId }});
-      }
-    };
-    }
-
-
-
   useEffect(() => {
     fetchRestaurantListData();
   }, []);
@@ -131,7 +106,10 @@ export default function RestaurantList() {
           <option value="">--</option>
           {restaurantList.map((restaurantList) => {
             return (
-              <option value={restaurantList.list_id} key={restaurantList.list_id}>
+              <option
+                value={restaurantList.list_id}
+                key={restaurantList.list_id}
+              >
                 {restaurantList.name}
               </option>
             );
@@ -150,31 +128,34 @@ export default function RestaurantList() {
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
         {restaurants.map((restaurant) => {
           return (
-            <div key={restaurant.restaurant_id} className="bg-white rounded-md shadow-md p-4">
+            <div
+              key={restaurant.restaurant_id}
+              className="bg-white rounded-md shadow-md p-4"
+            >
               <h3 className="text-lg font-semibold mb-2">{restaurant.name}</h3>
               <p className="text-gray-600 mb-2">Price: {restaurant.price}</p>
-              <p className="text-gray-600 mb-4">Cuisine: {restaurant.cuisine_name}</p>
-              <Link to={`/restaurants/${selectedListId}/edit/${restaurant.restaurant_id}`}>
-                <button
-                  // onClick={() => handleEditRestaurant(restaurant.restaurant_id)}
-                  className="btn btn-primary"
-                >
-                  Edit
-                </button>
+              <p className="text-gray-600 mb-4">
+                Cuisine: {restaurant.cuisine_name}
+              </p>
+              <Link
+                to={`/restaurants/${selectedListId}/edit/${restaurant.restaurant_id}`}
+              >
+                <button className="btn btn-primary">Edit</button>
               </Link>
               <div className="flex justify-between">
-
                 <button
-                className="btn btn-danger"
-                onClick={() => handleDeleteRestaurant(restaurant.restaurant_id)}
-              >
-                Delete
-              </button>
+                  className="btn btn-danger"
+                  onClick={() =>
+                    handleDeleteRestaurant(restaurant.restaurant_id)
+                  }
+                >
+                  Delete
+                </button>
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
     </div>
-  </div>
   );
 }
