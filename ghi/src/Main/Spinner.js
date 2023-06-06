@@ -84,7 +84,7 @@ export default function SpinningCarousel() {
     if (selectedFriends.includes(parseInt(friendId))){
       setSelectedFriends(selectedFriends.filter((id) => id !== parseInt(friendId)))
     }else{
-      setSelectedFriends([... selectedFriends, parseInt(friendId)])
+      setSelectedFriends([...selectedFriends, parseInt(friendId)])
     }
   };
 
@@ -243,9 +243,6 @@ export default function SpinningCarousel() {
     setFilteredRestaurants(filterRestaurants);
   };
 
-        
-
-
   function flatten() {
     const result = [];
       for (let key in selectedFriendsListsRestaurants) {
@@ -274,17 +271,6 @@ export default function SpinningCarousel() {
   };
 
   useEffect(() => {
-    // console.log("userSelectedRestaurants", userSelectedRestaurants);
-    // console.log('selectedFriendsListsRestaurants', selectedFriendsListsRestaurants);
-    // console.log('restaurants', restaurants);
-    // console.log('selectedFriendsList', selectedFriendsList);
-    console.log('restaurants', restaurants);
-    console.log("selectedCuisine", selectedCuisine);
-    console.log('filtered restaurants', filteredRestaurants);
-  })
-
-
-  useEffect(() => {
     const fetchData = async () => {
       if (selectedFriends.length === 0){
         setSelectedFriendsProfiles([]);
@@ -297,15 +283,15 @@ export default function SpinningCarousel() {
       const lists = await fetchFriendLists();
       setSelectedFriendsLists(lists);
     };
- 
     fetchData();
-  },[selectedFriends]);
+  },[selectedFriends]);// eslint-disable-line react-hooks/exhaustive-deps
+  
 
   useEffect(() => {
-    let timeoutID;
+    // let timeoutID;
     if (isRotating){
       setHasFirstRotation(false);
-      timeoutID = setTimeout(() => {
+      setTimeout(() => {
         setIsRotating(false);
       if (hasFirstRotation) {
         const updatedRestaurants = [...restaurants];
@@ -319,36 +305,36 @@ export default function SpinningCarousel() {
       }
       }, 3000);
     }
-  }, [isRotating]);
+  }, [isRotating]);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if(selectedFriendsList){
     fetchFriendRestaurants();
     }
-  }, [selectedFriendsList]);
+  }, [selectedFriendsList]);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     
     fetchRestaurants();
     fetchCuisine();
     fetchFreinds();
-  }, []);
+  }, []);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if(selectedUserList){
     fetchUsersRestaurants();
     }
-  }, [selectedUserList]);
+  }, [selectedUserList]);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (user){
     fetchUserLists();
     };
-  },[user]);
+  },[user]);// eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     filterRestaurants();
-  },[restaurants])
+  },[restaurants])// eslint-disable-line react-hooks/exhaustive-deps
 
   const placeholderCount = Math.max(9 - filteredRestaurants.length, 0);
   const placeholderFaces = Array.from({ length: placeholderCount }, (_, index) => index);
