@@ -86,7 +86,7 @@ def update_account(
     account_data: dict = Depends(authenticator.try_get_current_account_data),
     repo: AccountRepo = Depends(),
 ) -> Optional[Error]:
-    if profile_update.password != None:
+    if profile_update.password is not None:
         hashed_password = authenticator.hash_password(profile_update.password)
         return repo.updateAccount(account_data["id"], profile_update, hashed_password)
     else:
