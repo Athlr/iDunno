@@ -3,10 +3,8 @@ from typing import Union, List, Optional
 from authenticator import authenticator
 from queries.restaurant_list import (
     Error,
-    RestaurantListIn,
     RestaurantListInPicture,
     RestaurantListRepository,
-    RestaurantListOut,
     RestaurantListOutPicture,
     RestaurantOutWithCuisine,
 )

@@ -1,9 +1,8 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends
 from typing import List, Optional, Union
 from authenticator import authenticator
 from queries.friendships import (
     Error,
-    FriendshipIn,
     FriendshipOut,
     FriendOut,
     FriendshipsRepo,

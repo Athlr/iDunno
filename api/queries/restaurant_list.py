@@ -1,7 +1,6 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union
 from queries.pool import pool
-from queries.restaurants import RestaurantOut, RestaurantIn
 
 
 class Error(BaseModel):

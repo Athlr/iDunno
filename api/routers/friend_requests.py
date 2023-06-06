@@ -1,5 +1,5 @@
-from fastapi import APIRouter, Depends, Response
-from typing import List, Optional, Union
+from fastapi import APIRouter, Depends
+from typing import List, Union
 from authenticator import authenticator
 from queries.friend_requests import (
     Error,
