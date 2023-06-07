@@ -10,4 +10,3 @@
 # class CuisineOut(BaseModel):
 #     cuisine_id = int
 #     name: str
-    
