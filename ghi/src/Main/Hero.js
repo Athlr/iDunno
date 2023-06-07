@@ -27,7 +27,7 @@ const Hero = () => {
       </style>
       <div className="animate__animated animate__shakeY animate__infinite custom-shakeY image-section w-1/2">
         <img
-          src="/burgericon.png"
+          src="./static/img/burgericon.png"
           alt="Restaurant"
           className="object-cover h-full w-full"
         />

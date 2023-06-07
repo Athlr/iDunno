@@ -28,7 +28,7 @@ export default function ProfilePage() {
   };
 
   const fetchUserData = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/accounts`;
 
     const response = await fetch(url, {
       credentials: "include",
@@ -38,7 +38,7 @@ export default function ProfilePage() {
     if (response.ok) {
       const data = await response.json();
       setUserData(data);
-      console.log(userData)
+      console.log(userData);
     }
   };
 
@@ -62,7 +62,7 @@ export default function ProfilePage() {
       fetchRestaurantListData();
       fetchUserData();
     }
-  }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return token ? (
     <>

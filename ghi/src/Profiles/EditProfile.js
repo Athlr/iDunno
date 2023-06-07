@@ -119,7 +119,7 @@ export default function EditProfile({
   };
 
   const fetchUserDataModal = async () => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/`;
+    const url = `${process.env.REACT_APP_API_HOST}/api/accounts`;
 
     const response = await fetch(url, {
       credentials: "include",
