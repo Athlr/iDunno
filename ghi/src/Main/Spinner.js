@@ -30,10 +30,7 @@ export default function SpinningCarousel() {
     flatten();
     setIsOpen(false);
   };
-  function closeModal() {
-    setIsOpen(false);
-  }
-
+  
   function openFriendsModal () {
     setFriendsIsOpen(true);
   };

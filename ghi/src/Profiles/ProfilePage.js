@@ -62,7 +62,7 @@ export default function ProfilePage() {
       fetchRestaurantListData();
       fetchUserData();
     }
-  }, [token]);
+  }, [token]);// eslint-disable-line react-hooks/exhaustive-deps
 
   return token ? (
     <>
