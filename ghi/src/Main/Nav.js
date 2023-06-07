@@ -24,16 +24,12 @@ export default function Nav() {
         </Link>
       </div>
       <div className="flex-2 flex justify-center gap-2">
-        <button className="btn btn-ghost">
-          <Link to="/friends" className="text-white">
-            Friends
-          </Link>
-        </button>
-        <button className="btn btn-ghost">
-          <Link to="/restaurants" className="text-white">
-            Lists
-          </Link>
-        </button>
+        <Link to="/friends">
+          <button className="btn btn-ghost text-white">Friends</button>
+        </Link>
+        <Link to="/restaurants">
+          <button className="btn btn-ghost text-white">Lists</button>
+        </Link>
       </div>
       <div className="flex-none gap-2">
         <div className="dropdown dropdown-end">
@@ -73,16 +69,12 @@ export default function Nav() {
         </Link>
       </div>
       <div className="flex-2 flex justify-center gap-2">
-        <button className="btn btn-ghost">
-          <Link to="/signup" className="text-white">
-            Signup
-          </Link>
-        </button>
-        <button className="btn btn-ghost">
-          <Link to="/signin" className="text-white">
-            Signin
-          </Link>
-        </button>
+        <Link to="/signup">
+          <button className="btn btn-ghost text-white">Signup</button>
+        </Link>
+        <Link to="/signin">
+          <button className="btn btn-ghost text-white">Signin</button>
+        </Link>
       </div>
     </div>
   );
