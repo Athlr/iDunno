@@ -287,7 +287,10 @@ export default function NewRestaurantForm() {
       >
         <div className="absolute top-0 left-0 w-full h-full">
           <video autoPlay muted className="object-cover w-full h-full">
-            <source src="/idunno_restaurant_form_3.mp4" type="video/mp4" />
+            <source
+              src="./static/img/idunno_restaurant_form_3.mp4"
+              type="video/mp4"
+            />
           </video>
         </div>
         <div className="bg-white border border-gray-200 rounded p-6 shadow-lg space-y-12 relative z-10 h-auto max-h-full overflow-auto md:w-3/4 lg:w-1/2 xl:w-1/3">

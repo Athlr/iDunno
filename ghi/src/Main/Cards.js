@@ -171,7 +171,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/aaron.png"
+              src="./static/img/aaron.png"
               alt="Aaron"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -187,7 +187,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/linkedin.png"
+                  src="./static/img/linkedin.png"
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -199,7 +199,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/gitlabss.png"
+                  src="./static/img/gitlabss.png"
                   alt="gitlab Logo"
                 />
               </a>
@@ -210,7 +210,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/luis.png"
+              src="./static/img/luis.png"
               alt="Luis"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -226,7 +226,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-15 mr-2"
-                  src="/linkedin.png"
+                  src="./static/img/linkedin.png"
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -238,7 +238,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/gitlabss.png"
+                  src="./static/img/gitlabss.png"
                   alt="gitlab Logo"
                 />
               </a>
@@ -249,7 +249,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/matt.png"
+              src="./static/img/matt.png"
               alt="Matthew"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -265,7 +265,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/linkedin.png"
+                  src="./static/img/linkedin.png"
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -277,7 +277,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/gitlabss.png"
+                  src="./static/img/gitlabss.png"
                   alt="gitlab Logo"
                 />
               </a>
@@ -288,7 +288,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/jb.png"
+              src="./static/img/jb.png"
               alt="Justin"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -304,7 +304,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/linkedin.png"
+                  src="./static/img/linkedin.png"
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -316,7 +316,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/gitlabss.png"
+                  src="./static/img/gitlabss.png"
                   alt="gitlab Logo"
                 />
               </a>

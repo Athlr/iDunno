@@ -17,7 +17,7 @@ export default function Nav() {
     <div className="navbar bg-darkCyan flex">
       <div className="flex-1">
         <Link
-          to="/home/"
+          to="/home"
           className="btn btn-ghost normal-case text-xl text-white"
         >
           iDunno
