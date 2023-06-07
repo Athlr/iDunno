@@ -227,7 +227,6 @@ export default function SpinningCarousel() {
  
   const filterRestaurants = () => {
     let filterRestaurants = restaurants;
-    console.log("pre if", restaurants)
     if (selectedCuisine !== null) {
       filterRestaurants = filterRestaurants.filter(
         restaurant => restaurant.cuisine_id === selectedCuisine
