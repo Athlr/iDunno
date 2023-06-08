@@ -341,8 +341,8 @@ export default function SpinningCarousel() {
   );
 
   return (
-    <div className="h-screen w-screen flex items-center justify-center bg-salmon overflow-hidden">
-      <div className="container mx-auto">
+    <div className="h-screen w-screen flex flex-col items-center bg-salmon overflow-hidden">
+      <div className="container mx-auto flex-grow">
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>
             <Transition.Child
@@ -401,7 +401,7 @@ export default function SpinningCarousel() {
                             />
                             <label
                               htmlFor={cuisine.cuisine_id}
-                              className={`inline-flex items-center mb-2 
+                              className={`inline-flex items-center mb-2
                           ${
                             cuisine.cuisine_id === selectedCuisine?.id
                               ? "text-blue-900"
@@ -742,21 +742,15 @@ export default function SpinningCarousel() {
             </style>
           </div>
         </div>
-        <div style={{ textAlign: "center" }}>
-          <button onClick={toggleRotation}>
+        <div className="flex justify-center space-x-4 mt-2 mb-4 py-96">
+          <button onClick={toggleRotation} className="btn">
             {isRotating ? "Stop" : "Start"}
           </button>
-          <div>
-            {token && (
-              <button
-                type="button"
-                onClick={openModal}
-                className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              >
-                Filter
-              </button>
-            )}
-          </div>
+          {token && (
+            <button onClick={openModal} className="btn">
+              Filter
+            </button>
+          )}
         </div>
       </div>
     </div>
