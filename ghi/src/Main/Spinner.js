@@ -73,7 +73,6 @@ export default function SpinningCarousel() {
   const getRandomRestaurant = () => {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
     return randomIndex;
-    // return restaurants[randomIndex].name;
   };
 
   const handleCuisineChange = (event) => {

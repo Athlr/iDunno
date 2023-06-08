@@ -3,6 +3,7 @@
 Back-end deployment up
 Fixed mixed content error by removing "/" present in some routes
 Refractored code to hold images in public/static/img
+Debugged spinner with Matt (Got it to reset to sponsored list everytime we reset | Changed the way spinner displayed selected choice so that it doesn't override other potential choices)
 
 ## 6/6/23
 

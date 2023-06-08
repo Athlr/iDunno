@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+// import idunno_restaurant_form_3 from "../Media/idunno_restaurant_form_3.mp4";
 
 export default function EditRestaurantForm() {
   const [cuisines, setCuisines] = useState([]);
@@ -103,13 +104,19 @@ export default function EditRestaurantForm() {
       >
         <div className="absolute w-full h-full">
           <video autoPlay muted className="object-cover w-full h-full">
-            <source src="/idunno_restaurant_form_3.mp4" type="video/mp4" />
+            <source
+              src={
+                process.env.PUBLIC_URL +
+                "/static/img/idunno_restaurant_form_3.mp4"
+              }
+              type="video/mp4"
+            />
           </video>
         </div>
         <div className="bg-white border border-gray-200 rounded p-6 shadow-lg space-y-12 relative z-10 h-auto max-h-full overflow-auto">
           <div className="border-b border-gray-900/10 pb-12">
             <h2 className="text-base font-semibold leading-7 text-gray-900">
-              Create a restaurant
+              Edit Restaurant
             </h2>
             <form
               onSubmit={handleSubmit}

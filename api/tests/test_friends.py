@@ -17,6 +17,12 @@ class AccountOut(BaseModel):
     profile_picture_url: str
 
 
+class MakeFriendRequestOut(BaseModel):
+    request_id: int
+    sender_id: int
+    receiver_id: int
+
+
 def fake_account_data():
     data = AccountOut(
         id=1,
@@ -43,11 +49,11 @@ class EmptyFriendshipsRepo:
 
 class EmptyFriendRequestsRepo:
     def create_friend_request(self, user_id, friend_request):
-        return {
-            "request_id": 1,
-            "sender_id": user_id,
-            "receiver_id": 2,
-        }
+        return MakeFriendRequestOut(
+            request_id=1,
+            sender_id=user_id,
+            receiver_id=2,
+        )
 
 
 def test_get_friends():

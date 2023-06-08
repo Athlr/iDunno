@@ -1,10 +1,10 @@
 import React from "react";
-import aaron from "../Media/aaron.png";
-import Luis from "../Media/Luis.png";
-import jb from "../Media/jb.png";
-import gitlabss from "../Media/gitlabss.png";
-import MAtt from "../Media/MAtt.png";
-import linkedin from "../Media/linkedin.png";
+// import aaron from "../Media/aaron.png";
+// import Luis from "../Media/Luis.png";
+// import jb from "../Media/jb.png";
+// import gitlabss from "../Media/gitlabss.png";
+// import MAtt from "../Media/MAtt.png";
+// import linkedin from "../Media/linkedin.png";
 
 export default function Cards() {
   return (
@@ -14,7 +14,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src={aaron}
+              src={process.env.PUBLIC_URL + "/static/img/aaron.png"}
               alt="Aaron"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -30,7 +30,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src={linkedin}
+                  src={process.env.PUBLIC_URL + "/static/img/linkedin.png"}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -42,7 +42,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src={gitlabss}
+                  src={process.env.PUBLIC_URL + "/static/img/gitlabss.png"}
                   alt="gitlab Logo"
                 />
               </a>
@@ -53,7 +53,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src={Luis}
+              src={process.env.PUBLIC_URL + "/static/img/Luis.png"}
               alt="Luis"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -69,7 +69,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-15 mr-2"
-                  src={linkedin}
+                  src={process.env.PUBLIC_URL + "/static/img/linkedin.png"}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -81,7 +81,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src={gitlabss}
+                  src={process.env.PUBLIC_URL + "/static/img/gitlabss.png"}
                   alt="gitlab Logo"
                 />
               </a>
@@ -92,7 +92,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src={MAtt}
+              src={process.env.PUBLIC_URL + "/static/img/MAtt.png"}
               alt="Matthew"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -108,7 +108,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src={linkedin}
+                  src={process.env.PUBLIC_URL + "/static/img/linkedin.png"}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -120,7 +120,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src={gitlabss}
+                  src={process.env.PUBLIC_URL + "/static/img/gitlabss.png"}
                   alt="gitlab Logo"
                 />
               </a>
@@ -131,7 +131,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src={jb}
+              src={process.env.PUBLIC_URL + "/static/img/jb.png"}
               alt="Justin"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -147,7 +147,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src={linkedin}
+                  src={process.env.PUBLIC_URL + "/static/img/linkedin.png"}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -159,7 +159,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src={gitlabss}
+                  src={process.env.PUBLIC_URL + "/static/img/gitlabss.png"}
                   alt="gitlab Logo"
                 />
               </a>

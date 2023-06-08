@@ -1,6 +1,6 @@
 import React from "react";
 import "animate.css/animate.min.css";
-import idunno_landing_3 from "../Media/idunno_landing_3.mp4";
+// import idunno_landing_3 from "../Media/idunno_landing_3.mp4";
 import "tailwindcss/tailwind.css";
 
 const Hero = () => {
@@ -11,7 +11,10 @@ const Hero = () => {
         muted
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
-        <source src={idunno_landing_3} type="video/mp4" />
+        <source
+          src={process.env.PUBLIC_URL + "static/img/idunno_landing_3.mp4"}
+          type="video/mp4"
+        />
       </video>
       <div className="relative z-10 flex flex-col justify-center items-center h-full text-center text-neutral-content">
         <div className="max-w-md">

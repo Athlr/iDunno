@@ -1,7 +1,7 @@
 import React, { useEffect, useState, Fragment } from "react";
 import FriendsCard from "./FriendsCard";
 import { Dialog, Transition } from "@headlessui/react";
-import blobBackground from "../Media/blob-background.svg";
+// import blobBackground from "../Media/blob-background.svg";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 
 export default function FriendsMain() {
@@ -14,7 +14,9 @@ export default function FriendsMain() {
   const { token } = useToken();
 
   const mainBackground = {
-    backgroundImage: `url(${blobBackground})`,
+    backgroundImage: `url(${
+      process.env.PUBLIC_URL + "static/img/blob-background.svg"
+    })`,
     backgroundSize: "cover",
     backgroundPosition: "center",
   };

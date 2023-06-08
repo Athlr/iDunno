@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileList from "./ProfileList";
-import blobBackground from "../Media/blob-background.svg";
+// import blobBackground from "../Media/blob-background.svg";
 import { Link } from "react-router-dom";
 import EditProfile from "./EditProfile";
 
@@ -21,7 +21,9 @@ export default function ProfilePage() {
   };
 
   const mainBackground = {
-    backgroundImage: `url(${blobBackground})`,
+    backgroundImage: `url(${
+      process.env.PUBLIC_URL + "static/img/blob-background.svg"
+    })`,
     backgroundSize: "cover",
     backgroundPosition: "center",
     height: `calc(100vh - 64px)`,
