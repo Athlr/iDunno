@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-// import idunno_signup_form_2 from "./Media/idunno_signup_form_2.mp4";
 
 function Auth() {
   const [formData, setFormData] = useState({});

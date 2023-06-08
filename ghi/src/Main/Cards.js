@@ -1,10 +1,4 @@
 import React from "react";
-// import aaron from "../Media/aaron.png";
-// import Luis from "../Media/Luis.png";
-// import jb from "../Media/jb.png";
-// import gitlabss from "../Media/gitlabss.png";
-// import MAtt from "../Media/MAtt.png";
-// import linkedin from "../Media/linkedin.png";
 
 export default function Cards() {
   return (

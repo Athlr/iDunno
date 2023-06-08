@@ -1,6 +1,5 @@
 import React from "react";
 import "animate.css/animate.min.css";
-// import idunno_landing_3 from "../Media/idunno_landing_3.mp4";
 import "tailwindcss/tailwind.css";
 
 const Hero = () => {
@@ -12,7 +11,7 @@ const Hero = () => {
         className="absolute top-0 left-0 w-full h-full object-cover"
       >
         <source
-          src={process.env.PUBLIC_URL + "static/img/idunno_landing_3.mp4"}
+          src={process.env.PUBLIC_URL + "/static/img/idunno_landing_3.mp4"}
           type="video/mp4"
         />
       </video>

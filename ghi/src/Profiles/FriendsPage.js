@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import FriendsList from "./FriendsList";
 import { useParams } from "react-router-dom";
-// import blobBackground from "../Media/blob-background.svg";
 
 export default function FriendPage() {
   const [friendInfo, setFriendInfo] = useState([]);
@@ -11,7 +10,7 @@ export default function FriendPage() {
 
   const mainBackground = {
     backgroundImage: `url(${
-      process.env.PUBLIC_URL + "static/img/blob-background.svg"
+      process.env.PUBLIC_URL + "/static/img/blob-background.svg"
     })`,
     backgroundSize: "cover",
     backgroundPosition: "center",
