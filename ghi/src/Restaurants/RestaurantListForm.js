@@ -39,8 +39,6 @@ function RestaurantListForm() {
     }
     data.user_id = user.id;
 
-    console.log("Submitted data:", data);
-
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;
     const fetchConfig = {
       credentials: "include",
@@ -52,7 +50,6 @@ function RestaurantListForm() {
     };
 
     const response = await fetch(url, fetchConfig);
-    console.log(response);
     if (response.ok) {
       setName("");
       setDescription("");

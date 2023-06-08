@@ -23,7 +23,6 @@ export default function EditRestaurantListForm() {
     if (response.ok) {
       const data = await response.json();
       setRestaurantData(data);
-      console.log("Fetch data", data);
     }
   };
 

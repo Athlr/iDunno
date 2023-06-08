@@ -38,7 +38,6 @@ export default function FriendsMain() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log("Friends", data);
       setFriendsList(data);
     }
   };
@@ -53,13 +52,11 @@ export default function FriendsMain() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log("Requests", data);
       setFriendRequests(data);
     }
   };
 
   const addFriend = async () => {
-    console.log(message);
     setMessage("");
     const url = `${process.env.REACT_APP_API_HOST}/requests`;
 
@@ -78,7 +75,6 @@ export default function FriendsMain() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setMessage(data);
       setAddUsername("");
     }

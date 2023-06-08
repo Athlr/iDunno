@@ -169,6 +169,13 @@ class RestaurantListRepository:
                 with conn.cursor() as db:
                     db.execute(
                         """
+                        DELETE FROM restaurant_list_restaurant
+                        WHERE list_id = %s
+                        """,
+                        [list_id],
+                    )
+                    db.execute(
+                        """
                         DELETE FROM restaurant_list
                         WHERE list_id = %s
                         """,

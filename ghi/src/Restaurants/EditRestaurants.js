@@ -11,8 +11,6 @@ export default function EditRestaurantForm() {
   const [restaurantData, setRestaurantData] = useState("");
   const navigate = useNavigate();
   const { token } = useToken();
-  // console.log(listId)
-  // console.log(restaurantId)
 
   const fetchCuisineData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/cuisine-list`;
@@ -21,11 +19,9 @@ export default function EditRestaurantForm() {
       method: "get",
     };
     const response = await fetch(url, fetchConfig);
-    // console.log(response)
     if (response.ok) {
       const data = await response.json();
       setCuisines(data);
-      // console.log("Fetch data", data);
     }
   };
 
@@ -36,11 +32,9 @@ export default function EditRestaurantForm() {
       method: "get",
     };
     const response = await fetch(url, fetchConfig);
-    // console.log(response)
     if (response.ok) {
       const data = await response.json();
       setRestaurantData(data);
-      // console.log("Fetch data", data);
     }
   };
 
@@ -62,7 +56,6 @@ export default function EditRestaurantForm() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (token) {
-      // console.log("Token:", token);
       const data = {
         name: name,
         price: price,
@@ -88,10 +81,6 @@ export default function EditRestaurantForm() {
       }
     }
   };
-
-  // if (!token) {
-  //   navigate("/signin");
-  // }
 
   useEffect(() => {
     fetchRestaurantData();

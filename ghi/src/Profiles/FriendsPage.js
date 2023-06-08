@@ -26,7 +26,6 @@ export default function FriendPage() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setFriendInfo(data);
 
       if (friendInfo === null) {
@@ -45,7 +44,6 @@ export default function FriendPage() {
 
     if (response.ok) {
       const data = await response.json();
-      console.log(data);
       setRestaurantList(data);
     }
   };

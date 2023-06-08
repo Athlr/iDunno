@@ -38,7 +38,6 @@ export default function ProfilePage() {
     if (response.ok) {
       const data = await response.json();
       setUserData(data);
-      console.log(userData);
     }
   };
 
@@ -53,7 +52,6 @@ export default function ProfilePage() {
     if (response.ok) {
       const data = await response.json();
       setRestaurantList(data);
-      console.log(data);
     }
   };
 
