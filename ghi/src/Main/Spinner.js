@@ -29,6 +29,13 @@ export default function SpinningCarousel() {
   function closeModal() {
     fetchFriendRestaurants();
     flatten();
+    setSelectedUserList(null);
+    if (
+      selectedUserList === null &&
+      Object.keys(selectedFriendsList).length === 0
+    ) {
+      fetchRestaurants();
+    }
     setIsOpen(false);
   }
 
@@ -141,18 +148,15 @@ export default function SpinningCarousel() {
   };
 
   const fetchRestaurants = async () => {
-    if (!token) {
-      const url = `${process.env.REACT_APP_API_HOST}/sponsored`;
-      const response = await fetch(url, {
-        credentials: "include",
-        method: "get",
-      });
+    const url = `${process.env.REACT_APP_API_HOST}/sponsored`;
+    const response = await fetch(url, {
+      credentials: "include",
+      method: "get",
+    });
 
-      if (response.ok) {
-        const data = await response.json();
-        setRestaurants(data);
-      }
-    } else {
+    if (response.ok) {
+      const data = await response.json();
+      setRestaurants(data);
     }
   };
 
@@ -267,6 +271,8 @@ export default function SpinningCarousel() {
     setRestaurants([]);
     setSelectedFriendsList({});
     setSelectedFriendsListsRestaurants([]);
+    setSelectedPrice("");
+    setSelectedCuisine(null);
   }
 
   useEffect(() => {
@@ -286,7 +292,6 @@ export default function SpinningCarousel() {
   }, [selectedFriends]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
-    // let timeoutID;
     if (isRotating) {
       setHasFirstRotation(false);
       setTimeout(() => {
@@ -301,7 +306,7 @@ export default function SpinningCarousel() {
           updatedRestaurants[0].name = getRandomRestaurant();
           setRestaurants(updatedRestaurants);
         }
-      }, 3000);
+      }, 1500);
     }
   }, [isRotating]); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -314,8 +319,10 @@ export default function SpinningCarousel() {
   useEffect(() => {
     fetchRestaurants();
     fetchCuisine();
-    fetchFreinds();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+    if (token) {
+      fetchFreinds();
+    }
+  }, [token]); // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     if (selectedUserList) {
@@ -507,7 +514,7 @@ export default function SpinningCarousel() {
                           onChange={handleUserListChange}
                           className="form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                         >
-                          <option value="">Select Your List!</option>
+                          <option value={null}>Select Your List!</option>
                           {userLists.map((userList) => (
                             <option
                               key={userList.list_id}

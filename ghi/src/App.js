@@ -1,7 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import FriendsMain from "./Friends/FriendsMain";
-// import useToken from "@galvanize-inc/jwtdown-for-react";
-// import useUser from "./useUser";
 import Auth from "./Auth";
 import RestaurantListPage from "./Restaurants/RestaurantListPage";
 import Nav from "./Main/Nav";

@@ -5,7 +5,6 @@ export default function RestaurantList() {
   const [restaurants, setRestaurants] = useState([]);
   const [restaurantList, setRestaurantList] = useState([]);
   const [selectedListId, setSelectedListId] = useState("");
-  // const { restaurantId } = useParams();
   const navigate = useNavigate();
 
   const { listId } = useParams();
@@ -19,19 +18,6 @@ export default function RestaurantList() {
       fetchRestaurantData(value);
     }
   };
-
-  // const fetchRestaurantsData = async () => {
-  //   const url = `${process.env.REACT_APP_API_HOST}/restaurants`;
-  //   const response = await fetch(url, {
-  //     credentials: "include",
-  //     method: "get",
-  //   });
-
-  //   if (response.ok) {
-  //     const data = await response.json();
-  //     setRestaurants(data);
-  //   }
-  // };
 
   const fetchRestaurantListData = async () => {
     const url = `${process.env.REACT_APP_API_HOST}/restaurant-list`;

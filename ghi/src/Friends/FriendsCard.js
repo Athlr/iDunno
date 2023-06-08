@@ -38,13 +38,6 @@ export default function FriendsCard({
     delete_friend();
   }
 
-  // const [menuOpen, setMenuOpen] = useState(false);
-
-  //   const handleUpdate = (e, stateFunction) => {
-  //     const value = e.target.value;
-  //     stateFunction(value);
-  //   };
-
   return (
     <>
       <Transition appear show={isOpen} as={Fragment}>
@@ -158,29 +151,6 @@ export default function FriendsCard({
                 <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />
               </svg>
             </button>
-            {/* <button onClick={() => setMenuOpen(!menuOpen)}>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke="currentColor"
-              className="w-6 h-6"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M12 6.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 12.75a.75.75 0 110-1.5.75.75 0 010 1.5zM12 18.75a.75.75 0 110-1.5.75.75 0 010 1.5z"
-              />
-            </svg>
-            {menuOpen && (
-              <div className="absolute bg-white shadow-lg rounded-lg py-2 z-10">
-                <button className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
-                  Delete Friend
-                </button>
-              </div>
-            )}
-          </button> */}
           </div>
           <Link to={`/profile/${friend_id}`}>
             <div className="photo-wrapper p-2">

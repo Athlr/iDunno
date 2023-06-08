@@ -269,12 +269,6 @@ export default function FriendsMain() {
                             </button>
                           </div>
                         </div>
-                        // <div
-                        //   key={request.request_id}
-                        //   className="text-sm text-gray-5000"
-                        // >
-                        //   @{request.username}
-                        // </div>
                       );
                     })}
                     <p className="flex text-sm text-gray-500 justify-end">
