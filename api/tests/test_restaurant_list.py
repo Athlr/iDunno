@@ -3,9 +3,19 @@ from pydantic import BaseModel
 from authenticator import authenticator
 from typing import Optional
 from main import app
-from queries.restaurant_list import RestaurantListRepository, RestaurantListOutPicture
+from queries.restaurant_list import RestaurantListRepository
 
 client = TestClient(app)
+
+
+class RestaurantListIn(BaseModel):
+    name: str
+    description: Optional[str]
+    user_id: int
+
+
+class RestaurantListInPicture(RestaurantListIn):
+    list_picture: Optional[str]
 
 
 class RestaurantListOut(BaseModel):
@@ -13,6 +23,10 @@ class RestaurantListOut(BaseModel):
     name: str
     description: Optional[str]
     user_id: int
+
+
+class RestaurantListOutPicture(RestaurantListOut):
+    list_picture: Optional[str]
 
 
 def fake_restaurant_list_data():

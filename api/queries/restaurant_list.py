@@ -167,6 +167,15 @@ class RestaurantListRepository:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
+                    # Remove all restaurants associated with the list
+                    db.execute(
+                        """
+                        DELETE FROM restaurant_list_restaurant
+                        WHERE list_id = %s
+                        """,
+                        [list_id],
+                    )
+                    # Delete the list itself
                     db.execute(
                         """
                         DELETE FROM restaurant_list_restaurant
@@ -184,7 +193,6 @@ class RestaurantListRepository:
                     return True
         except Exception as e:
             print(e)
-            return False
 
     def update(
         self, user_id: int, list_id: int, restaurant_list: RestaurantListInPicture
