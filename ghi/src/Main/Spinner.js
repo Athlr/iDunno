@@ -55,12 +55,16 @@ export default function SpinningCarousel() {
       setIsRotating(false);
       if (hasFirstRotation) {
         const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0] = getRandomRestaurant();
+        const idx = getRandomRestaurant();
+        const item = updatedRestaurants.splice(idx, 1)[0];
+        updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
         setHasFirstRotation(true);
       } else {
         const updatedRestaurants = [...restaurants];
-        updatedRestaurants[0].name = getRandomRestaurant();
+        const idx = getRandomRestaurant();
+        const item = updatedRestaurants.splice(idx, 1)[0];
+        updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
       }
     }
@@ -68,7 +72,8 @@ export default function SpinningCarousel() {
 
   const getRandomRestaurant = () => {
     const randomIndex = Math.floor(Math.random() * restaurants.length);
-    return restaurants[randomIndex].name;
+    return randomIndex;
+    // return restaurants[randomIndex].name;
   };
 
   const handleCuisineChange = (event) => {
@@ -298,12 +303,15 @@ export default function SpinningCarousel() {
         setIsRotating(false);
         if (hasFirstRotation) {
           const updatedRestaurants = [...restaurants];
-          updatedRestaurants[0] = getRandomRestaurant();
-          setRestaurants(updatedRestaurants);
+          const idx = getRandomRestaurant();
+          const item = updatedRestaurants.splice(idx, 1)[0];
+          updatedRestaurants.unshift(item);
           setHasFirstRotation(true);
         } else {
           const updatedRestaurants = [...restaurants];
-          updatedRestaurants[0].name = getRandomRestaurant();
+          const idx = getRandomRestaurant();
+          const item = updatedRestaurants.splice(idx, 1)[0];
+          updatedRestaurants.unshift(item);
           setRestaurants(updatedRestaurants);
         }
       }, 1500);
