@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import idunno_signup_form_2 from "./Media/idunno_signup_form_2.mp4";
 
 function Auth() {
   const [formData, setFormData] = useState({});
@@ -68,7 +69,7 @@ function Auth() {
     >
       <div className="absolute w-full h-full">
         <video autoPlay muted className="object-cover w-full h-full">
-          <source src="/static/img/idunno_signup_form_2.mp4" type="video/mp4" />
+          <source src={idunno_signup_form_2} type="video/mp4" />
         </video>
       </div>
       <div className="bg-white border border-gray-200 rounded p-6 shadow-lg space-y-12 relative z-10 h-auto max-h-full overflow-auto">

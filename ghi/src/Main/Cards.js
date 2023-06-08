@@ -1,4 +1,10 @@
 import React from "react";
+import aaron from "../Media/aaron.png";
+import Luis from "../Media/Luis.png";
+import jb from "../Media/jb.png";
+import gitlabss from "../Media/gitlabss.png";
+import MAtt from "../Media/MAtt.png";
+import linkedin from "../Media/linkedin.png";
 
 export default function Cards() {
   return (
@@ -171,7 +177,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/static/img/aaron.png"
+              src={aaron}
               alt="Aaron"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -187,7 +193,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/static/img/linkedin.png"
+                  src={linkedin}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -199,7 +205,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/static/img/gitlabss.png"
+                  src={gitlabss}
                   alt="gitlab Logo"
                 />
               </a>
@@ -210,7 +216,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/static/img/luis.png"
+              src={Luis}
               alt="Luis"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -226,7 +232,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-15 mr-2"
-                  src="/static/img/linkedin.png"
+                  src={linkedin}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -238,7 +244,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/static/img/gitlabss.png"
+                  src={gitlabss}
                   alt="gitlab Logo"
                 />
               </a>
@@ -249,7 +255,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/static/img/matt.png"
+              src={MAtt}
               alt="Matthew"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -265,7 +271,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/static/img/linkedin.png"
+                  src={linkedin}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -277,7 +283,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/static/img/gitlabss.png"
+                  src={gitlabss}
                   alt="gitlab Logo"
                 />
               </a>
@@ -288,7 +294,7 @@ export default function Cards() {
           <div className="flex flex-col items-center">
             <img
               className="w-24 h-24 mb-3 rounded-full shadow-lg"
-              src="/static/img/jb.png"
+              src={jb}
               alt="Justin"
             />
             <h5 className="mb-1 text-xl font-medium text-gray-900">
@@ -304,7 +310,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-11 mr-2"
-                  src="/static/img/linkedin.png"
+                  src={linkedin}
                   alt="LinkedIn Logo"
                 />
               </a>
@@ -316,7 +322,7 @@ export default function Cards() {
               >
                 <img
                   className="h-11 w-12 mr-2"
-                  src="/static/img/gitlabss.png"
+                  src={gitlabss}
                   alt="gitlab Logo"
                 />
               </a>

@@ -1,5 +1,6 @@
 import React from "react";
 import "animate.css/animate.min.css";
+import burgericon from "../Media/burgericon.png";
 
 const Hero = () => {
   return (
@@ -22,7 +23,7 @@ const Hero = () => {
       </style>
       <div className="animate__animated animate__shakeY animate__infinite custom-shakeY image-section w-1/2">
         <img
-          src="/static/img/burgericon.png"
+          src={burgericon}
           alt="Restaurant"
           className="object-cover h-full w-full"
         />
