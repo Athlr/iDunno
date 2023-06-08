@@ -25,23 +25,23 @@ export default function FriendRestaurantPage() {
   }, [listId]);
 
   return (
-    <div className="my-5 container">
-      <h1 className="text-3xl font-bold mb-5">Restaurant List</h1>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
-        {restaurants.map((restaurant) => {
-          return (
-            <div
-              key={restaurant.restaurant_id}
-              className="bg-white rounded-md shadow-md p-4"
-            >
-              <h3 className="text-lg font-semibold mb-2">{restaurant.name}</h3>
-              <p className="text-gray-600 mb-2">Price: {restaurant.price}</p>
-              <p className="text-gray-600 mb-4">
-                Cuisine: {restaurant.cuisine_name}
-              </p>
+    <div className="container h-screen min-w-full bg-[#faceaf]">
+      <h1 className="text-3xl text-center mb-20 font-bold mb-5">Friends List</h1>
+      <div className="overflow-y-auto" style={{ maxHeight: "calc(100vh - 200px)" }}>
+        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4 mx-20 mr-20 overflow-hidden">
+          {restaurants.map((restaurant) => {
+            return (
+              <div
+                key={restaurant.restaurant_id}
+                className="bg-[#e89d5b51] rounded-md shadow-md p-4"
+              >
+                <h3 className="text-lg font-semibold mb-2">{restaurant.name}</h3>
+                <p className="text-gray-600 mb-2">Price: {restaurant.price}</p>
+                <p className="text-gray-600 mb-4">Cuisine: {restaurant.cuisine_name}</p>
             </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </div>
   );
