@@ -70,14 +70,7 @@ export default function FriendPage() {
               <p>@{friendInfo.username}</p>
             </div>
           </div>
-          <div className="flex items-end ml-auto">
-            {/* <button className="mr-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-              Add Restaurant Lists
-            </button>
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full">
-              Edit Profile
-            </button> */}
-          </div>
+          <div className="flex items-end ml-auto"></div>
         </div>
       </div>
       <div className="container mx-auto mt-5 w-4/5 bg-[#faf0e6] h-4/6 overflow-y-scroll rounded-md">

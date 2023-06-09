@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import useToken from "@galvanize-inc/jwtdown-for-react";
-// import idunno_restaurant_form_3 from "../Media/idunno_restaurant_form_3.mp4";
 
 export default function NewRestaurantForm() {
   const [cuisines, setCuisines] = useState([]);
