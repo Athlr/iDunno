@@ -9,7 +9,10 @@
 
 ## Who we are
 
-if we even want this
+iDunno is your go-to random restaurant picker. Our team understands that choosing a restaurant can often be a challenging task,
+especially when you're out and about with a group. Here at iDunno, we've created a simple and innovative solution to take the guesswork
+out of your dining decisions. Users can spin for a random selection tailored to their own preferences, and their friends' preferences, if
+they choose to do so! No more saying, "I don't know". iDunno is here to help you pick your next dining experience. Let us take the stress out of decision-making.
 
 ## Design
 
