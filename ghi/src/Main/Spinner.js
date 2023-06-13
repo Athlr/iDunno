@@ -2,6 +2,8 @@ import React, { useState, useEffect, Fragment } from "react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
 import { Dialog, Transition } from "@headlessui/react";
 import useUser from "../useUser";
+import Places_API from api/key.py 
+import {get_restaurant_photos, get_place_photos} from api/acls.py
 
 export default function SpinningCarousel() {
   const [restaurants, setRestaurants] = useState([]);
