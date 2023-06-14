@@ -8,6 +8,7 @@ from routers import (
     restaurants,
     cuisine_list,
     sponsored,
+    question,
 )
 import os
 from authenticator import authenticator
@@ -21,6 +22,7 @@ app.include_router(restaurant_list.router)
 app.include_router(restaurants.router)
 app.include_router(cuisine_list.router)
 app.include_router(sponsored.router)
+app.include_router(question.router)
 
 
 app.add_middleware(

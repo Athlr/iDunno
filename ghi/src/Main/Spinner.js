@@ -60,12 +60,14 @@ export default function SpinningCarousel() {
         updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
         setHasFirstRotation(true);
+        
       } else {
         const updatedRestaurants = [...restaurants];
         const idx = getRandomRestaurant();
         const item = updatedRestaurants.splice(idx, 1)[0];
         updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
+        
       }
     }
   };
@@ -351,7 +353,13 @@ export default function SpinningCarousel() {
   const placeholderFaces = Array.from(
     { length: placeholderCount },
     (_, index) => index
+  
   );
+  
+  
+  let faceCount = Math.floor(Math.random() * 4) + 3;
+  
+
 
   return (
     <div className="h-screen w-screen flex flex-col items-center bg-salmon overflow-hidden">
@@ -688,52 +696,193 @@ export default function SpinningCarousel() {
               animation: isRotating ? "rotate360 1s infinite linear" : "none",
             }}
           >
-            {filteredRestaurants.slice(0, 9).map((restaurant, index) => (
-              <div
-                key={index}
-                style={{
-                  position: "absolute",
-                  width: "300px",
-                  height: "187px",
-                  top: "20px",
-                  left: "10px",
-                  right: "10px",
-                  backgroundSize: "cover",
-                  boxShadow: "inset 0 0 0 2000px rgba(0,0,0,0.5)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  transform: `rotateY(${index * 40}deg) translateZ(430px)`,
-                }}
-              >
-                <h3>{restaurant.name}</h3>
-              </div>
-            ))}
-            {placeholderFaces.map((index) => (
-              <div
-                key={index}
-                style={{
-                  position: "absolute",
-                  width: "300px",
-                  height: "187px",
-                  top: "20px",
-                  left: "10px",
-                  right: "10px",
-                  backgroundSize: "cover",
-                  boxShadow: "inset 0 0 0 2000px rgba(0,0,0,0.5)",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  textAlign: "center",
-                  transform: `rotateY(${
-                    (filteredRestaurants.length + index) * 40
-                  }deg) translateZ(430px)`,
-                }}
-              >
-                Place Holder
-              </div>
-            ))}
+            {filteredRestaurants.slice(0, 9).map((restaurant, index) => {
+              if (faceCount % 3 === 0) {
+                faceCount += 1;
+                return (
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#b76f53",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${index * 40}deg) translateZ(430px)`,
+                      color: "#aa3e29",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>{restaurant.name}</h3>
+                  </div>
+                );
+              }else if (faceCount % 3 === 1 ){
+                faceCount += 1;
+                return (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        width: "300px",
+                        height: "187px",
+                        top: "20px",
+                        left: "10px",
+                        right: "10px",
+                        backgroundSize: "cover",
+                        backgroundColor: "#f9a240",
+                        border: "2px solid black",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        transform: `rotateY(${index * 40}deg) translateZ(430px)`,
+                        color: "#f58057",
+                        textShadow: "1px 1px 1px black",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <h3>{restaurant.name}</h3>
+                    </div>
+                  );
+              }else{
+                faceCount += 1;
+                return (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        width: "300px",
+                        height: "187px",
+                        top: "20px",
+                        left: "10px",
+                        right: "10px",
+                        backgroundSize: "cover",
+                        backgroundColor: "#e1b773",
+                        border: "2px solid black",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        transform: `rotateY(${index * 40}deg) translateZ(430px)`,
+                        color: "#f8e5bc",
+                        textShadow: "1px 1px 1px black",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <h3>{restaurant.name}</h3>
+                    </div>
+                  );
+              }
+
+            })}
+            {placeholderFaces.map((index) => {
+              if (faceCount % 3 === 0){
+                faceCount += 1;
+                return (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        width: "300px",
+                        height: "187px",
+                        top: "20px",
+                        left: "10px",
+                        right: "10px",
+                        backgroundSize: "cover",
+                        backgroundColor: "#b76f53",
+                        border: "2px solid black",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        transform: `rotateY(${
+                          (filteredRestaurants.length + index) * 40
+                        }deg) translateZ(430px)`,
+                        color: "#aa3e29",
+                        textShadow: "1px 1px 1px black",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <h3>iDunno</h3>
+                    </div>
+                  );
+              }else if (faceCount % 3 === 1){
+                faceCount += 1;
+                return (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        width: "300px",
+                        height: "187px",
+                        top: "20px",
+                        left: "10px",
+                        right: "10px",
+                        backgroundSize: "cover",
+                        backgroundColor: "#f9a240",
+                        border: "2px solid black",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        transform: `rotateY(${
+                          (filteredRestaurants.length + index) * 40
+                        }deg) translateZ(430px)`,
+                        color: "#f58057",
+                        textShadow: "1px 1px 1px black",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <h3>iDunno</h3>
+                    </div>
+                  );
+              }else{
+                faceCount += 1;
+                return (
+                    <div
+                      key={index}
+                      style={{
+                        position: "absolute",
+                        width: "300px",
+                        height: "187px",
+                        top: "20px",
+                        left: "10px",
+                        right: "10px",
+                        backgroundSize: "cover",
+                        backgroundColor: "#e1b773",
+                        border: "2px solid black",
+                        borderRadius: "10px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        textAlign: "center",
+                        transform: `rotateY(${
+                          (filteredRestaurants.length + index) * 40
+                        }deg) translateZ(430px)`,
+                        color: "#f8e5bc",
+                        textShadow: "1px 1px 1px black",
+                        fontSize: "20px",
+                      }}
+                    >
+                      <h3>iDunno</h3>
+                    </div>
+                  );
+               }
+            })}
             <style>
               {`
             @keyframes rotate360{
