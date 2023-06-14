@@ -2,6 +2,7 @@ import React, { useEffect, useState, Fragment } from "react";
 import FriendsCard from "./FriendsCard";
 import { Dialog, Transition } from "@headlessui/react";
 import useToken from "@galvanize-inc/jwtdown-for-react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function FriendsMain() {
   const [friendsList, setFriendsList] = useState([]);
@@ -11,6 +12,36 @@ export default function FriendsMain() {
   const [message, setMessage] = useState("");
   const [search, setSearch] = useState("");
   const { token } = useToken();
+
+  const notify = (message) => {
+    toast.success(message, {
+      duration: 4000,
+      style: {
+        border: "1px solid #048A81",
+        padding: "16px",
+        color: "#048A81",
+      },
+      iconTheme: {
+        primary: "#048A81",
+        secondary: "#FFFAEE",
+      },
+    });
+  };
+
+  const notifyFail = (message) => {
+    toast.error(message, {
+      duration: 4000,
+      style: {
+        border: "1px solid #e53e3e",
+        padding: "16px",
+        color: "#e53e3e",
+      },
+      iconTheme: {
+        primary: "#e53e3e",
+        secondary: "#FFFAEE",
+      },
+    });
+  };
 
   const mainBackground = {
     backgroundImage: `url(${
@@ -77,11 +108,14 @@ export default function FriendsMain() {
     if (response.ok) {
       const data = await response.json();
       setMessage(data);
+      if (typeof data.message !== "string") {
+        notify(`Friend Request has been sent to ${addUsername}`);
+      }
       setAddUsername("");
     }
   };
 
-  const acceptFriendRequest = async (request_id) => {
+  const acceptFriendRequest = async (request_id, username) => {
     const url = `${process.env.REACT_APP_API_HOST}/requests/${request_id}`;
 
     const data = {
@@ -98,12 +132,13 @@ export default function FriendsMain() {
     });
 
     if (response.ok) {
+      notify(`${username}'s friend request has been accepted`);
       fetchFriendRequests();
       fetchFriendsData();
     }
   };
 
-  const rejectFriendRequest = async (request_id) => {
+  const rejectFriendRequest = async (request_id, username) => {
     const url = `${process.env.REACT_APP_API_HOST}/requests/${request_id}`;
 
     const data = {
@@ -120,6 +155,7 @@ export default function FriendsMain() {
     });
 
     if (response.ok) {
+      notifyFail(`${username}'s friend request has been rejected`);
       fetchFriendRequests();
     }
   };
@@ -232,7 +268,10 @@ export default function FriendsMain() {
                           <div>
                             <button
                               onClick={() =>
-                                acceptFriendRequest(request.request_id)
+                                acceptFriendRequest(
+                                  request.request_id,
+                                  request.username
+                                )
                               }
                               className="mr-2 bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
                             >
@@ -251,7 +290,10 @@ export default function FriendsMain() {
                             </button>
                             <button
                               onClick={() =>
-                                rejectFriendRequest(request.request_id)
+                                rejectFriendRequest(
+                                  request.request_id,
+                                  request.username
+                                )
                               }
                               className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
                             >
@@ -297,7 +339,7 @@ export default function FriendsMain() {
               </div>
               <button
                 onClick={() => openRequest()}
-                className="bg-[#faf0e6] hover:bg-black text-black hover:text-white font-bold py-2 px-4 rounded-full"
+                className="bg-[#faf0e6] hover:bg-black text-black hover:text-white font-bold py-2 px-4 rounded-full duration-300"
               >
                 Friend Request
               </button>
@@ -313,6 +355,9 @@ export default function FriendsMain() {
                 full_name.toLowerCase().includes(search.toLowerCase())
               );
             })
+            .filter((friend) => {
+              return friend.favorited_id !== null;
+            })
             .map((friend) => {
               return (
                 <FriendsCard
@@ -322,11 +367,38 @@ export default function FriendsMain() {
                   first_name={friend.first_name}
                   last_name={friend.last_name}
                   profile_pic={friend.profile_pic}
+                  favorited_id={friend.favorited_id}
+                  fetchFriendsData={() => fetchFriendsData()}
+                />
+              );
+            })}
+          {friendsList
+            .filter((friend) => {
+              const full_name = `${friend.first_name} ${friend.last_name}`;
+              return (
+                friend.username.toLowerCase().includes(search.toLowerCase()) ||
+                full_name.toLowerCase().includes(search.toLowerCase())
+              );
+            })
+            .filter((friend) => {
+              return friend.favorited_id === null;
+            })
+            .map((friend) => {
+              return (
+                <FriendsCard
+                  key={friend.friend_id}
+                  friend_id={friend.friend_id}
+                  username={friend.username}
+                  first_name={friend.first_name}
+                  last_name={friend.last_name}
+                  profile_pic={friend.profile_pic}
+                  favorited_id={friend.favorited_id}
                   fetchFriendsData={() => fetchFriendsData()}
                 />
               );
             })}
         </div>
+        <Toaster position="bottom-right" reverseOrder={false} />
       </div>
     </>
   ) : null;

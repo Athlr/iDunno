@@ -35,3 +35,12 @@ def delete_friend(
     repo: FriendshipsRepo = Depends(),
 ) -> bool:
     return repo.delete_friendship(account_data["id"], friend_id)
+
+
+@router.put("/favorites/{friend_id}", response_model=bool)
+def toggle_favorite(
+    friend_id: int,
+    account_data: dict = Depends(authenticator.get_current_account_data),
+    repo: FriendshipsRepo = Depends(),
+) -> bool:
+    return repo.toggle_favorite(account_data["id"], friend_id)

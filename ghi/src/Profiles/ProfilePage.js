@@ -3,6 +3,7 @@ import useToken from "@galvanize-inc/jwtdown-for-react";
 import ProfileList from "./ProfileList";
 import { Link } from "react-router-dom";
 import EditProfile from "./EditProfile";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function ProfilePage() {
   const { token } = useToken();
@@ -10,6 +11,34 @@ export default function ProfilePage() {
   const [restaurantList, setRestaurantList] = useState([]);
   const [search, setSearch] = useState("");
   const [isEditOpen, setIsEditOpen] = useState(false);
+
+  const notify = (message) => {
+    toast.success(`Profile: ${message} has been successfully updated`, {
+      style: {
+        border: "1px solid #048A81",
+        padding: "16px",
+        color: "#048A81",
+      },
+      iconTheme: {
+        primary: "#048A81",
+        secondary: "#FFFAEE",
+      },
+    });
+  };
+
+  const notifyFail = () => {
+    toast.error(`Profile: Update failed`, {
+      style: {
+        border: "1px solid #e53e3e",
+        padding: "16px",
+        color: "#e53e3e",
+      },
+      iconTheme: {
+        primary: "#e53e3e",
+        secondary: "#FFFAEE",
+      },
+    });
+  };
 
   const openEditProfile = () => {
     setIsEditOpen(true);
@@ -69,6 +98,8 @@ export default function ProfilePage() {
         fetchUserData={() => fetchUserData()}
         isEditOpen={isEditOpen}
         closeEditProfile={() => closeEditProfile()}
+        notify={(message) => notify(message)}
+        notifyFail={() => notifyFail()}
       />
       <div style={mainBackground}>
         <div className="container mx-auto pt-8 w-4/5 h-auto">
@@ -88,13 +119,13 @@ export default function ProfilePage() {
             </div>
             <div className="flex items-end ml-auto ">
               <Link to="/restaurants/createList">
-                <button className="mr-3 bg-zinc-200 hover:bg-black text-black hover:text-white outline outline-1 font-bold py-2 px-4 rounded-full">
+                <button className="mr-3 bg-zinc-200 hover:bg-black text-black hover:text-white outline outline-1 font-bold py-2 px-4 rounded-full duration-300">
                   Add Restaurant Lists
                 </button>
               </Link>
               <button
                 onClick={() => openEditProfile()}
-                className="bg-zinc-200 hover:bg-black text-black hover:text-white outline outline-1 font-bold py-2 px-4 rounded-full"
+                className="bg-zinc-200 hover:bg-black text-black hover:text-white outline outline-1 font-bold py-2 px-4 rounded-full duration-300"
               >
                 Edit Profile
               </button>
@@ -151,6 +182,7 @@ export default function ProfilePage() {
               })}
           </div>
         </div>
+        <Toaster position="bottom-right" reverseOrder={false} />
       </div>
     </>
   ) : null;

@@ -5,6 +5,8 @@ export default function EditProfile({
   fetchUserData,
   isEditOpen,
   closeEditProfile,
+  notify,
+  notifyFail,
 }) {
   const [userData, setUserData] = useState("");
   const [username, setUsername] = useState(userData.username);
@@ -13,108 +15,137 @@ export default function EditProfile({
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
   const [pictureUrl, setPictureUrl] = useState("");
+  const [currentData, setCurrentData] = useState({});
 
   const updateFirstName = async (user_id) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
+    if (currentData.firstName !== firstName) {
+      const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
 
-    const data = {
-      first_name: firstName,
-      last_name: null,
-      password: null,
-      profile_picture: null,
-    };
+      const data = {
+        first_name: firstName,
+        last_name: null,
+        password: null,
+        profile_picture: null,
+      };
 
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await fetch(url, {
+        credentials: "include",
+        method: "put",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (response.ok) {
-      fetchUserData();
-      setFirstName("");
-      fetchUserDataModal();
+      if (response.ok) {
+        notify("First Name");
+        fetchUserData();
+        setFirstName("");
+        fetchUserDataModal();
+      } else {
+        notifyFail();
+      }
+    } else {
+      notifyFail();
     }
   };
 
   const updateLastName = async (user_id) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
+    if (currentData.lastName !== lastName) {
+      const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
 
-    const data = {
-      first_name: null,
-      last_name: lastName,
-      password: null,
-      profile_picture: null,
-    };
+      const data = {
+        first_name: null,
+        last_name: lastName,
+        password: null,
+        profile_picture: null,
+      };
 
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await fetch(url, {
+        credentials: "include",
+        method: "put",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (response.ok) {
-      fetchUserData();
-      setLastName("");
-      fetchUserDataModal();
+      if (response.ok) {
+        notify("Last Name");
+        fetchUserData();
+        setLastName("");
+        fetchUserDataModal();
+      } else {
+        notifyFail();
+      }
+    } else {
+      notifyFail();
     }
   };
 
   const updatePassword = async (user_id) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
+    if (currentData.password !== password) {
+      const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
 
-    const data = {
-      first_name: null,
-      last_name: null,
-      password: password,
-      profile_picture: null,
-    };
+      const data = {
+        first_name: null,
+        last_name: null,
+        password: password,
+        profile_picture: null,
+      };
 
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await fetch(url, {
+        credentials: "include",
+        method: "put",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (response.ok) {
-      fetchUserData();
-      setPassword("");
-      fetchUserDataModal();
+      if (response.ok) {
+        notify("Password");
+        fetchUserData();
+        setPassword("");
+        fetchUserDataModal();
+      } else {
+        notifyFail();
+      }
+    } else {
+      notifyFail();
     }
   };
 
   const updateProfilePicture = async (user_id) => {
-    const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
+    if (currentData.profilePictureUrl !== pictureUrl) {
+      const url = `${process.env.REACT_APP_API_HOST}/api/accounts/${user_id}`;
 
-    const data = {
-      first_name: null,
-      last_name: null,
-      password: null,
-      profile_picture: pictureUrl,
-    };
+      const data = {
+        first_name: null,
+        last_name: null,
+        password: null,
+        profile_picture: pictureUrl,
+      };
 
-    const response = await fetch(url, {
-      credentials: "include",
-      method: "put",
-      body: JSON.stringify(data),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
+      const response = await fetch(url, {
+        credentials: "include",
+        method: "put",
+        body: JSON.stringify(data),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
-    if (response.ok) {
-      fetchUserData();
-      setPictureUrl("");
-      fetchUserDataModal();
+      if (response.ok) {
+        notify("Profile Picture");
+        fetchUserData();
+        setPictureUrl("");
+        fetchUserDataModal();
+      } else {
+        notifyFail();
+      }
+    } else {
+      notifyFail();
     }
   };
 
@@ -149,6 +180,13 @@ export default function EditProfile({
     setLastName(userData.last_name);
     setPassword("");
     setPictureUrl(userData.profile_picture_url);
+    setCurrentData({
+      profilePictureUrl: userData.profile_picture_url,
+      firstName: userData.first_name,
+      lastName: userData.last_name,
+      email: userData.email,
+      password: "",
+    });
   }, [userData]);
 
   return (

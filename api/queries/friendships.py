@@ -19,6 +19,7 @@ class FriendshipOut(BaseModel):
     first_name: str
     last_name: str
     profile_pic: str
+    favorited_id: Optional[int] = None
 
 
 class FriendOut(BaseModel):
@@ -28,6 +29,7 @@ class FriendOut(BaseModel):
     first_name: str
     last_name: str
     profile_pic: str
+    favorited_id: Optional[int] = None
 
 
 class FriendshipsRepo:
@@ -37,11 +39,13 @@ class FriendshipsRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT f.friendship_id, u.user_id, u.username, u.email, u.first_name, u.last_name, u.profile_picture_url
+                        SELECT f.friendship_id, u.user_id, u.username, u.email, u.first_name, u.last_name, u.profile_picture_url, ff.friends_favorites_id
                         FROM user_table u
                         JOIN friendships f ON
                         (u.user_id = f.user1_id AND f.user2_id = %s)
-                        OR (u.user_id = f.user2_id AND f.user1_id = %s);
+                        OR (u.user_id = f.user2_id AND f.user1_id = %s)
+                        LEFT JOIN friends_favorites ff ON
+                        (u.user_id = ff.friend_id);
                         """,
                         [user_id, user_id],
                     )
@@ -55,6 +59,7 @@ class FriendshipsRepo:
                             first_name=record[4],
                             last_name=record[5],
                             profile_pic=record[6],
+                            favorited_id=record[7],
                         )
                         result.append(friendship)
                     return result
@@ -81,9 +86,11 @@ class FriendshipsRepo:
                     if check_friends_exist:
                         result = db.execute(
                             """
-                            SELECT user_id, username, email, first_name, last_name, profile_picture_url
-                            FROM user_table
-                            WHERE user_id = %(friend_id)s
+                            SELECT u.user_id, u.username, u.email, u.first_name, u.last_name, u.profile_picture_url, ff.friends_favorites_id
+                            FROM user_table u
+                            LEFT JOIN friends_favorites ff ON
+                            (u.user_id = ff.friend_id)
+                            WHERE u.user_id = %(friend_id)s;
                             """,
                             {"friend_id": friend_id},
                         )
@@ -97,6 +104,7 @@ class FriendshipsRepo:
                             first_name=record[3],
                             last_name=record[4],
                             profile_pic=record[5],
+                            favorited_id=record[6],
                         )
         except Exception as e:
             print(e)
@@ -123,6 +131,42 @@ class FriendshipsRepo:
                         {"user_id": user_id, "friend_id": friend_id},
                     )
                     return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def toggle_favorite(self, user_id: int, friend_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    check_favorites = db.execute(
+                        """
+                        SELECT FROM friends_favorites
+                        WHERE user_id = %(user_id)s AND friend_id = %(friend_id)s;
+                        """,
+                        {"user_id": user_id, "friend_id": friend_id},
+                    )
+                    exists = check_favorites.fetchone()
+                    if exists is None:
+                        db.execute(
+                            """
+                            INSERT INTO friends_favorites
+                                (user_id, friend_id)
+                            VALUES
+                                (%(user_id)s, %(friend_id)s)
+                            """,
+                            {"user_id": user_id, "friend_id": friend_id},
+                        )
+                        return True
+                    else:
+                        db.execute(
+                            """
+                            DELETE FROM friends_favorites
+                            WHERE user_id = %(user_id)s AND friend_id = %(friend_id)s;
+                            """,
+                            {"user_id": user_id, "friend_id": friend_id},
+                        )
+                        return True
         except Exception as e:
             print(e)
             return False

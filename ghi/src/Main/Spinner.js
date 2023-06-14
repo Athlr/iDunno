@@ -60,14 +60,12 @@ export default function SpinningCarousel() {
         updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
         setHasFirstRotation(true);
-        
       } else {
         const updatedRestaurants = [...restaurants];
         const idx = getRandomRestaurant();
         const item = updatedRestaurants.splice(idx, 1)[0];
         updatedRestaurants.unshift(item);
         setRestaurants(updatedRestaurants);
-        
       }
     }
   };
@@ -353,13 +351,9 @@ export default function SpinningCarousel() {
   const placeholderFaces = Array.from(
     { length: placeholderCount },
     (_, index) => index
-  
   );
-  
-  
-  let faceCount = Math.floor(Math.random() * 4) + 3;
-  
 
+  let faceCount = Math.floor(Math.random() * 4) + 3;
 
   return (
     <div className="h-screen w-screen flex flex-col items-center bg-salmon overflow-hidden">
@@ -588,32 +582,80 @@ export default function SpinningCarousel() {
                                   >
                                     Who are you eating with?:
                                   </Dialog.Title>
+                                  <hr></hr>
+                                  <Dialog.Title
+                                    as="h4"
+                                    className="text-md font-medium leading-6 text-gray-900 mt-1 mb-1"
+                                  >
+                                    Favorites:
+                                  </Dialog.Title>
                                   <div className="space-y-2">
-                                    {userFriends.map((friend) => (
-                                      <div
-                                        key={friend.friend_id}
-                                        className="flex items-center"
-                                      >
-                                        <input
-                                          type="checkbox"
-                                          id={friend.friend_id}
-                                          value={friend.friend_id}
-                                          checked={selectedFriends.includes(
-                                            friend.friend_id
-                                          )}
-                                          onChange={(e) =>
-                                            handleFriendChange(e.target.value)
-                                          }
-                                          className="form-checkbox h-5 w-5 text-blue-500"
-                                        />
-                                        <label
-                                          htmlFor={friend.friend_id}
-                                          className="ml-2 block text-sm text-gray-700"
+                                    {userFriends
+                                      .filter((friend) => {
+                                        return friend.favorited_id !== null;
+                                      })
+                                      .map((friend) => (
+                                        <div
+                                          key={friend.friend_id}
+                                          className="flex items-center form-check"
                                         >
-                                          {friend.username}
-                                        </label>
-                                      </div>
-                                    ))}
+                                          <input
+                                            type="checkbox"
+                                            id={friend.friend_id}
+                                            value={friend.friend_id}
+                                            checked={selectedFriends.includes(
+                                              friend.friend_id
+                                            )}
+                                            onChange={(e) =>
+                                              handleFriendChange(e.target.value)
+                                            }
+                                            className="form-check-input text-blue-500"
+                                          />
+                                          <label
+                                            htmlFor={friend.friend_id}
+                                            className="ml-2 block text-sm text-gray-700"
+                                          >
+                                            {friend.username}
+                                          </label>
+                                        </div>
+                                      ))}
+                                  </div>
+                                  <Dialog.Title
+                                    as="h4"
+                                    className="text-md font-medium leading-6 text-gray-900 mt-1 mb-1"
+                                  >
+                                    Friends:
+                                  </Dialog.Title>
+                                  <div className="space-y-2">
+                                    {userFriends
+                                      .filter((friend) => {
+                                        return friend.favorited_id === null;
+                                      })
+                                      .map((friend) => (
+                                        <div
+                                          key={friend.friend_id}
+                                          className="flex items-center form-check"
+                                        >
+                                          <input
+                                            type="checkbox"
+                                            id={friend.friend_id}
+                                            value={friend.friend_id}
+                                            checked={selectedFriends.includes(
+                                              friend.friend_id
+                                            )}
+                                            onChange={(e) =>
+                                              handleFriendChange(e.target.value)
+                                            }
+                                            className="form-check-input text-blue-500"
+                                          />
+                                          <label
+                                            htmlFor={friend.friend_id}
+                                            className="ml-2 block text-sm text-gray-700"
+                                          >
+                                            {friend.username}
+                                          </label>
+                                        </div>
+                                      ))}
                                   </div>
                                 </Dialog.Panel>
                               </Transition.Child>
@@ -624,11 +666,15 @@ export default function SpinningCarousel() {
                       <div className="mt-4">
                         {selectedFriendsProfiles.map((friendProfile) => (
                           <div key={friendProfile.id}>
-                            <label htmlFor={`dropdown-${friendProfile.id}`}>
+                            <label
+                              htmlFor={`dropdown-${friendProfile.id}`}
+                              className="text-sm text-gray-500"
+                            >
                               {friendProfile.username}:{" "}
                             </label>
                             <select
                               id={`dropdown-${friendProfile.id}`}
+                              className="form-select w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
                               style={{ width: "200px", marginTop: "5px" }}
                               onChange={(event) =>
                                 handleFriendListChange(
@@ -723,165 +769,174 @@ export default function SpinningCarousel() {
                       fontSize: "20px",
                     }}
                   >
-                    <h3>{restaurant.name}</h3>
+                    <h3>
+                      {restaurant ? restaurant.name : "No Restaurant Exist"}
+                    </h3>
                   </div>
                 );
-              }else if (faceCount % 3 === 1 ){
+              } else if (faceCount % 3 === 1) {
                 faceCount += 1;
                 return (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        width: "300px",
-                        height: "187px",
-                        top: "20px",
-                        left: "10px",
-                        right: "10px",
-                        backgroundSize: "cover",
-                        backgroundColor: "#f9a240",
-                        border: "2px solid black",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        transform: `rotateY(${index * 40}deg) translateZ(430px)`,
-                        color: "#f58057",
-                        textShadow: "1px 1px 1px black",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <h3>{restaurant.name}</h3>
-                    </div>
-                  );
-              }else{
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#f9a240",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${index * 40}deg) translateZ(430px)`,
+                      color: "#f58057",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>
+                      <h3>
+                        {restaurant ? restaurant.name : "No Restaurant Exist"}
+                      </h3>
+                    </h3>
+                  </div>
+                );
+              } else {
                 faceCount += 1;
                 return (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        width: "300px",
-                        height: "187px",
-                        top: "20px",
-                        left: "10px",
-                        right: "10px",
-                        backgroundSize: "cover",
-                        backgroundColor: "#e1b773",
-                        border: "2px solid black",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        transform: `rotateY(${index * 40}deg) translateZ(430px)`,
-                        color: "#f8e5bc",
-                        textShadow: "1px 1px 1px black",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <h3>{restaurant.name}</h3>
-                    </div>
-                  );
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#e1b773",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${index * 40}deg) translateZ(430px)`,
+                      color: "#f8e5bc",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>
+                      <h3>
+                        {restaurant ? restaurant.name : "No Restaurant Exist"}
+                      </h3>
+                    </h3>
+                  </div>
+                );
               }
-
             })}
             {placeholderFaces.map((index) => {
-              if (faceCount % 3 === 0){
+              if (faceCount % 3 === 0) {
                 faceCount += 1;
                 return (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        width: "300px",
-                        height: "187px",
-                        top: "20px",
-                        left: "10px",
-                        right: "10px",
-                        backgroundSize: "cover",
-                        backgroundColor: "#b76f53",
-                        border: "2px solid black",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        transform: `rotateY(${
-                          (filteredRestaurants.length + index) * 40
-                        }deg) translateZ(430px)`,
-                        color: "#aa3e29",
-                        textShadow: "1px 1px 1px black",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <h3>iDunno</h3>
-                    </div>
-                  );
-              }else if (faceCount % 3 === 1){
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#b76f53",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${
+                        (filteredRestaurants.length + index) * 40
+                      }deg) translateZ(430px)`,
+                      color: "#aa3e29",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>iDunno</h3>
+                  </div>
+                );
+              } else if (faceCount % 3 === 1) {
                 faceCount += 1;
                 return (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        width: "300px",
-                        height: "187px",
-                        top: "20px",
-                        left: "10px",
-                        right: "10px",
-                        backgroundSize: "cover",
-                        backgroundColor: "#f9a240",
-                        border: "2px solid black",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        transform: `rotateY(${
-                          (filteredRestaurants.length + index) * 40
-                        }deg) translateZ(430px)`,
-                        color: "#f58057",
-                        textShadow: "1px 1px 1px black",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <h3>iDunno</h3>
-                    </div>
-                  );
-              }else{
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#f9a240",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${
+                        (filteredRestaurants.length + index) * 40
+                      }deg) translateZ(430px)`,
+                      color: "#f58057",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>iDunno</h3>
+                  </div>
+                );
+              } else {
                 faceCount += 1;
                 return (
-                    <div
-                      key={index}
-                      style={{
-                        position: "absolute",
-                        width: "300px",
-                        height: "187px",
-                        top: "20px",
-                        left: "10px",
-                        right: "10px",
-                        backgroundSize: "cover",
-                        backgroundColor: "#e1b773",
-                        border: "2px solid black",
-                        borderRadius: "10px",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        textAlign: "center",
-                        transform: `rotateY(${
-                          (filteredRestaurants.length + index) * 40
-                        }deg) translateZ(430px)`,
-                        color: "#f8e5bc",
-                        textShadow: "1px 1px 1px black",
-                        fontSize: "20px",
-                      }}
-                    >
-                      <h3>iDunno</h3>
-                    </div>
-                  );
-               }
+                  <div
+                    key={index}
+                    style={{
+                      position: "absolute",
+                      width: "300px",
+                      height: "187px",
+                      top: "20px",
+                      left: "10px",
+                      right: "10px",
+                      backgroundSize: "cover",
+                      backgroundColor: "#e1b773",
+                      border: "2px solid black",
+                      borderRadius: "10px",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      textAlign: "center",
+                      transform: `rotateY(${
+                        (filteredRestaurants.length + index) * 40
+                      }deg) translateZ(430px)`,
+                      color: "#f8e5bc",
+                      textShadow: "1px 1px 1px black",
+                      fontSize: "20px",
+                    }}
+                  >
+                    <h3>iDunno</h3>
+                  </div>
+                );
+              }
             })}
             <style>
               {`
