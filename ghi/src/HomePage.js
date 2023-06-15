@@ -2,7 +2,7 @@ import SpinningCarousel from "./Main/Spinner";
 
 export default function HomePage() {
   return (
-    <div>
+    <div className="bg-salmon">
       <SpinningCarousel />
     </div>
   );

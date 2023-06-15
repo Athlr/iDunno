@@ -14,6 +14,8 @@ module.exports = {
         hunterGreen: "#3E5641",
         nyanza: "#DDFFD9",
         darkCyan: "#048A81",
+        wine: "#723D46",
+        navy: "#1e2936",
       },
     },
   },

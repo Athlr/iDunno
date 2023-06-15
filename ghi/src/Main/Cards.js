@@ -1,9 +1,22 @@
 import React from "react";
+import { useInView, animated } from "@react-spring/web";
 
 export default function Cards() {
+  const [ref, springs] = useInView(
+    () => ({
+      from: { opacity: 0, y: 100 },
+      to: { opacity: 1, y: 0 },
+    }),
+    { rootMargin: "-40% 0%" }
+  );
+
   return (
-    <div className="flex justify-center py-10 space-x-6 bg-salmon">
-      <div className="flex items-center bg-grey space-x-6">
+    <animated.div
+      className="container mx-auto px-48 py-10"
+      ref={ref}
+      style={springs}
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8 justify-center py-10 ">
         <div className="animate__animated animate__fadeIn w-64 h-80 bg-darkCyan border-gray-200 rounded-lg shadow p-8">
           <div className="flex flex-col items-center">
             <img
@@ -161,6 +174,6 @@ export default function Cards() {
           </div>
         </div>
       </div>
-    </div>
+    </animated.div>
   );
 }

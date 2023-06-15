@@ -356,7 +356,7 @@ export default function SpinningCarousel() {
   let faceCount = Math.floor(Math.random() * 4) + 3;
 
   return (
-    <div className="h-screen w-screen flex flex-col items-center bg-salmon overflow-hidden">
+    <div className="h-full w-full flex flex-col items-center overflow-hidden">
       <div className="container mx-auto flex-grow">
         <Transition appear show={isOpen} as={Fragment}>
           <Dialog as="div" className="relative z-10" onClose={closeModal}>
