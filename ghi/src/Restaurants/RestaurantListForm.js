@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 function RestaurantListForm() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [listPicture, setListPicture] = useState(
-    "https://cdn-icons-png.flaticon.com/128/284/284789.png"
-  );
+  const [listPicture, setListPicture] = useState("https://cdn-icons-png.flaticon.com/128/284/284789.png");
   const { token } = useToken();
   const { user } = useUser(token);
   const navigate = useNavigate();
@@ -59,45 +57,53 @@ function RestaurantListForm() {
   };
 
   return (
-    <div className="container h-screen min-w-full bg-[#faceaf]">
-      <div className="flex justify-center items-center h-full ">
-        <div className="shadow p-4 mt-4 rounded-md bg-[#e89d5b51]">
-          <h1 className="text-2xl font-bold mb-4">Create Restaurant List</h1>
-              <form onSubmit={handleSubmit} id="create-restaurant-form">
-                <div className="form-floating mb-3">
-                  <input
-                    value={name}
-                    onChange={handleNameChange}
-                    placeholder="Name"
-                    required
-                    type="text"
-                    name="name"
-                    id="name"
-                    className="form-control"
-                  />
-                  <label htmlFor="name">List Name</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <input
-                    value={description}
-                    onChange={handleDescriptionChange}
-                    placeholder="*Optional"
-                    type="text"
-                    name="description"
-                    id="description"
-                    className="form-control"
-                  />
-                  <label htmlFor="description">Description</label>
-                </div>
-                <div className="form-floating mb-3">
-                  <select
-                    className="block w-full p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-0"
-                    onChange={handleListPictureChange}
-                    defaultValue={listPicture}
-                  >
-                    <option value="" disabled>
-                      Select an option
-                    </option>
+    <div className="container h-screen min-w-full bg-[#A1BD98] flex justify-center items-center">
+        <div className="bg-white p-8 rounded-md shadow" style={{ borderBottom: "1px solid black" }}>
+          <div className="flex justify-center">
+            <div className="flex justify-center">
+              <div className="w-96">
+                <img
+                  className="rounded-md h-64"
+                  src={process.env.PUBLIC_URL + "/static/img/create_list.png"}
+                  alt=""
+                />
+              </div>
+          </div>
+          <form onSubmit={handleSubmit} id="create-restaurant-form">
+            <div className="form-floating mb-3">
+              <input
+                value={name}
+                onChange={handleNameChange}
+                placeholder="Name"
+                required
+                type="text"
+                name="name"
+                id="name"
+                className="form-control w-96 ml-4"
+              />
+              <label className="ml-4" htmlFor="name">List Name</label>
+            </div>
+            <div className="form-floating mb-3">
+              <input
+                value={description}
+                onChange={handleDescriptionChange}
+                placeholder="*Optional"
+                type="text"
+                name="description"
+                id="description"
+                className="form-control w-96 ml-4"
+              />
+              <label className="ml-4" htmlFor="description">Description</label>
+            </div>
+            <div className="form-floating mb-3">
+              <select
+                className="block w-96 ml-4 p-4 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 focus:outline-0 "
+                onChange={handleListPictureChange}
+                defaultValue={listPicture}
+              >
+                <option value="" disabled>
+                  Select an option
+                </option>
                     <option value="https://cdn-icons-png.flaticon.com/128/284/284824.png">
                       Taco
                     </option>
@@ -140,16 +146,16 @@ function RestaurantListForm() {
                     <option value="https://cdn-icons-png.flaticon.com/128/284/284835.png">
                       Bell Pepper
                     </option>
-                  </select>
-                  <label htmlFor="Picture_Url">List Picture</label>
-                </div>
-                <button type="submit" className="btn btn-primary">
-                  Create
-                </button>
-              </form>
+              </select>
+              <label className="ml-4" htmlFor="Picture_Url">List Picture</label>
             </div>
+            <button type="submit" className="btn btn-primary ml-4">
+              Create
+            </button>
+          </form>
           </div>
         </div>
+    </div>
   );
 }
 
