@@ -81,7 +81,7 @@ function RestaurantListForm() {
                   <input
                     value={description}
                     onChange={handleDescriptionChange}
-                    placeholder="*Optional*"
+                    placeholder="*Optional"
                     type="text"
                     name="description"
                     id="description"

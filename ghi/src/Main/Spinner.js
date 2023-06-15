@@ -787,7 +787,7 @@ export default function SpinningCarousel() {
                       left: "10px",
                       right: "10px",
                       backgroundSize: "cover",
-                      backgroundColor: "#f9a240",
+                      backgroundColor: "#A1BD98",
                       border: "2px solid black",
                       borderRadius: "10px",
                       display: "flex",
@@ -795,7 +795,7 @@ export default function SpinningCarousel() {
                       alignItems: "center",
                       textAlign: "center",
                       transform: `rotateY(${index * 40}deg) translateZ(430px)`,
-                      color: "#f58057",
+                      color: "#d4b66c",
                       textShadow: "1px 1px 1px black",
                       fontSize: "20px",
                     }}
