@@ -80,11 +80,11 @@ export default function MainPage() {
             </div>
             <div className="bg-navy p-5 rounded-b-lg">
               <div>
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-white ">
                   Internal Struggle
                 </h5>
               </div>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <p className="mb-3 font-normal text-gray-400">
                 Ever been ensnared in the labyrinth of deciding where to dine?
                 Or found yourself on the frontline of culinary clashes,
                 defending the honor of pizza against the spicy allure of Thai
@@ -108,11 +108,11 @@ export default function MainPage() {
             </div>
             <div className="bg-navy p-5 rounded-b-lg">
               <div>
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
                   Internal Desire
                 </h5>
               </div>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <p className="mb-3 font-normal text-gray-400 ">
                 Does the paradox of choice have you in its grip? Standing in the
                 heart of a metropolis with a thousand eateries, do you find
                 yourself paralyzed by the smorgasbord of culinary delights on
@@ -143,11 +143,11 @@ export default function MainPage() {
             </div>
             <div className="bg-navy p-5 rounded-b-lg">
               <div>
-                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                <h5 className="mb-2 text-2xl font-bold tracking-tight text-white">
                   Sweet Release
                 </h5>
               </div>
-              <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
+              <p className="mb-3 font-normal text-gray-400">
                 In this era of endless choices, it can feel like we're adrift on
                 a sea of indecision. Each moment is a tide pulling us towards
                 new horizons, with every decision echoing in the depths of

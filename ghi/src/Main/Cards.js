@@ -12,11 +12,11 @@ export default function Cards() {
 
   return (
     <animated.div
-      className="container mx-auto px-48 py-10"
+      className="container mx-auto px-10 py-10"
       ref={ref}
       style={springs}
     >
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-8 justify-center py-10 ">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 justify-center py-10 ">
         <div className="animate__animated animate__fadeIn w-64 h-80 bg-darkCyan border-gray-200 rounded-lg shadow p-8">
           <div className="flex flex-col items-center">
             <img
