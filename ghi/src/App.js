@@ -13,6 +13,7 @@ import FriendRestaurantPage from "./Restaurants/FriendRestaurantPage";
 import EditRestaurantListForm from "./Restaurants/EditRestaurantListPage";
 import EditRestaurantForm from "./Restaurants/EditRestaurants";
 import HomePage from "./HomePage";
+import PollPage from "./Easter Eggs/Poll";
 
 function App() {
   return (
@@ -25,7 +26,8 @@ function App() {
           <Route path="/signup" element={<Auth />} />
           <Route path="/signin" element={<Auth />} />
           <Route path="/signout" element={<Auth />} />
-          <Route path="friends">
+          <Route path="/question" element={<PollPage />} />
+          <Route path="friends"> 
             <Route path="" element={<FriendsMain />} />
           </Route>
           <Route path="/restaurants">
