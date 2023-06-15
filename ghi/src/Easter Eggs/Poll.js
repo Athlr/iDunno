@@ -73,8 +73,8 @@ export default function PollPage(){
     return (
     <div style={{ backgroundColor: "rgb(75, 0, 130)", height: "100vh", width: "100vw", margin: 0, padding: 0 }}>
         <div>
-        <h1 style={{ textAlign: "center", fontSize: "3rem" }}>The Big Question</h1>
-        <h2 style={{ textAlign: "center", fontSize: "1.5rem" }}>Would you rather have:</h2>
+        <h1 style={{ textAlign: "center", fontSize: "3rem", color: "white" }}>The Big Question</h1>
+        <h2 style={{ textAlign: "center", fontSize: "1.5rem", color: "white"}}>Would you rather have:</h2>
         </div>
         <div className="flex items-center justify-center space-x-4">
             <div className="flex items-center justify-center w-1/3 p-4 rounded-md">
